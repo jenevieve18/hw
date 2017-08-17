@@ -37,8 +37,8 @@ namespace HW.Grp
 		SponsorAdmin sponsorAdmin;
 		int sponsorAdminID;
 		IAdmin sponsor;
-		SqlUserRepository userRepository = new SqlUserRepository();
-		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
+        //SqlUserRepository userRepository = new SqlUserRepository();/*commented w/out DB connectionString*/
+        protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 
 
         /// <summary>
@@ -51,26 +51,26 @@ namespace HW.Grp
 			SearchResults.Visible = false;
 			ActionNav.Visible = (Convert.ToInt32(Session["ReadOnly"]) == 0);
 			sponsorID = Convert.ToInt32(Session["SponsorID"]);
-			sponsor = sponsorRepository.ReadSponsor(sponsorID);
-			sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
+            //sponsor = sponsorRepository.ReadSponsor(sponsorID);/*commented w/out DB connectionString*/
+            sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"]);
 
-			HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Organization), "default.aspx", true);
+            /*commented w/out DB connectionString*/
+            //HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Organization), "default.aspx", true);
+            //var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+            //if (userSession != null) {
+            //	lid = userSession.Lang;
+            //}
 
-			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
-			if (userSession != null) {
-				lid = userSession.Lang;
-			}
-			
-			ReminderHelper.SetLanguageID(lid);
+            ReminderHelper.SetLanguageID(lid);
 			LanguageFactory.SetCurrentCulture(lid);
 
-			sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Organization, DateTime.Now);
-			string query = "";
+            //sponsorRepository.SaveSponsorAdminSessionFunction(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Organization, DateTime.Now/*commented w/out DB connectionString*/
+            string query = "";
 			if (sponsorID != 0) {
 
-				sponsorAdmin = sponsorRepository.ReadSponsorAdmin(sponsorID, sponsorAdminID);
+                //sponsorAdmin = sponsorRepository.ReadSponsorAdmin(sponsorID, sponsorAdminID);/*commented w/out DB connectionString*/
 
-				if (!IsPostBack) {
+                if (!IsPostBack) {
 					StoppedReason.Items.Clear();
 					StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.active", "Active"), "0"));
 					StoppedReason.Items.Add(new ListItem(R.Str(lid, "status.stop.work", "Stopped, work related"), "1"));
@@ -140,369 +140,371 @@ WHERE SponsorInviteID = {1}",
 					Db.exec(string.Format("UPDATE Answer SET EndDT = GETDATE() WHERE ProjectRoundUserID = {0} AND AnswerID = {1}", Convert.ToInt32(Request.QueryString["SubmitUID"]), Convert.ToInt32(Request.QueryString["SubmitAID"])), "eFormSqlConnection");
 					Response.Redirect("org.aspx?SDID=" + showDepartmentID + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
 				}
-				if (Request.QueryString["BQID"] != null) {
-					query = string.Format(
-@"SELECT sib.BAID,
-	sib.ValueInt,
-	sib.ValueText,
-	sib.ValueDate,
-	bq.Type,
-	up.UserProfileID
-FROM SponsorInvite si
-INNER JOIN SponsorInviteBQ sib ON si.SponsorInviteID = sib.SponsorInviteID AND sib.BQID = {0}
-INNER JOIN bq ON sib.BQID = bq.BQID
-INNER JOIN [User] u ON si.UserID = u.UserID
-INNER JOIN UserProfile up ON u.UserProfileID = up.UserProfileID
-LEFT OUTER JOIN UserProfileBQ upbq ON up.UserProfileID = upbq.UserProfileID AND upbq.BQID = bq.BQID
-WHERE upbq.UserBQID IS NULL
-AND si.UserID = {1}
-AND si.SponsorID = {2}",
-						Convert.ToInt32(Request.QueryString["BQID"]),
-						Convert.ToInt32(Request.QueryString["UID"]),
-						sponsorID
-					);
-					rs = Db.rs(query);
-					if (rs.Read()) {
-						query = string.Format(
-							@"
-INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueInt,ValueText,ValueDate)
-VALUES ({0},{1},{2},{3},{4})",
-							rs.GetInt32(5),
-							Convert.ToInt32(Request.QueryString["BQID"]),
-							(rs.IsDBNull(1) ? (rs.IsDBNull(0) ? "NULL" : rs.GetInt32(0).ToString()) : rs.GetInt32(1).ToString()),
-							(rs.IsDBNull(2) ? "NULL" : "'" + rs.GetString(2).Replace("'", "") + "'"),
-							(rs.IsDBNull(3) ? "NULL" : "'" + rs.GetDateTime(3).ToString("yyyy-MM-dd") + "'")
-						);
-						Db.exec(query);
-					}
-					rs.Close();
-					Response.Redirect("org.aspx?SDID=" + showDepartmentID + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
-				}
-				if (Request.QueryString["SendExtra"] != null) {
-					#region Send extra
-					query = string.Format(
-						@"
-SELECT ses.ExtraEmailBody,
-	ses.ExtraEmailSubject,
-	u.Email,
-	u.UserID,
-	u.ReminderLink,
-	LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12)
-FROM [User] u
-INNER JOIN SponsorExtendedSurvey ses ON ses.SponsorExtendedSurveyID = {0}
-WHERE u.UserID = {1}",
-						Convert.ToInt32(Request.QueryString["SESID"]),
-						Convert.ToInt32(Request.QueryString["SendExtra"])
-					);
-					rs = Db.rs(query);
-					if (rs.Read()) {
-						string body = rs.GetString(0);
 
-						string personalLink = "" + ConfigurationManager.AppSettings["healthWatchURL"] + "";
-						if (!rs.IsDBNull(4) && rs.GetInt32(4) > 0) {
-							personalLink += "c/" + rs.GetString(5).ToLower() + rs.GetInt32(3).ToString();
-						}
-						if (body.IndexOf("<LINK/>") >= 0) {
-							body = body.Replace("<LINK/>", personalLink);
-						} else {
-							body += "\r\n\r\n" + personalLink;
-						}
+                /*commented w/out DB connectionString*/
+                //				if (Request.QueryString["BQID"] != null) {
+                //					query = string.Format(
+                //@"SELECT sib.BAID,
+                //	sib.ValueInt,
+                //	sib.ValueText,
+                //	sib.ValueDate,
+                //	bq.Type,
+                //	up.UserProfileID
+                //FROM SponsorInvite si
+                //INNER JOIN SponsorInviteBQ sib ON si.SponsorInviteID = sib.SponsorInviteID AND sib.BQID = {0}
+                //INNER JOIN bq ON sib.BQID = bq.BQID
+                //INNER JOIN [User] u ON si.UserID = u.UserID
+                //INNER JOIN UserProfile up ON u.UserProfileID = up.UserProfileID
+                //LEFT OUTER JOIN UserProfileBQ upbq ON up.UserProfileID = upbq.UserProfileID AND upbq.BQID = bq.BQID
+                //WHERE upbq.UserBQID IS NULL
+                //AND si.UserID = {1}
+                //AND si.SponsorID = {2}",
+                //						Convert.ToInt32(Request.QueryString["BQID"]),
+                //						Convert.ToInt32(Request.QueryString["UID"]),
+                //						sponsorID
+                //					);
+                //					rs = Db.rs(query);
+                //					if (rs.Read()) {
+                //						query = string.Format(
+                //							@"
+                //INSERT INTO UserProfileBQ (UserProfileID,BQID,ValueInt,ValueText,ValueDate)
+                //VALUES ({0},{1},{2},{3},{4})",
+                //							rs.GetInt32(5),
+                //							Convert.ToInt32(Request.QueryString["BQID"]),
+                //							(rs.IsDBNull(1) ? (rs.IsDBNull(0) ? "NULL" : rs.GetInt32(0).ToString()) : rs.GetInt32(1).ToString()),
+                //							(rs.IsDBNull(2) ? "NULL" : "'" + rs.GetString(2).Replace("'", "") + "'"),
+                //							(rs.IsDBNull(3) ? "NULL" : "'" + rs.GetDateTime(3).ToString("yyyy-MM-dd") + "'")
+                //						);
+                //						Db.exec(query);
+                //					}
+                //					rs.Close();
+                //					Response.Redirect("org.aspx?SDID=" + showDepartmentID + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
+                //				}
+                //				if (Request.QueryString["SendExtra"] != null) {
+                //					#region Send extra
+                //					query = string.Format(
+                //						@"
+                //SELECT ses.ExtraEmailBody,
+                //	ses.ExtraEmailSubject,
+                //	u.Email,
+                //	u.UserID,
+                //	u.ReminderLink,
+                //	LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12)
+                //FROM [User] u
+                //INNER JOIN SponsorExtendedSurvey ses ON ses.SponsorExtendedSurveyID = {0}
+                //WHERE u.UserID = {1}",
+                //						Convert.ToInt32(Request.QueryString["SESID"]),
+                //						Convert.ToInt32(Request.QueryString["SendExtra"])
+                //					);
+                //					rs = Db.rs(query);
+                //					if (rs.Read()) {
+                //						string body = rs.GetString(0);
 
-						Db.sendMail2(rs.GetString(2).Trim(), rs.GetString(1), body);
-					}
-					rs.Close();
-					#endregion
-					Response.Redirect("org.aspx?SDID=" + showDepartmentID + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
-				}
-				if (sendSponsorInvitationID != 0) {
-					#region Resend
-//					query = string.Format(
-//						@"
-					//SELECT s.InviteTxt,
-//	s.InviteSubject,
-//	si.Email,
-//	LEFT(REPLACE(CONVERT(VARCHAR(255),si.InvitationKey),'-',''),8),
-//	si.UserID,
-//	u.ReminderLink,
-//	LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12),
-//	s.LoginTxt,
-//	s.LoginSubject
-					//FROM Sponsor s
-					//INNER JOIN SponsorInvite si ON s.SponsorID = si.SponsorID
-					//LEFT OUTER JOIN [User] u ON u.UserID = si.UserID
-					//WHERE s.SponsorID = {0} AND si.SponsorInviteID = {1}",
-//						sponsorID,
-//						sendSponsorInvitationID
-//					);
-//					rs = Db.rs(query);
-					var i = sponsorRepository.ReadSponsorInviteBySponsor(sendSponsorInvitationID, sponsorID);
-//					if (rs.Read()) {
-					if (i != null) {
-//						if (rs.IsDBNull(4)) {
-						if (i.User == null) {
-							sponsorRepository.UpdateSponsorInviteSent(sendSponsorInvitationID);
-//							Db.sendInvitation(sendSponsorInvitationID, rs.GetString(2).Trim(), rs.GetString(1), rs.GetString(0), rs.GetString(3));
-							Db.sendInvitation(sendSponsorInvitationID, i.Email.Trim(), i.Sponsor.InviteSubject, i.Sponsor.InviteText, i.InvitationKey);
-						} else {
-//							string body = rs.GetString(7);
-							string body = i.Sponsor.LoginText;
+                //						string personalLink = "" + ConfigurationManager.AppSettings["healthWatchURL"] + "";
+                //						if (!rs.IsDBNull(4) && rs.GetInt32(4) > 0) {
+                //							personalLink += "c/" + rs.GetString(5).ToLower() + rs.GetInt32(3).ToString();
+                //						}
+                //						if (body.IndexOf("<LINK/>") >= 0) {
+                //							body = body.Replace("<LINK/>", personalLink);
+                //						} else {
+                //							body += "\r\n\r\n" + personalLink;
+                //						}
 
-							string personalLink = "" + ConfigurationManager.AppSettings["healthWatchURL"] + "";
-//							if (!rs.IsDBNull(5) && rs.GetInt32(5) > 0) {
-							if (i.User.ReminderLink > 0) {
-//								personalLink += "c/" + rs.GetString(6).ToLower() + rs.GetInt32(4).ToString();
-								personalLink += "c/" + i.User.UserKey.ToLower() + i.User.Id.ToString();
-							}
-							if (body.IndexOf("<LINK/>") >= 0) {
-								body = body.Replace("<LINK/>", personalLink);
-							} else {
-								body += "\r\n\r\n" + personalLink;
-							}
+                //						Db.sendMail2(rs.GetString(2).Trim(), rs.GetString(1), body);
+                //					}
+                //					rs.Close();
+                //					#endregion
+                //					Response.Redirect("org.aspx?SDID=" + showDepartmentID + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
+                //				}
+                //				if (sendSponsorInvitationID != 0) {
+                //					#region Resend
+                ////					query = string.Format(
+                ////						@"
+                //					//SELECT s.InviteTxt,
+                ////	s.InviteSubject,
+                ////	si.Email,
+                ////	LEFT(REPLACE(CONVERT(VARCHAR(255),si.InvitationKey),'-',''),8),
+                ////	si.UserID,
+                ////	u.ReminderLink,
+                ////	LEFT(REPLACE(CONVERT(VARCHAR(255),u.UserKey),'-',''),12),
+                ////	s.LoginTxt,
+                ////	s.LoginSubject
+                //					//FROM Sponsor s
+                //					//INNER JOIN SponsorInvite si ON s.SponsorID = si.SponsorID
+                //					//LEFT OUTER JOIN [User] u ON u.UserID = si.UserID
+                //					//WHERE s.SponsorID = {0} AND si.SponsorInviteID = {1}",
+                ////						sponsorID,
+                ////						sendSponsorInvitationID
+                ////					);
+                ////					rs = Db.rs(query);
+                //					var i = sponsorRepository.ReadSponsorInviteBySponsor(sendSponsorInvitationID, sponsorID);
+                ////					if (rs.Read()) {
+                //					if (i != null) {
+                ////						if (rs.IsDBNull(4)) {
+                //						if (i.User == null) {
+                //							sponsorRepository.UpdateSponsorInviteSent(sendSponsorInvitationID);
+                ////							Db.sendInvitation(sendSponsorInvitationID, rs.GetString(2).Trim(), rs.GetString(1), rs.GetString(0), rs.GetString(3));
+                //							Db.sendInvitation(sendSponsorInvitationID, i.Email.Trim(), i.Sponsor.InviteSubject, i.Sponsor.InviteText, i.InvitationKey);
+                //						} else {
+                ////							string body = rs.GetString(7);
+                //							string body = i.Sponsor.LoginText;
 
-//							Db.sendMail(rs.GetString(2).Trim(), rs.GetString(8), body);
-							Db.sendMail2(i.Email.Trim(), i.Sponsor.LoginSubject, body);
-						}
-					}
-//					rs.Close();
-					#endregion
-					Response.Redirect("org.aspx?SDID=" + showDepartmentID + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
-				}
+                //							string personalLink = "" + ConfigurationManager.AppSettings["healthWatchURL"] + "";
+                ////							if (!rs.IsDBNull(5) && rs.GetInt32(5) > 0) {
+                //							if (i.User.ReminderLink > 0) {
+                ////								personalLink += "c/" + rs.GetString(6).ToLower() + rs.GetInt32(4).ToString();
+                //								personalLink += "c/" + i.User.UserKey.ToLower() + i.User.Id.ToString();
+                //							}
+                //							if (body.IndexOf("<LINK/>") >= 0) {
+                //								body = body.Replace("<LINK/>", personalLink);
+                //							} else {
+                //								body += "\r\n\r\n" + personalLink;
+                //							}
 
-				#region Populate hidden variables
-				query = string.Format(
-					@"
-SELECT BQ.Internal,
-	BQ.BQID,
-	BQ.Type
-FROM SponsorBQ sbq
-INNER JOIN BQ ON sbq.BQID = BQ.BQID
-WHERE sbq.SponsorID = {0}
-AND sbq.Hidden = 1
-ORDER BY sbq.SortOrder",
-					sponsorID
-				);
-				rs = Db.rs(query);
-				while (rs.Read()) {
-					Hidden.Controls.Add(new LiteralControl("<span class='desc'>" + rs.GetString(0) + "</span>"));
-					if (rs.GetInt32(2) == 7 || rs.GetInt32(2) == 1) {
-						DropDownList rbl = new DropDownList();
-						rbl.ID = "Hidden" + rs.GetInt32(1);
-						rbl.Items.Add(new ListItem("-", "NULL"));
-						query = string.Format("SELECT BAID, Internal FROM BA WHERE BQID = {0} ORDER BY SortOrder", rs.GetInt32(1));
-						SqlDataReader rs2 = Db.rs(query);
-						while (rs2.Read()) {
-							rbl.Items.Add(new ListItem(rs2.GetString(1), rs2.GetInt32(0).ToString()));
-						}
-						rs2.Close();
-						Hidden.Controls.Add(rbl);
-					} else if (rs.GetInt32(2) == 4 || rs.GetInt32(2) == 2) {
-						TextBox tb = new TextBox();
-						tb.ID = "Hidden" + rs.GetInt32(1);
-						tb.Width = Unit.Pixel(150);
-						Hidden.Controls.Add(tb);
-						if (rs.GetInt32(2) == 2) {
-							hiddenBqJoin += "LEFT OUTER JOIN SponsorInviteBQ upb" + rs.GetInt32(1) + " ON si.SponsorInviteID = upb" + rs.GetInt32(1) + ".SponsorInviteID AND upb" + rs.GetInt32(1) + ".BQID = " + rs.GetInt32(1) + " ";
-							hiddenBqWhere += " OR upb" + rs.GetInt32(1) + ".ValueText LIKE [x]";
-						}
-					} else if (rs.GetInt32(2) == 3) {
-						DropDownList ddl = new DropDownList();
-						ddl.ID = "Hidden" + rs.GetInt32(1) + "Y";
-						ddl.Items.Add(new ListItem("-", "0"));
-						for (int i = 1900; i <= DateTime.Now.Year; i++) {
-							ddl.Items.Add(new ListItem(i.ToString(), i.ToString()));
-						}
-						Hidden.Controls.Add(ddl);
+                ////							Db.sendMail(rs.GetString(2).Trim(), rs.GetString(8), body);
+                //							Db.sendMail2(i.Email.Trim(), i.Sponsor.LoginSubject, body);
+                //						}
+                //					}
+                ////					rs.Close();
+                //					#endregion
+                //					Response.Redirect("org.aspx?SDID=" + showDepartmentID + "&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + (showReg ? "&ShowReg=1" : ""), true);
+                //				}
 
-						ddl = new DropDownList();
-						ddl.ID = "Hidden" + rs.GetInt32(1) + "M";
-						ddl.Items.Add(new ListItem("-", "0"));
-						for (int i = 1; i <= 12; i++) {
-							ddl.Items.Add(new ListItem(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[i - 1], i.ToString()));
-						}
-						Hidden.Controls.Add(ddl);
+                //				#region Populate hidden variables
+                //				query = string.Format(
+                //					@"
+                //SELECT BQ.Internal,
+                //	BQ.BQID,
+                //	BQ.Type
+                //FROM SponsorBQ sbq
+                //INNER JOIN BQ ON sbq.BQID = BQ.BQID
+                //WHERE sbq.SponsorID = {0}
+                //AND sbq.Hidden = 1
+                //ORDER BY sbq.SortOrder",
+                //					sponsorID
+                //				);
+                //				rs = Db.rs(query);
+                //				while (rs.Read()) {
+                //					Hidden.Controls.Add(new LiteralControl("<span class='desc'>" + rs.GetString(0) + "</span>"));
+                //					if (rs.GetInt32(2) == 7 || rs.GetInt32(2) == 1) {
+                //						DropDownList rbl = new DropDownList();
+                //						rbl.ID = "Hidden" + rs.GetInt32(1);
+                //						rbl.Items.Add(new ListItem("-", "NULL"));
+                //						query = string.Format("SELECT BAID, Internal FROM BA WHERE BQID = {0} ORDER BY SortOrder", rs.GetInt32(1));
+                //						SqlDataReader rs2 = Db.rs(query);
+                //						while (rs2.Read()) {
+                //							rbl.Items.Add(new ListItem(rs2.GetString(1), rs2.GetInt32(0).ToString()));
+                //						}
+                //						rs2.Close();
+                //						Hidden.Controls.Add(rbl);
+                //					} else if (rs.GetInt32(2) == 4 || rs.GetInt32(2) == 2) {
+                //						TextBox tb = new TextBox();
+                //						tb.ID = "Hidden" + rs.GetInt32(1);
+                //						tb.Width = Unit.Pixel(150);
+                //						Hidden.Controls.Add(tb);
+                //						if (rs.GetInt32(2) == 2) {
+                //							hiddenBqJoin += "LEFT OUTER JOIN SponsorInviteBQ upb" + rs.GetInt32(1) + " ON si.SponsorInviteID = upb" + rs.GetInt32(1) + ".SponsorInviteID AND upb" + rs.GetInt32(1) + ".BQID = " + rs.GetInt32(1) + " ";
+                //							hiddenBqWhere += " OR upb" + rs.GetInt32(1) + ".ValueText LIKE [x]";
+                //						}
+                //					} else if (rs.GetInt32(2) == 3) {
+                //						DropDownList ddl = new DropDownList();
+                //						ddl.ID = "Hidden" + rs.GetInt32(1) + "Y";
+                //						ddl.Items.Add(new ListItem("-", "0"));
+                //						for (int i = 1900; i <= DateTime.Now.Year; i++) {
+                //							ddl.Items.Add(new ListItem(i.ToString(), i.ToString()));
+                //						}
+                //						Hidden.Controls.Add(ddl);
 
-						ddl = new DropDownList();
-						ddl.ID = "Hidden" + rs.GetInt32(1) + "D";
-						ddl.Items.Add(new ListItem("-", "0"));
-						for (int i = 1; i <= 31; i++) {
-							ddl.Items.Add(new ListItem(i.ToString(), i.ToString()));
-						}
-						Hidden.Controls.Add(ddl);
-					}
-					Hidden.Controls.Add(new LiteralControl("<br/>"));
-				}
-				rs.Close();
-				#endregion
+                //						ddl = new DropDownList();
+                //						ddl.ID = "Hidden" + rs.GetInt32(1) + "M";
+                //						ddl.Items.Add(new ListItem("-", "0"));
+                //						for (int i = 1; i <= 12; i++) {
+                //							ddl.Items.Add(new ListItem(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[i - 1], i.ToString()));
+                //						}
+                //						Hidden.Controls.Add(ddl);
 
-				if (Request.QueryString["Action"] != null || deptID != 0 || userID != 0 || deleteUserID != 0) {
-					if (Request.QueryString["Action"] != null && Request.QueryString["Action"] == "AddUnit" || deptID != 0) {
-						AddUnit.Visible = true;
-					}
-					if (Request.QueryString["Action"] != null && Request.QueryString["Action"] == "AddUser" || userID != 0) {
-						AddUser.Visible = true;
-					}
-					if (Request.QueryString["Action"] != null && Request.QueryString["Action"] == "ImportUser") {
-						ImportUsers.Visible = true;
-					}
-					if (Request.QueryString["Action"] != null && Request.QueryString["Action"] == "ImportUnit") {
-						ImportUnits.Visible = true;
-					}
-					Actions.Visible = false;
-				}
+                //						ddl = new DropDownList();
+                //						ddl.ID = "Hidden" + rs.GetInt32(1) + "D";
+                //						ddl.Items.Add(new ListItem("-", "0"));
+                //						for (int i = 1; i <= 31; i++) {
+                //							ddl.Items.Add(new ListItem(i.ToString(), i.ToString()));
+                //						}
+                //						Hidden.Controls.Add(ddl);
+                //					}
+                //					Hidden.Controls.Add(new LiteralControl("<br/>"));
+                //				}
+                //				rs.Close();
+                //				#endregion
 
-				if (!IsPostBack) {
-					//ImportUnitsParentDepartmentID.Items.Add(new ListItem("< top level >", "NULL"));
-                    ImportUnitsParentDepartmentID.Items.Add(new ListItem(R.Str(lid, "department.toplevel", "< top level >"), "NULL"));
-					//ImportUsersParentDepartmentID.Items.Add(new ListItem("< top level >", "NULL"));
-					query = string.Format(
-						@"
-SELECT d.DepartmentID,
-	dbo.cf_departmentTree(d.DepartmentID,' » ')
-FROM Department d
-{0} d.SponsorID = {1}
-ORDER BY d.SortString",
-						(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
-						sponsorID
-					);
-					rs = Db.rs(query);
-					while (rs.Read()) {
-						ImportUnitsParentDepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
-						ImportUsersParentDepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
-					}
-					rs.Close();
+                //				if (Request.QueryString["Action"] != null || deptID != 0 || userID != 0 || deleteUserID != 0) {
+                //					if (Request.QueryString["Action"] != null && Request.QueryString["Action"] == "AddUnit" || deptID != 0) {
+                //						AddUnit.Visible = true;
+                //					}
+                //					if (Request.QueryString["Action"] != null && Request.QueryString["Action"] == "AddUser" || userID != 0) {
+                //						AddUser.Visible = true;
+                //					}
+                //					if (Request.QueryString["Action"] != null && Request.QueryString["Action"] == "ImportUser") {
+                //						ImportUsers.Visible = true;
+                //					}
+                //					if (Request.QueryString["Action"] != null && Request.QueryString["Action"] == "ImportUnit") {
+                //						ImportUnits.Visible = true;
+                //					}
+                //					Actions.Visible = false;
+                //				}
 
-					//ParentDepartmentID.Items.Add(new ListItem("< top level >", "NULL"));
-                    ParentDepartmentID.Items.Add(new ListItem(R.Str(lid, "department.toplevel", "< top level >"), "NULL"));
-					if (deptID != 0) {
-						string sortString = "";
-						string parentDepartmentID = "NULL";
-						string department = "", departmentShort = "";
-						query = string.Format("SELECT d.SortString, d.ParentDepartmentID, d.Department, d.DepartmentShort FROM Department d WHERE d.SponsorID = {0} AND d.DepartmentID = {1}", sponsorID, deptID);
-						rs = Db.rs(query);
-						if (rs.Read()) {
-							sortString = rs.GetString(0);
-							if (!rs.IsDBNull(1)) {
-								parentDepartmentID = rs.GetInt32(1).ToString();
-							}
-							department = rs.GetString(2);
-							departmentShort = rs.GetString(3);
-						}
-						rs.Close();
-						query = string.Format(
-							@"
-SELECT d.DepartmentID,
-	dbo.cf_departmentTree(d.DepartmentID,' » ')
-FROM Department d
-{0} d.SponsorID = {1}
-AND LEFT(d.SortString,{2}) <> '{3}'
-ORDER BY d.SortString",
-							(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
-							sponsorID,
-							sortString.Length,
-							sortString
-						);
-						rs = Db.rs(query);
-						while (rs.Read()) {
-							ParentDepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
-						}
-						rs.Close();
+                //				if (!IsPostBack) {
+                //					//ImportUnitsParentDepartmentID.Items.Add(new ListItem("< top level >", "NULL"));
+                //                    ImportUnitsParentDepartmentID.Items.Add(new ListItem(R.Str(lid, "department.toplevel", "< top level >"), "NULL"));
+                //					//ImportUsersParentDepartmentID.Items.Add(new ListItem("< top level >", "NULL"));
+                //					query = string.Format(
+                //						@"
+                //SELECT d.DepartmentID,
+                //	dbo.cf_departmentTree(d.DepartmentID,' » ')
+                //FROM Department d
+                //{0} d.SponsorID = {1}
+                //ORDER BY d.SortString",
+                //						(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
+                //						sponsorID
+                //					);
+                //					rs = Db.rs(query);
+                //					while (rs.Read()) {
+                //						ImportUnitsParentDepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
+                //						ImportUsersParentDepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
+                //					}
+                //					rs.Close();
 
-						Department.Text = department;
-						DepartmentShort.Text = departmentShort;
-						ParentDepartmentID.SelectedValue = parentDepartmentID;
-					} else {
-						query = string.Format(
-							@"
-SELECT d.DepartmentID,
-	dbo.cf_departmentTree(d.DepartmentID,' » ')
-FROM Department d
-{0} d.SponsorID = {1}
-ORDER BY d.SortString",
-							(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
-							sponsorID
-						);
-						rs = Db.rs(query);
-						while (rs.Read()) {
-							ParentDepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
-						}
-						rs.Close();
-					}
-					query = string.Format(
-						@"
-SELECT d.DepartmentID,
-	dbo.cf_departmentTree(d.DepartmentID,' » ')
-FROM Department d
-{0} d.SponsorID = {1}
-ORDER BY d.SortString",
-						(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
-						sponsorID
-					);
-					rs = Db.rs(query);
-					while (rs.Read()) {
-						DepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
-					}
-					rs.Close();
+                //					//ParentDepartmentID.Items.Add(new ListItem("< top level >", "NULL"));
+                //                    ParentDepartmentID.Items.Add(new ListItem(R.Str(lid, "department.toplevel", "< top level >"), "NULL"));
+                //					if (deptID != 0) {
+                //						string sortString = "";
+                //						string parentDepartmentID = "NULL";
+                //						string department = "", departmentShort = "";
+                //						query = string.Format("SELECT d.SortString, d.ParentDepartmentID, d.Department, d.DepartmentShort FROM Department d WHERE d.SponsorID = {0} AND d.DepartmentID = {1}", sponsorID, deptID);
+                //						rs = Db.rs(query);
+                //						if (rs.Read()) {
+                //							sortString = rs.GetString(0);
+                //							if (!rs.IsDBNull(1)) {
+                //								parentDepartmentID = rs.GetInt32(1).ToString();
+                //							}
+                //							department = rs.GetString(2);
+                //							departmentShort = rs.GetString(3);
+                //						}
+                //						rs.Close();
+                //						query = string.Format(
+                //							@"
+                //SELECT d.DepartmentID,
+                //	dbo.cf_departmentTree(d.DepartmentID,' » ')
+                //FROM Department d
+                //{0} d.SponsorID = {1}
+                //AND LEFT(d.SortString,{2}) <> '{3}'
+                //ORDER BY d.SortString",
+                //							(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
+                //							sponsorID,
+                //							sortString.Length,
+                //							sortString
+                //						);
+                //						rs = Db.rs(query);
+                //						while (rs.Read()) {
+                //							ParentDepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
+                //						}
+                //						rs.Close();
 
-					if (userID != 0) {
-						query = string.Format("SELECT Email, DepartmentID, StoppedReason, Stopped FROM SponsorInvite WHERE SponsorInviteID = {0}", userID);
-						rs = Db.rs(query);
-						if (rs.Read()) {
-							Email.Text = rs.GetString(0);
-							DepartmentID.SelectedValue = (rs.IsDBNull(1) ? "NULL" : rs.GetInt32(1).ToString());
-							StoppedReason.Items.FindByValue((rs.IsDBNull(2) ? "0" : rs.GetInt32(2).ToString())).Selected = true;
-							Stopped.Text = (rs.IsDBNull(3) ? DateTime.Today.ToString("yyyy-MM-dd") : rs.GetDateTime(3).ToString("yyyy-MM-dd"));
-						}
-						rs.Close();
-						query = string.Format("SELECT s.BQID, s.BAID, BQ.Type, s.ValueInt, s.ValueDate, s.ValueText, BQ.Restricted FROM SponsorInviteBQ s INNER JOIN BQ ON BQ.BQID = s.BQID WHERE s.SponsorInviteID = {0}", userID);
-						rs = Db.rs(query);
-						while (rs.Read()) {
-							if (rs.GetInt32(2) == 7 || rs.GetInt32(2) == 1) {
-								if (Hidden.FindControl("Hidden" + rs.GetInt32(0)) != null && !rs.IsDBNull(1)) {
-									((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0))).SelectedValue = rs.GetInt32(1).ToString();
-								}
-							} else if (rs.GetInt32(2) == 2) {
-								if (Hidden.FindControl("Hidden" + rs.GetInt32(0)) != null && !rs.IsDBNull(5)) {
-									((TextBox)Hidden.FindControl("Hidden" + rs.GetInt32(0))).Text = (rs.IsDBNull(6) ? rs.GetString(5) : "*****");
-								}
-							} else if (rs.GetInt32(2) == 4) {
-								if (Hidden.FindControl("Hidden" + rs.GetInt32(0)) != null && !rs.IsDBNull(3)) {
-									((TextBox)Hidden.FindControl("Hidden" + rs.GetInt32(0))).Text = rs.GetInt32(3).ToString();
-								}
-							} else if (rs.GetInt32(2) == 3 && !rs.IsDBNull(4)) {
-								if (Hidden.FindControl("Hidden" + rs.GetInt32(0) + "Y") != null) {
-									((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0) + "Y")).SelectedValue = rs.GetDateTime(4).ToString("yyyy");
-								}
-								if (Hidden.FindControl("Hidden" + rs.GetInt32(0) + "M") != null) {
-									((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0) + "M")).SelectedValue = rs.GetDateTime(4).ToString("MM");
-								}
-								if (Hidden.FindControl("Hidden" + rs.GetInt32(0) + "D") != null) {
-									((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0) + "D")).SelectedValue = rs.GetDateTime(4).ToString("dd");
-								}
-							}
-						}
-						rs.Close();
-					}
+                //						Department.Text = department;
+                //						DepartmentShort.Text = departmentShort;
+                //						ParentDepartmentID.SelectedValue = parentDepartmentID;
+                //					} else {
+                //						query = string.Format(
+                //							@"
+                //SELECT d.DepartmentID,
+                //	dbo.cf_departmentTree(d.DepartmentID,' » ')
+                //FROM Department d
+                //{0} d.SponsorID = {1}
+                //ORDER BY d.SortString",
+                //							(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
+                //							sponsorID
+                //						);
+                //						rs = Db.rs(query);
+                //						while (rs.Read()) {
+                //							ParentDepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
+                //						}
+                //						rs.Close();
+                //					}
+                //					query = string.Format(
+                //						@"
+                //SELECT d.DepartmentID,
+                //	dbo.cf_departmentTree(d.DepartmentID,' » ')
+                //FROM Department d
+                //{0} d.SponsorID = {1}
+                //ORDER BY d.SortString",
+                //						(Session["SponsorAdminID"].ToString() != "-1" ? "INNER JOIN SponsorAdminDepartment sad ON d.DepartmentID = sad.DepartmentID WHERE sad.SponsorAdminID = " + Session["SponsorAdminID"] + " AND " : "WHERE "),
+                //						sponsorID
+                //					);
+                //					rs = Db.rs(query);
+                //					while (rs.Read()) {
+                //						DepartmentID.Items.Add(new ListItem(rs.GetString(1), rs.GetInt32(0).ToString()));
+                //					}
+                //					rs.Close();
 
-					if (deleteUserID != 0) {
-						query = string.Format("SELECT Email FROM SponsorInvite WHERE SponsorInviteID = {0}", deleteUserID);
-						rs = Db.rs(query);
-						if (rs.Read()) {
-							DeleteUserEmail.Text = rs.GetString(0);
-						}
-						rs.Close();
-					}
+                //					if (userID != 0) {
+                //						query = string.Format("SELECT Email, DepartmentID, StoppedReason, Stopped FROM SponsorInvite WHERE SponsorInviteID = {0}", userID);
+                //						rs = Db.rs(query);
+                //						if (rs.Read()) {
+                //							Email.Text = rs.GetString(0);
+                //							DepartmentID.SelectedValue = (rs.IsDBNull(1) ? "NULL" : rs.GetInt32(1).ToString());
+                //							StoppedReason.Items.FindByValue((rs.IsDBNull(2) ? "0" : rs.GetInt32(2).ToString())).Selected = true;
+                //							Stopped.Text = (rs.IsDBNull(3) ? DateTime.Today.ToString("yyyy-MM-dd") : rs.GetDateTime(3).ToString("yyyy-MM-dd"));
+                //						}
+                //						rs.Close();
+                //						query = string.Format("SELECT s.BQID, s.BAID, BQ.Type, s.ValueInt, s.ValueDate, s.ValueText, BQ.Restricted FROM SponsorInviteBQ s INNER JOIN BQ ON BQ.BQID = s.BQID WHERE s.SponsorInviteID = {0}", userID);
+                //						rs = Db.rs(query);
+                //						while (rs.Read()) {
+                //							if (rs.GetInt32(2) == 7 || rs.GetInt32(2) == 1) {
+                //								if (Hidden.FindControl("Hidden" + rs.GetInt32(0)) != null && !rs.IsDBNull(1)) {
+                //									((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0))).SelectedValue = rs.GetInt32(1).ToString();
+                //								}
+                //							} else if (rs.GetInt32(2) == 2) {
+                //								if (Hidden.FindControl("Hidden" + rs.GetInt32(0)) != null && !rs.IsDBNull(5)) {
+                //									((TextBox)Hidden.FindControl("Hidden" + rs.GetInt32(0))).Text = (rs.IsDBNull(6) ? rs.GetString(5) : "*****");
+                //								}
+                //							} else if (rs.GetInt32(2) == 4) {
+                //								if (Hidden.FindControl("Hidden" + rs.GetInt32(0)) != null && !rs.IsDBNull(3)) {
+                //									((TextBox)Hidden.FindControl("Hidden" + rs.GetInt32(0))).Text = rs.GetInt32(3).ToString();
+                //								}
+                //							} else if (rs.GetInt32(2) == 3 && !rs.IsDBNull(4)) {
+                //								if (Hidden.FindControl("Hidden" + rs.GetInt32(0) + "Y") != null) {
+                //									((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0) + "Y")).SelectedValue = rs.GetDateTime(4).ToString("yyyy");
+                //								}
+                //								if (Hidden.FindControl("Hidden" + rs.GetInt32(0) + "M") != null) {
+                //									((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0) + "M")).SelectedValue = rs.GetDateTime(4).ToString("MM");
+                //								}
+                //								if (Hidden.FindControl("Hidden" + rs.GetInt32(0) + "D") != null) {
+                //									((DropDownList)Hidden.FindControl("Hidden" + rs.GetInt32(0) + "D")).SelectedValue = rs.GetDateTime(4).ToString("dd");
+                //								}
+                //							}
+                //						}
+                //						rs.Close();
+                //					}
 
-					if (deleteDepartmentID != 0) {
-						query = string.Format("SELECT dbo.cf_departmentTree(d.DepartmentID,' » ') FROM Department d WHERE d.DepartmentID = {0}", deleteDepartmentID);
-						rs = Db.rs(query);
-						if (rs.Read()) {
-							DeleteDepartmentName.Text = rs.GetString(0);
-						}
-						rs.Close();
-					}
-				}
+                //					if (deleteUserID != 0) {
+                //						query = string.Format("SELECT Email FROM SponsorInvite WHERE SponsorInviteID = {0}", deleteUserID);
+                //						rs = Db.rs(query);
+                //						if (rs.Read()) {
+                //							DeleteUserEmail.Text = rs.GetString(0);
+                //						}
+                //						rs.Close();
+                //					}
 
-				SaveUnit.Click += new EventHandler(SaveUnit_Click);
+                //					if (deleteDepartmentID != 0) {
+                //						query = string.Format("SELECT dbo.cf_departmentTree(d.DepartmentID,' » ') FROM Department d WHERE d.DepartmentID = {0}", deleteDepartmentID);
+                //						rs = Db.rs(query);
+                //						if (rs.Read()) {
+                //							DeleteDepartmentName.Text = rs.GetString(0);
+                //						}
+                //						rs.Close();
+                //					}
+                //				}
+
+                SaveUnit.Click += new EventHandler(SaveUnit_Click);
 				SaveDeleteDepartment.Click += new EventHandler(SaveDeleteDepartment_Click);
 				SaveUser.Click += new EventHandler(SaveUser_Click);
 				SaveDeleteUser.Click += new EventHandler(SaveDeleteUser_Click);
@@ -1191,7 +1193,8 @@ VALUES ({0},1,NULL,{1},GETDATE())",
             OrgTree.Text += string.Format("<tr><td colspan='3'>{0}</td>[xxx]</tr>", Session["Sponsor"]);
 
             int UX = 0; int totalActivated = 0; int IX = 0; int totalActive = 0;
-            int MIN_SHOW = sponsor.MinUserCountToDisclose;
+            //int MIN_SHOW = sponsor.MinUserCountToDisclose;/*commented w/out DB connectionString*/
+            int MIN_SHOW = 0;
 
             Dictionary<int, bool> DX = new Dictionary<int, bool>();
 

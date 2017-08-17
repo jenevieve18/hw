@@ -17,6 +17,8 @@ namespace HW.Grp
 {
 	public partial class Default : System.Web.UI.Page
 	{
+        
+        /*
 		SqlManagerFunctionRepository functionRepo = new SqlManagerFunctionRepository();
 		SqlUserRepository userRepository = new SqlUserRepository();
 		
@@ -25,9 +27,10 @@ namespace HW.Grp
 		
 		SqlSponsorRepository sponsorRepo = new SqlSponsorRepository();
 		SqlNewsRepository newsRepo = new SqlNewsRepository();
-		
+		*/
 		protected string errorMessage = "";
-		protected IList<AdminNews> adminNews;
+//		protected IList<AdminNews> adminNews; 
+        
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 //		public Default() : this(new SqlSponsorRepository(), new SqlNewsRepository())
@@ -40,10 +43,13 @@ namespace HW.Grp
 //			this.newsRepo = newsRepo;
 //		}
 		
+        /*
+
 		public void Index()
 		{
 			adminNews = newsRepo.FindTop3AdminNews();
 		}
+        */
 
 		protected CultureInfo GetCultureInfo(int lid)
 		{
@@ -56,32 +62,43 @@ namespace HW.Grp
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			var userSession = new UserSession { HostAddress = Request.UserHostAddress, Agent = Request.UserAgent, Lang = ConvertHelper.ToInt32(Request.QueryString["lid"]) };
-			userRepository.SaveSessionIf(Request.QueryString["lid"] != null, userSession);
-			if (Request.QueryString["r"] != null) {
-				Response.Redirect(HttpUtility.UrlDecode(Request.QueryString["r"]));
-			}
-			userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
-			if (userSession != null) {
-				lid = userSession.Lang;
-			}
+            lid = 2;
 
-			Index();
+            //var userSession = new UserSession { HostAddress = Request.UserHostAddress, Agent = Request.UserAgent, Lang = ConvertHelper.ToInt32(Request.QueryString["lid"]) };
+            //userRepository.SaveSessionIf(Request.QueryString["lid"] != null, userSession);
+            //if (Request.QueryString["r"] != null) {
+            //	Response.Redirect(HttpUtility.UrlDecode(Request.QueryString["r"]));
+            //}
+            //userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+            //if (userSession != null) {
+            //	lid = userSession.Lang;
+            //}
 
+            //Index();
+
+
+
+            /*
             bool login = false;
             SponsorAdmin sponsorAdmin = null;
+            
+            */
+
             var service = new Soap();
             if (((Request.Form["ANV"] != null && Request.Form["ANV"] != "") && (Request.Form["LOS"] != null && Request.Form["LOS"] != "")) || Request.QueryString["SKEY"] != null || Request.QueryString["SAKEY"] != null)
             {
+                
                 string sponsorKey = Request.QueryString["SKEY"];
                 string sponsorAdminKey = Request.QueryString["SAKEY"];
                 string username = Request.Form["ANV"];
                 string password = Request.Form["LOS"];
                 string sa = Request.QueryString["SA"];
                 string said = sa != null ? (Session["SuperAdminID"] != null ? Session["SuperAdminID"].ToString() : "0") : "";
+                
                 string firstUrl = "default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
+                
                 if (sponsorKey != null)
-                {
+                {/*
                     sponsorAdmin = sponsorRepo.ReadSponsorAdmin(sponsorKey, sponsorAdminKey, sa, said, username, password);
                     if (sponsorAdmin != null)
                     {
@@ -108,6 +125,7 @@ namespace HW.Grp
                     {
                         errorMessage = R.Str(lid, "login.invalid", "Invalid user name and password. Please try again.");
                     }
+                    */
                 }
                 else
                 {
@@ -136,8 +154,9 @@ namespace HW.Grp
                             Session["SeeUsers"] = serviceResponse.SeeUsers ? 1 : 0;
                             Session["ReadOnly"] = serviceResponse.ReadOnly ? 1 : 0;
 
-                            ManagerFunction firstFunction = functionRepo.ReadFirstFunctionBySponsorAdmin(serviceResponse.Id);
-                            firstUrl = firstFunction.URL + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
+                            //ManagerFunction firstFunction = functionRepo.ReadFirstFunctionBySponsorAdmin(serviceResponse.Id);
+                            //firstUrl = firstFunction.URL + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
+                            firstUrl = "org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
                             Response.Redirect(firstUrl, true);
                         }
                     }
@@ -147,6 +166,8 @@ namespace HW.Grp
                     }
                 }
             }
+
+            /*
             if (Session["SponsorAdminID"] != null && Request.QueryString["Logout"] != null)
             {
                 if (Session["Token"] != null){
@@ -178,6 +199,8 @@ namespace HW.Grp
                 Session.Remove("SuperAdminID");
                 ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language='JavaScript'>window.close();</script>");
             }
+            */
         }
+        
     }
 }
