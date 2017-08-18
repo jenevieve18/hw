@@ -12,6 +12,8 @@ using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
 using System.Text;
+using System.Net;
+using System.IO;
 
 namespace HW.Grp
 {
@@ -555,6 +557,10 @@ namespace HW.Grp
                     selectedGID,
                     20);
 
+                var imagePath = Server.MapPath("~\\img\\Sponsor" + sponsorID);
+                
+                Directory.CreateDirectory(imagePath);
+
                 /// <summary>
                 /// Display image to Statistic page.
                 /// </summary>
@@ -572,8 +578,22 @@ namespace HW.Grp
                     imageBuilder += "<div class=\"report-part-content\">";
                     if (r is ReportPartLang)
                     {
-                        imageBuilder += "<span class=\"hidden hidden-image-url\">" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "</span>";
-                        imageBuilder += "<img class=\"report-part-graph\" src=" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)) + " alt=\"\"/>";
+                        /// <summary>
+                        /// Generate image filepath + filename
+                        /// </summary>
+                        var saveImage = imagePath + "\\" + Session["Token"].ToString() + r.ReportPart.Id.ToString() + ".png";
+                        var imageSource = "img/Sponsor" + sponsorID + "/" + Session["Token"].ToString() + r.ReportPart.Id.ToString() + ".png";
+                        var imageUrl = soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue));
+
+                        /// <summary>
+                        /// Download and save the image file to GRP
+                        /// </summary>
+                        WebClient webClient = new WebClient();
+                        webClient.DownloadFile(imageUrl, saveImage);
+                        webClient.Dispose();
+                        
+                        imageBuilder += "<span class=\"hidden hidden-image-url\">" + imageSource + "</span>";
+                        imageBuilder += "<img class=\"report-part-graph\" src=" + imageSource + " alt=\"\"/>";
                         imageBuilder += "<div class=\"action\">";
                         imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change", "Change this graph to:") + "</span>";
                         imageBuilder += "<select class=\"plot-types small\">";
