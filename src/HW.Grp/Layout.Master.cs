@@ -26,7 +26,7 @@ namespace HW.Grp
         protected void Page_Load(object sender, EventArgs e)
         {
             int sponsorID = Convert.ToInt32(Session["SponsorID"]);
-            sponsor = sponsorRepository.ReadSponsor2(sponsorID);
+            // sponsor = sponsorRepository.ReadSponsor2(sponsorID);
 
             sponsorName = Session["Name"] != null ? Session["Name"].ToString() : "";
             sponsorAdminID = Session["SponsorAdminID"] != null ? Convert.ToInt32(Session["SponsorAdminID"]) : -1;
@@ -34,12 +34,59 @@ namespace HW.Grp
             super = Request.Url.AbsolutePath.Contains("super");
 
             //			lid = ConvertHelper.ToInt32(Session["lid"], 2);
-            var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
-            if (userSession != null)
+            //var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+            //if (userSession != null)
+            //{
+            //    lid = userSession.Lang;
+            //}
+            // functions = managerFunctionRepository.FindBySponsorAdmin(sponsorAdminID, lid);
+
+            functions = new List<ManagerFunctionLang>();
             {
-                lid = userSession.Lang;
+
+                var f = new ManagerFunctionLang
+                {
+                    Function = "Organization",
+                    URL = "org.aspx",
+                    Expl = "administer units and users",
+                };
+
+                functions.Add(f);
+
+
+                var f1 = new ManagerFunctionLang
+                {
+                    Function = "Statistics",
+                    URL = "statistics.aspx",
+                    Expl = "view results and compare groups",
+                };
+                functions.Add(f1);
+
+                var f2 = new ManagerFunctionLang
+                {
+                    Function = "Messages",
+                    URL = "messages.aspx",
+                    Expl = "administer messages, invitations and reminders",
+                };
+                functions.Add(f2);
+
+                var f3 = new ManagerFunctionLang
+                {
+                    Function = "Managers",
+                    URL = "managers.aspx",
+                    Expl = "administer unit managers",
+                };
+                functions.Add(f3);
+
+
+                var f4 = new ManagerFunctionLang
+                {
+                    Function = "Exercise",
+                    URL = "exercise.aspx",
+                    Expl = "manager exercises",
+                };
+                functions.Add(f4);
             }
-            functions = managerFunctionRepository.FindBySponsorAdmin(sponsorAdminID, lid);
         }
     }
 }

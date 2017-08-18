@@ -61,7 +61,7 @@
             <i class="icon-circle-arrow-right"></i><%= R.Str(lid, "login.signin", "Sign in") %>
         </button>
 
-        <% if (adminNews.Count > 0) { %>
+       <%-- <% if (adminNews.Count > 0) { %>
             <hr />
             <div class="news">
                 <h4><%= R.Str(lid, "news", "News") %></h4>
@@ -77,7 +77,7 @@
                     <% i++; %>
                 <% } %>
             </div>
-        <% } %>
+        <% } %>--%>
     </form>
 
     <div class="footer">
