@@ -583,7 +583,7 @@ namespace HW.Grp
                         /// </summary>
                         var saveImage = imagePath + "\\" + Session["Token"].ToString() + r.ReportPart.Id.ToString() + ".png";
                         var imageSource = "img/Sponsor" + sponsorID + "/" + Session["Token"].ToString() + r.ReportPart.Id.ToString() + ".png";
-                        var imageUrl = soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue));
+                        var imageUrl = soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0]; //+ "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue));
 
                         /// <summary>
                         /// Download and save the image file to GRP
