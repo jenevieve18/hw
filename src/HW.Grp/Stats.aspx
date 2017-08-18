@@ -53,6 +53,8 @@
         <asp:Label ID="StatisticImage" runat="server" />
         <!-- End for Statistic Images -->
 
+
+
     <script type="text/javascript">
         $('.input-daterange').datepicker({
             format: "yyyy M",
@@ -60,5 +62,54 @@
             language: "<%= GetLang(lid) %>",
             autoclose: true
         });
+
+        var arraySelectIDs = [ <%= ReportPartID %>];
+
+
+        function onChanged(id, sponsorID) {
+            if (id != 0) {
+
+                var e = document.getElementById("selectID" + id);
+                var plotType = e.options[e.selectedIndex].value;
+
+                var url = document.getElementById("HiddenID" + id).innerText;
+
+
+                $.ajax({
+                    url: "Stats.aspx/GetImage",
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ "id": id, "value": plotType, "url": url, "sponsorID": sponsorID }),
+                    success: function (data) {
+
+
+                        var img = document.getElementById("ImageID" + id);
+
+                        console.log(img.src);
+                        img.src = data.d + "?" + new Date().getTime();
+                        //img.attr("src", data.d+"?" + new Date().getTime());
+                        console.log(img.src);
+
+                    }
+
+                });
+
+            } else { // if zero
+                var parent = document.getElementById("selectID" + id);
+                
+
+                console.log(arraySelectIDs);
+                for (i = 0; i < arraySelectIDs.length; i++){
+                    var selectedID = arraySelectIDs[i];
+                    console.log(selectedID);
+                    var e = document.getElementById("selectID" + selectedID);
+                    console.log(plotType);
+                    e.selectedIndex = parent.selectedIndex;
+                    onChanged(selectedID, sponsorID);
+                };
+            }
+            
+        }
     </script>
 </asp:Content>

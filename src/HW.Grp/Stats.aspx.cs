@@ -14,6 +14,7 @@ using HW.Core.Repositories.Sql;
 using System.Text;
 using System.Net;
 using System.IO;
+using System.Web.Services;
 
 namespace HW.Grp
 {
@@ -50,6 +51,7 @@ namespace HW.Grp
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
 		protected Sponsor sponsor;
+        protected string ReportPartID = "";
 
 		public IList<SponsorProjectRoundUnit> SponsorProjectRoundUnits {
 			set {
@@ -254,7 +256,8 @@ namespace HW.Grp
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
+
+            sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 			sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
 
             HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
@@ -412,18 +415,24 @@ namespace HW.Grp
 
 		void ExecuteClick(object sender, EventArgs e)
 		{
-			int grouping = Convert.ToInt32(Grouping.SelectedValue);
-			
-			if (departments.Count > 0) {
-				var reportParts = GetReportParts(ProjectRoundUnitID.SelectedValue);
-				SetReportPartLanguages(reportParts, GetUrlModels(grouping));
-			}
+            images();
+        }
+
+        void images() {
+
+            int grouping = Convert.ToInt32(Grouping.SelectedValue);
+
+            if (departments.Count > 0)
+            {
+                var reportParts = GetReportParts(ProjectRoundUnitID.SelectedValue);
+                SetReportPartLanguages(reportParts, GetUrlModels(grouping));
+            }
 
             /// <summary>
             /// Generate HTML File to display in Statistic image.
             /// </summary>
             String imageBuilder = "";
-            
+
             if (reportParts != null && reportParts.Count > 0)
             {
                 Q additionalQuery = GetGID(urlModels);
@@ -431,29 +440,35 @@ namespace HW.Grp
                 imageBuilder += "<div class=\"report-parts\">";
                 if (reportParts[0] is ReportPartLang)
                 {
-                imageBuilder += "<div class=\"action\">";
-                imageBuilder += "<div class=\"chart-descriptions\" title=" + R.Str(lid, "chart.description", "Chart Descriptions") + ">";
-                imageBuilder += "<div>";
+                    imageBuilder += "<div class=\"action\">";
+                    imageBuilder += "<div class=\"chart-descriptions\" title=" + R.Str(lid, "chart.description", "Chart Descriptions") + ">";
+                    imageBuilder += "<div>";
                     foreach (var p in plotTypes)
                     {
                         imageBuilder += "<div>&nbsp;<br /></div>";
                         imageBuilder += "<div class=\"report -part\">";
                         imageBuilder += "<div class=\"report -part-subject\">";
-                        imageBuilder += "<span>" + p.ShortName + " - " + p.Name  + "</span>";
+                        imageBuilder += "<span>" + p.ShortName + " - " + p.Name + "</span>";
                         imageBuilder += "<span class=\"toggle toggle-right toggle-active\"></span></div>";
                         imageBuilder += "<div class=\"report-part-header\">" + p.Description + "</div></div>";
                     };
                     imageBuilder += "</div>";
                     imageBuilder += "</div>";
                     imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change.all", "Change all graphs to:") + "</span>";
-                    imageBuilder += "<select class=\"plot-types small\">";
+                    imageBuilder += "<select onchange=\"onChanged(0, "+sponsorID+ ")\" runat=\"server\" id=\"selectID0\" class=\"plot-types small\">";
+                    //imageBuilder += "<option value = \"1\">Line</ option >";
+                    //imageBuilder += "<option value = \"2\">Line (± SD)</ option >";
+                    //imageBuilder += "<option value = \"3\">Line (± 1.96 SD)</ option >";
+                    //imageBuilder += "<option value = \"4\">Boxplot(Min / Max)</ option >";
+                    //imageBuilder += "<option value = \"5\">Boxplot (Tukey)</ option >";
+                    //imageBuilder += "<option value = \"6\">Bar</ option >";
                     foreach (var p in plotTypes)
-                    { 
-                        if (!p.SupportsMultipleSeries && !forSingleSeries) { } 
+                    {
+                        if (!p.SupportsMultipleSeries && !forSingleSeries) { }
                         else
-                           {
-                                imageBuilder += "<option value = " + p.PlotType.Id.ToString() + (p.PlotType.Id == sponsor.DefaultPlotType ? "selected" : "" )+">" + p.ShortName + "</ option >";
-                           }
+                        {
+                            imageBuilder += "<option value = " + p.PlotType.Id.ToString() + (p.PlotType.Id == sponsor.DefaultPlotType ? "selected" : "") + ">" + p.ShortName + "</ option >";
+                        }
                     };
                     imageBuilder += "</select>";
                     imageBuilder += "<span class=\"chart-descriptions-info\"></span>";
@@ -483,31 +498,37 @@ namespace HW.Grp
                     imageBuilder += "<div class=\"action\">";
                     imageBuilder += "<div class=\"chart-descriptions\" title=" + R.Str(lid, "chart.description", "Chart Descriptions") + ">";
                     imageBuilder += "<div>";
-                        foreach (var p in plotTypes)
-                        {
-                            imageBuilder += "<div>&nbsp;<br />";
-                            imageBuilder += "</div>";
-                            imageBuilder += "<div class=\"report-part\">";
-                            imageBuilder += "<div class=\"report-part-subject\">";
-                            imageBuilder += "<span>" + p.ShortName + " - " + p.Name + "</span>";
-                            imageBuilder += "<span class=\"toggle toggle-right toggle-active\"></span>";
-                            imageBuilder += "</div>";
-                            imageBuilder += "<div class=\"report-part-header\">" + p.Description + "</div>";
-                            imageBuilder += "</div>";
-                        };
+                    foreach (var p in plotTypes)
+                    {
+                        imageBuilder += "<div>&nbsp;<br />";
+                        imageBuilder += "</div>";
+                        imageBuilder += "<div class=\"report-part\">";
+                        imageBuilder += "<div class=\"report-part-subject\">";
+                        imageBuilder += "<span>" + p.ShortName + " - " + p.Name + "</span>";
+                        imageBuilder += "<span class=\"toggle toggle-right toggle-active\"></span>";
+                        imageBuilder += "</div>";
+                        imageBuilder += "<div class=\"report-part-header\">" + p.Description + "</div>";
+                        imageBuilder += "</div>";
+                    };
                     imageBuilder += "</div>";
                     imageBuilder += "</div>";
                     imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change.all", "Change all graphs to:") + "</span>";
-                    imageBuilder += "<select class=\"plot-types small\">";
+                    imageBuilder += "<select onchange=\"__doPostBack()\" runat=\"server\" id=\"selectID\" class=\"plot-types small\">";
+                    //imageBuilder += "<option value = \"1\">Line</ option >";
+                    //imageBuilder += "<option value = \"2\">Line (± SD)</ option >";
+                    //imageBuilder += "<option value = \"3\">Line (± 1.96 SD)</ option >";
+                    //imageBuilder += "<option value = \"4\">Boxplot(Min / Max)</ option >";
+                    //imageBuilder += "<option value = \"5\">Boxplot (Tukey)</ option >";
+                    //imageBuilder += "<option value = \"6\">Bar</ option >";
                     var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje", SupportsMultipleSeries = true } :
                                    new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line", SupportsMultipleSeries = true };
                     foreach (var p in new PlotTypeLanguage[] { xxx })
-                       { 
-                    if (!p.SupportsMultipleSeries && !forSingleSeries) { }
-                    else
-                       {
+                    {
+                        if (!p.SupportsMultipleSeries && !forSingleSeries) { }
+                        else
+                        {
                             imageBuilder += "<option value = " + p.PlotType.Id.ToString() + (p.PlotType.Id == sponsor.DefaultPlotType ? "selected" : "") + ">" + p.ShortName + "</option>";
-                       } 
+                        }
                     };
                     imageBuilder += "</select>";
                     imageBuilder += "<span class=\"chart-descriptions-info\"></span>";
@@ -542,6 +563,7 @@ namespace HW.Grp
                 /// Initializing GRP-WS and call GetReportImageUrl webmethod.
                 /// </summary>
                 /// <returns>List of Statistic Image URLs</returns>
+
                 var soapService = new Grp.WebService.Soap();
                 var soapResponse = soapService.GetReportImageUrl(
                     Session["Token"].ToString(),
@@ -557,8 +579,10 @@ namespace HW.Grp
                     selectedGID,
                     20);
 
+                var plotTyped = "&Plot=0";
+
                 var imagePath = Server.MapPath("~\\img\\Sponsor" + sponsorID);
-                
+
                 Directory.CreateDirectory(imagePath);
 
                 /// <summary>
@@ -566,6 +590,12 @@ namespace HW.Grp
                 /// </summary>
                 foreach (var r in reportParts)
                 {
+
+                    ReportPartID += r.ReportPart.Id;
+                    if (reportParts.IndexOf(r) < reportParts.Count - 1) {
+                        ReportPartID += ",";
+                    }
+
                     imageBuilder += "<div> &nbsp;<br/>";
                     imageBuilder += "</div>";
                     imageBuilder += "<div class=\"report-part\">";
@@ -574,15 +604,17 @@ namespace HW.Grp
                     imageBuilder += "<span>" + r.Subject + "</span>";
                     imageBuilder += "<span class=\"toggle toggle-right toggle-active\"></span>";
                     imageBuilder += "</div>";
-                    imageBuilder += "<div class=\"report-part-header\">" + r.Header  + "</div>";
+                    imageBuilder += "<div class=\"report-part-header\">" + r.Header + "</div>";
                     imageBuilder += "<div class=\"report-part-content\">";
                     if (r is ReportPartLang)
                     {
+                        // Session["Token"].ToString() + 
+                        // + Session["Token"].ToString() 
                         /// <summary>
                         /// Generate image filepath + filename
                         /// </summary>
-                        var saveImage = imagePath + "\\" + Session["Token"].ToString() + r.ReportPart.Id.ToString() + ".png";
-                        var imageSource = "img/Sponsor" + sponsorID + "/" + Session["Token"].ToString() + r.ReportPart.Id.ToString() + ".png";
+                        var saveImage = imagePath + "\\" +r.ReportPart.Id.ToString() + ".png";
+                        var imageSource = "img/Sponsor" + sponsorID + "/" + r.ReportPart.Id.ToString() + ".png";
                         var imageUrl = soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0]; //+ "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue));
 
                         /// <summary>
@@ -591,20 +623,26 @@ namespace HW.Grp
                         WebClient webClient = new WebClient();
                         webClient.DownloadFile(imageUrl, saveImage);
                         webClient.Dispose();
-                        
-                        imageBuilder += "<span class=\"hidden hidden-image-url\">" + imageUrl + "</span>";
-                        imageBuilder += "<img class=\"report-part-graph\" src=" + imageSource + " alt=\"\"/>";
+
+                        imageBuilder += "<span id=\"HiddenID" + r.ReportPart.Id + "\" class=\"hidden hidden-image-url\">" + imageUrl + "</span>";
+                        imageBuilder += "<img id=\"ImageID"+r.ReportPart.Id+"\" class=\"report-part-graph\" src=" + imageSource + " alt=\"\"/>";
                         imageBuilder += "<div class=\"action\">";
                         imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change", "Change this graph to:") + "</span>";
-                        imageBuilder += "<select class=\"plot-types small\">";
-                            foreach (var p in plotTypes)
-                               { 
-                            if (!p.SupportsMultipleSeries && !forSingleSeries) { } 
+                        imageBuilder += "<select onchange=\"onChanged(" + r.ReportPart.Id + ", "+ sponsorID + ")\" runat=\"server\" id=\"selectID" + r.ReportPart.Id + "\"  class=\"plot-types small\">";
+                        ////////imageBuilder += "<option value = \"1\">Line</ option >";
+                        ////////imageBuilder += "<option value = \"2\">Line (± SD)</ option >";
+                        ////////imageBuilder += "<option value = \"3\">Line (± 1.96 SD)</ option >";
+                        ////////imageBuilder += "<option value = \"4\">Boxplot(Min / Max)</ option >";
+                        ////////imageBuilder += "<option value = \"5\">Boxplot (Tukey)</ option >";
+                        ////////imageBuilder += "<option value = \"6\">Bar</ option >";
+                        foreach (var p in plotTypes)
+                        {
+                            if (!p.SupportsMultipleSeries && !forSingleSeries) { }
                             else
-                                {
-                                imageBuilder += "<option value = " + p.PlotType.Id.ToString() +  (p.PlotType.Id == sponsor.DefaultPlotType ? "selected" : "") + ">" + p.ShortName + "</ option >";
-                                } 
-                            };
+                            {
+                                imageBuilder += "<option value = " + p.PlotType.Id.ToString() + (p.PlotType.Id == sponsor.DefaultPlotType ? "selected" : "") + ">" + p.ShortName + "</ option >";
+                            }
+                        };
                         imageBuilder += "</select>";
                         imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.export", "Export this graph to:") + "</span>";
                         imageBuilder += "<span class=\"button white small export\">";
@@ -614,7 +652,7 @@ namespace HW.Grp
                         imageBuilder += "</span>";
                         imageBuilder += "<span class=\"button white small export\">";
                         string exportPptXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery);
-                        imageBuilder += "<span class=\"hidden hidden-export-pptx-url\">"+ exportPptXUrl + "</span>";
+                        imageBuilder += "<span class=\"hidden hidden-export-pptx-url\">" + exportPptXUrl + "</span>";
                         imageBuilder += HtmlHelper.Anchor("pptx", exportPptXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-pptx-url' target='_blank'");
                         imageBuilder += "</span>";
                         string exportXlsUrl = GetExportUrl(r.ReportPart.Id, r.Id, "xls", additionalQuery);
@@ -633,17 +671,23 @@ namespace HW.Grp
                         imageBuilder += "<img class=\"report-part-graph\" src=" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)) + " alt=\"\" />";
                         imageBuilder += "<div class=\"action\">";
                         imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change", "Change this graph to:") + "</span>";
-                        imageBuilder += "<select class=\"plot-types small\">";
-                            var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje", SupportsMultipleSeries = true } :
-                                               new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line", SupportsMultipleSeries = true }; 
-                            foreach (var p in new PlotTypeLanguage[] { xxx })
-                               { 
+                        imageBuilder += "<select onchange=\"__doPostBack()\" runat=\"server\" id=\"selectID\"  class=\"plot-types small\">";
+                        //////////imageBuilder += "<option value = \"1\">Line</ option >";
+                        //////////imageBuilder += "<option value = \"2\">Line (± SD)</ option >";
+                        //////////imageBuilder += "<option value = \"3\">Line (± 1.96 SD)</ option >";
+                        //////////imageBuilder += "<option value = \"4\">Boxplot(Min / Max)</ option >";
+                        //////////imageBuilder += "<option value = \"5\">Boxplot (Tukey)</ option >";
+                        //////////imageBuilder += "<option value = \"6\">Bar</ option >";
+                        var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje", SupportsMultipleSeries = true } :
+                                           new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line", SupportsMultipleSeries = true };
+                        foreach (var p in new PlotTypeLanguage[] { xxx })
+                        {
                             if (!p.SupportsMultipleSeries && !forSingleSeries) { }
                             else
-                               {
-                                imageBuilder += "<option value = " + p.PlotType.Id.ToString() + (p.PlotType.Id == sponsor.DefaultPlotType ? "selected" : "" ) + ">" + p.ShortName + "</option>";
-                               }
-                            };
+                            {
+                                imageBuilder += "<option value = " + p.PlotType.Id.ToString() + (p.PlotType.Id == sponsor.DefaultPlotType ? "selected" : "") + ">" + p.ShortName + "</option>";
+                            }
+                        };
                         imageBuilder += "</select>";
                         imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.export", "Export this graph to:") + "</span>";
                         imageBuilder += "<span class=\"button white small export\">";
@@ -670,6 +714,7 @@ namespace HW.Grp
                     imageBuilder += "<div class=\"report -part-bottom\">&nbsp;</div>";
                     imageBuilder += "</div>";
                 }
+
             }
             imageBuilder += "</div>";
             StatisticImage.Text = imageBuilder;
@@ -693,5 +738,28 @@ namespace HW.Grp
 			}
 			return parts;
 		}
+
+        [WebMethod]
+        public static string GetImage(int id, int value, string url, int sponsorID){
+
+            //Session["Token"].ToString() +
+            var imagePath = System.Web.Hosting.HostingEnvironment.MapPath("~\\img\\Sponsor" + sponsorID);
+            var saveImage = imagePath + "\\" +  id + ".png";
+            var newUrl = url + "&Plot=" + value;
+            var imageSource = "img/Sponsor"+ sponsorID + "/" + id + ".png";
+
+            
+
+            /// <summary>
+            /// Download and save the image file to GRP
+            /// </summary>
+            WebClient webClient = new WebClient();
+            webClient.DownloadFile(newUrl, saveImage);
+            webClient.Dispose();
+
+
+
+            return imageSource;
+        }
 	}
 }
