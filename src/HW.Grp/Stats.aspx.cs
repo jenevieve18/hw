@@ -592,7 +592,7 @@ namespace HW.Grp
                         webClient.DownloadFile(imageUrl, saveImage);
                         webClient.Dispose();
                         
-                        imageBuilder += "<span class=\"hidden hidden-image-url\">" + imageSource + "</span>";
+                        imageBuilder += "<span class=\"hidden hidden-image-url\">" + imageUrl + "</span>";
                         imageBuilder += "<img class=\"report-part-graph\" src=" + imageSource + " alt=\"\"/>";
                         imageBuilder += "<div class=\"action\">";
                         imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change", "Change this graph to:") + "</span>";
