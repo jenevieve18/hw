@@ -15,34 +15,40 @@ using System.Text;
 using System.Net;
 using System.IO;
 using System.Web.Services;
+using GrpModel = HW.Grp.WebService;
+using System.Collections;
 
 namespace HW.Grp
 {
 	public partial class Stats : System.Web.UI.Page
 	{
-
+        
         Grp.WebService.Soap service = new WebService.Soap();
 
+        
+
+
         SqlSponsorRepository sponsorRepo = new SqlSponsorRepository();
-		SqlSponsorProjectRepository sponsorProjectRepo = new SqlSponsorProjectRepository();
-		SqlSponsorBQRepository sponsorBQRepo = new SqlSponsorBQRepository();
-		SqlSponsorProjectRoundUnitRepository sponsorProjectRoundUnitRepo = new SqlSponsorProjectRoundUnitRepository();
-		
-		SqlUserRepository userRepository = new SqlUserRepository();
-		
-		SqlProjectRepository projRepository = new SqlProjectRepository();
-		
-		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
-		
-		SqlReportRepository reportRepository = new SqlReportRepository();
-		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
-		
-		IList<Department> departments;
+        SqlSponsorProjectRepository sponsorProjectRepo = new SqlSponsorProjectRepository();
+        SqlSponsorBQRepository sponsorBQRepo = new SqlSponsorBQRepository();
+        SqlSponsorProjectRoundUnitRepository sponsorProjectRoundUnitRepo = new SqlSponsorProjectRoundUnitRepository();
+
+        SqlUserRepository userRepository = new SqlUserRepository();
+
+        SqlProjectRepository projRepository = new SqlProjectRepository();
+
+        SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
+        
+
+        SqlReportRepository reportRepository = new SqlReportRepository();
+        SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
+
+        IList<Department> departments;
 		IList<SponsorBackgroundQuestion> questions;
 		int sponsorID = 0;
 		int sponsorAdminID = 0;
 		
-		protected IList<IReportPart> reportParts = null;
+		protected List<Grp.WebService.ReportPartLang> reportParts = null;
 		protected IList<BaseModel> urlModels;
 		protected IList<PlotTypeLanguage> plotTypes = new List<PlotTypeLanguage>();
 		
@@ -50,7 +56,8 @@ namespace HW.Grp
 		protected DateTime endDate;
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		
-		protected Sponsor sponsor;
+		protected GrpModel.Sponsor sponsor;
+
         protected string ReportPartID = "";
 
 		public IList<SponsorProjectRoundUnit> SponsorProjectRoundUnits {
@@ -150,10 +157,18 @@ namespace HW.Grp
 		IList<BaseModel> SelectedQuestions {
 			get {
 				var selectedQuestions = new List<BaseModel>();
-//				foreach (var q in sponsorRepo.FindBySponsor(sponsorID)) {
-				foreach (var q in sponsorBQRepo.FindBySponsor(sponsorID)) {
+                //				foreach (var q in sponsorRepo.FindBySponsor(sponsorID)) {
+                var soap = new HW.Grp.WebService.Soap();
+                var token = Session["Token"].ToString();
+                var sponsorBQ = soap.FindBySponsorBackgroundQuestion(token, sponsorID, 20); 
+
+                foreach (var q in sponsorBQ) {
 					if (BQ.Items.FindByValue(q.Id.ToString()).Selected) {
-						selectedQuestions.Add(q);
+                        BaseModel newQ = new BaseModel
+                        {
+                            Id = q.Id
+                        };
+						selectedQuestions.Add(newQ);
 					}
 				}
 				return selectedQuestions;
@@ -173,7 +188,7 @@ namespace HW.Grp
 			}
 		}
 		
-		public void SetReportPartLanguages(IList<IReportPart> reportParts, IList<BaseModel> urlModels)
+		public void SetReportPartLanguages(List<Grp.WebService.ReportPartLang> reportParts, IList<BaseModel> urlModels)
 		{
 			this.reportParts = reportParts;
 			this.urlModels = urlModels;
@@ -200,15 +215,18 @@ namespace HW.Grp
             }
 		}
 		
-		public void SaveAdminSession(int SponsorAdminSessionID, int ManagerFunction, DateTime date)
-		{
-			sponsorRepo.SaveSponsorAdminSessionFunction(SponsorAdminSessionID, ManagerFunction, date);
-		}
+		//public void SaveAdminSession(int SponsorAdminSessionID, int ManagerFunction, DateTime date)
+		//{
+		//	sponsorRepo.SaveSponsorAdminSessionFunction(SponsorAdminSessionID, ManagerFunction, date);
+		//}
 		
 		public void Index(int sponsorID, int sponsorAdminID)
 		{
-			if (sponsorID != 0) {
-				if (!IsPostBack) {
+            var soapService = new GrpModel.Soap();
+            if (sponsorID != 0) {
+                var token = Session["Token"].ToString();
+
+                if (!IsPostBack) {
 					
 					startDate = ToDate(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
 					endDate = DateTime.Now;
@@ -227,17 +245,83 @@ namespace HW.Grp
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit", "Users on unit"), "1"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit.subunit", "Users on unit+subunits"), "2"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "background.variable", "Background variable"), "3"));
+                    //SponsorProjectRoundUnits = sponsorRepo.FindBySponsorAndLanguage(sponsorID, lid);
 
-                    SponsorProjectRoundUnits = sponsorRepo.FindBySponsorAndLanguage(sponsorID, lid);
+                    var fbsal = soapService.FindBySponsorAndLanguage(token, sponsorID, lid, 20);
+                    var enumSpru = new List<SponsorProjectRoundUnit>();
+                    foreach (var item in fbsal)
+                    {
+                        var spru = new SponsorProjectRoundUnit
+                        {
+                            Navigation = item.Navigation,
+                            ProjectRoundUnitID = item.ProjectRoundUnitID,
+                            DefaultAggregation = item.DefaultAggregation,
+                            ProjectRoundUnit = new ProjectRoundUnit { Id = item.ProjectRoundUnit1.Id }
+                        };
+                        enumSpru.Add(spru);
+                    }
+                    SponsorProjectRoundUnits = enumSpru;
 
-                    SponsorProjects = sponsorProjectRepo.FindSponsorProjects(sponsorID);
 
-					BackgroundQuestions = sponsorBQRepo.FindBySponsor(sponsorID);
+                    var sp = soapService.FindSponsorProjects(token, sponsorID, 20);
+                    var enumSP = new List<SponsorProject>();
+                    foreach(var i in sp)
+                    {
+                        var fsp = new SponsorProject
+                        {
+                            Id = i.Id,
+                            Sponsor = new Sponsor { Id = i.Sponsor.Id },
+                            StartDate = i.StartDate,
+                            EndDate = i.EndDate,
+                            Subject = i.Subject
+                        };
+                        enumSP.Add(fsp);
+                    }
+                    SponsorProjects = enumSP;
+
+                    //SponsorProjects = sponsorProjectRepo.FindSponsorProjects(sponsorID);
+
+                    //BackgroundQuestions = sponsorBQRepo.FindBySponsor(sponsorID);
+
+                    var questions = soapService.FindBySponsorBackgroundQuestion(token, sponsorID, 20);
+                    var enumQuestions = new List<SponsorBackgroundQuestion>();
+                    foreach(var i in questions)
+                    {
+                        var q = new SponsorBackgroundQuestion
+                        {
+                            Id = i.Id,
+                            BackgroundQuestion = new BackgroundQuestion { Internal = i.BackgroundQuestion.Internal }
+                        };
+                        enumQuestions.Add(q);
+                    }
+
+                    BackgroundQuestions = enumQuestions;
+
 				} else {
 					startDate = GetDateFromString(Request.Form["startDate"]);
 					endDate = GetDateFromString(Request.Form["endDate"]);
 				}
-				Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
+                //Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
+
+                var xdepartment = soapService.FindBySponsorWithSponsorAdminInDepth(token, sponsorID, sponsorAdminID, 20);
+                var departments = new List<Department>();
+                foreach(var i in xdepartment)
+                {
+                    var d = new Department
+                    {
+                        Name = i.Name,
+                        Id  = i.Id,
+                        ShortName = i.ShortName,
+                        Depth = i.Depth,
+                        Siblings = i.Siblings,
+                        LoginDays = i.LoginDays,
+                        LoginWeekDay = i.LoginWeekDay
+                    };
+                    departments.Add(d);
+                }
+                Departments = departments;
+
+
 			} else {
 				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
@@ -259,21 +343,39 @@ namespace HW.Grp
 
             sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 			sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+            var token = Session["Token"].ToString();
+            //HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
 
-            HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
+            //sponsor = sponsorRepo.Read(sponsorID);
+            var soapService = new HW.Grp.WebService.Soap();
+            sponsor = soapService.GetSponsor(token, sponsorID, 20);
 
-            sponsor = sponsorRepo.Read(sponsorID);
+            //var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+            //if (userSession != null)
+            //{
+            //    lid = userSession.Lang;
+            //}
 
-            var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
-            if (userSession != null)
+            lid = 2;
+
+            var soapResult = soapService.FindByLanguage(token, lid, 20);
+            var types =  new List<PlotTypeLanguage>();
+            foreach (var i in soapResult)
             {
-                lid = userSession.Lang;
+                var p = new PlotTypeLanguage
+                {
+                    PlotType = new PlotType {  Id = i.PlotType.Id },
+                    Name = i.Name,
+                    Description = i.Description,
+                    ShortName = i.ShortName,
+                    SupportsMultipleSeries = i.SupportsMultipleSeries
+                };
+                types.Add(p);
+
             }
-
-
-            plotTypes = plotRepository.FindByLanguage(lid);
+            plotTypes = types;
 			
-			SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
+			//SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
 			
 			Index(sponsorID, sponsorAdminID);
 
@@ -720,20 +822,27 @@ namespace HW.Grp
             StatisticImage.Text = imageBuilder;
         }
 
-        IList<IReportPart> GetReportParts(string project)
+        List<Grp.WebService.ReportPartLang> GetReportParts(string project)
 		{
-			var parts = new List<IReportPart>();
+            var soapService = new Grp.WebService.Soap();
+            
+			var parts = new List<Grp.WebService.ReportPartLang> ();
 			if (project.Contains("SPRU")) {
 				int selectedProjectRoundUnitID = ConvertHelper.ToInt32(project.Replace("SPRU", ""));
 				int selectedDepartmentID = departments[0].Id;
-				var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, lid, selectedDepartmentID);
-				if (reportParts.Count <= 0) {
-					reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, lid);
-				}
-				parts.AddRange(reportParts);
+                //var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, lid, selectedDepartmentID);
+
+               var reportParts = soapService.FindByProjectAndLanguage2(Session["Token"].ToString(), selectedProjectRoundUnitID, lid, selectedDepartmentID, 20);
+
+                if (reportParts.Count <= 0) {
+					//reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, lid);
+                    reportParts = soapService.FindByProjectAndLanguage(Session["Token"].ToString(), selectedProjectRoundUnitID, lid, 20);
+                }
+				parts.AddRange(reportParts.AsEnumerable());
 			} else {
 				int sponsorProjectID = ConvertHelper.ToInt32(project.Replace("SP", ""));
-				var sponsorProject = sponsorProjectRepo.Read(sponsorProjectID);
+                //var sponsorProject = sponsorProjectRepo.Read(sponsorProjectID);
+                var sponsorProject = soapService.ReadSponsorProject(Session["Token"].ToString(), sponsorProjectID, 20);
 				parts.Add(sponsorProject);
 			}
 			return parts;

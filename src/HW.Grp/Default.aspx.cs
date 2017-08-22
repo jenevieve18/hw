@@ -44,13 +44,12 @@ namespace HW.Grp
         //			this.sponsorRepo = sponsorRepo;
         //			this.newsRepo = newsRepo;
         //		}
-
+        /*
         public void Index()
 		{
 			adminNews = newsRepo.FindTop3AdminNews();
 		}
         */
-
 		protected CultureInfo GetCultureInfo(int lid)
 		{
             switch (lid) {
@@ -225,7 +224,7 @@ namespace HW.Grp
                 Session.Remove("SuperAdminID");
                 ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language='JavaScript'>window.close();</script>");
             }
-            */
+            
         }
         
     }
