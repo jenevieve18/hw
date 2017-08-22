@@ -44,7 +44,7 @@ namespace HW.Grp
         //			this.sponsorRepo = sponsorRepo;
         //			this.newsRepo = newsRepo;
         //		}
-
+        /*
         public void Index()
 		{
 			adminNews = newsRepo.FindTop3AdminNews();
@@ -168,8 +168,9 @@ namespace HW.Grp
                                 }
                             }
 
-                            ManagerFunction firstFunction = functionRepo.ReadFirstFunctionBySponsorAdmin(serviceResponse.Id);
-                            firstUrl = firstFunction.URL + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
+                            //ManagerFunction firstFunction = functionRepo.ReadFirstFunctionBySponsorAdmin(serviceResponse.Id);
+                            //firstUrl = firstFunction.URL + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
+                            firstUrl = "org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
                             Response.Redirect(firstUrl, true);
                         }
                     }
@@ -224,7 +225,7 @@ namespace HW.Grp
                 Session.Remove("SuperAdminID");
                 ClientScript.RegisterStartupScript(this.GetType(), "CLOSE", "<script language='JavaScript'>window.close();</script>");
             }
-            */
+            
         }
         
     }
