@@ -54,8 +54,8 @@ namespace HW.Grp
 		
 		protected DateTime startDate;
 		protected DateTime endDate;
-		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
-		
+        //protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
+        protected int lid = 2;
 		protected GrpModel.Sponsor sponsor;
 
         protected string ReportPartID = "";
