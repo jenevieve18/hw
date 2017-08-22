@@ -540,7 +540,7 @@ namespace HW.Grp
                 Q additionalQuery = GetGID(urlModels);
                 bool forSingleSeries = (SelectedDepartments.Count <= 1 && (Grouping.SelectedValue == "1" || Grouping.SelectedValue == "2")) || Grouping.SelectedValue == "0";
                 imageBuilder += "<div class=\"report-parts\">";
-                if (reportParts[0] is ReportPartLang)
+                if (reportParts[0] is Grp.WebService.ReportPartLang)
                 {
                     imageBuilder += "<div class=\"action\">";
                     imageBuilder += "<div class=\"chart-descriptions\" title=" + R.Str(lid, "chart.description", "Chart Descriptions") + ">";
@@ -615,7 +615,8 @@ namespace HW.Grp
                     imageBuilder += "</div>";
                     imageBuilder += "</div>";
                     imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change.all", "Change all graphs to:") + "</span>";
-                    imageBuilder += "<select onchange=\"__doPostBack()\" runat=\"server\" id=\"selectID\" class=\"plot-types small\">";
+                    imageBuilder += "<select onchange=\"onChanged(0, " + sponsorID + ")\" runat=\"server\" id=\"selectID0\" class=\"plot-types small\">";
+                    //imageBuilder += "<select onchange=\"__doPostBack()\" runat=\"server\" id=\"selectID\" class=\"plot-types small\">";
                     //imageBuilder += "<option value = \"1\">Line</ option >";
                     //imageBuilder += "<option value = \"2\">Line (± SD)</ option >";
                     //imageBuilder += "<option value = \"3\">Line (± 1.96 SD)</ option >";
@@ -708,7 +709,7 @@ namespace HW.Grp
                     imageBuilder += "</div>";
                     imageBuilder += "<div class=\"report-part-header\">" + r.Header + "</div>";
                     imageBuilder += "<div class=\"report-part-content\">";
-                    if (r is ReportPartLang)
+                    if (r is Grp.WebService.ReportPartLang)
                     {
                         // Session["Token"].ToString() + 
                         // + Session["Token"].ToString() 
@@ -769,17 +770,25 @@ namespace HW.Grp
                     }
                     else
                     {
-                        imageBuilder += "<span class=\"hidden hidden-image-url\">" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "</span>";
-                        imageBuilder += "<img class=\"report-part-graph\" src=" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)) + " alt=\"\" />";
+                        /// <summary>
+                        /// Generate image filepath + filename
+                        /// </summary>
+                        var saveImage = imagePath + "\\" + r.ReportPart.Id.ToString() + ".png";
+                        var imageSource = "img/Sponsor" + sponsorID + "/" + r.ReportPart.Id.ToString() + ".png";
+                        var imageUrl = soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0]; //+ "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue));
+
+                        /// <summary>
+                        /// Download and save the image file to GRP
+                        /// </summary>
+                        WebClient webClient = new WebClient();
+                        webClient.DownloadFile(imageUrl, saveImage);
+                        webClient.Dispose();
+
+                        imageBuilder += "<span id=\"HiddenID" + r.ReportPart.Id + "\" class=\"hidden hidden-image-url\">" + imageUrl + "</span>";
+                        imageBuilder += "<img id=\"ImageID" + r.ReportPart.Id + "\" class=\"report-part-graph\" src=" + imageSource + " alt=\"\"/>";
                         imageBuilder += "<div class=\"action\">";
                         imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change", "Change this graph to:") + "</span>";
-                        imageBuilder += "<select onchange=\"__doPostBack()\" runat=\"server\" id=\"selectID\"  class=\"plot-types small\">";
-                        //////////imageBuilder += "<option value = \"1\">Line</ option >";
-                        //////////imageBuilder += "<option value = \"2\">Line (± SD)</ option >";
-                        //////////imageBuilder += "<option value = \"3\">Line (± 1.96 SD)</ option >";
-                        //////////imageBuilder += "<option value = \"4\">Boxplot(Min / Max)</ option >";
-                        //////////imageBuilder += "<option value = \"5\">Boxplot (Tukey)</ option >";
-                        //////////imageBuilder += "<option value = \"6\">Bar</ option >";
+                        imageBuilder += "<select onchange=\"onChanged(" + r.ReportPart.Id + ", " + sponsorID + ")\" runat=\"server\" id=\"selectID" + r.ReportPart.Id + "\"  class=\"plot-types small\">";
                         var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje", SupportsMultipleSeries = true } :
                                            new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line", SupportsMultipleSeries = true };
                         foreach (var p in new PlotTypeLanguage[] { xxx })
