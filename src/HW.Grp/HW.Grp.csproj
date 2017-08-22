@@ -105,6 +105,8 @@
     <Reference Include="PushSharp.Windows">
       <HintPath>packages\PushSharp.4.0.10\lib\net45\PushSharp.Windows.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -393,6 +395,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Web References\WebService\Default.disco" />
+    <Content Include="Stats.aspx" />
     <Content Include="~etc\assets\css\default.css" />
     <Content Include="~etc\assets\exercises\css\exercises.css" />
     <Content Include="~etc\assets\exercises\css\styles.css" />
@@ -708,7 +711,6 @@
     <Content Include="SavedExerciseShow.aspx" />
     <Content Include="Service.aspx" />
     <Content Include="Settings.aspx" />
-    <Content Include="Stats.aspx" />
     <Content Include="SuperAdmin.aspx" />
     <Content Include="SuperExport.aspx" />
     <Content Include="SuperExportAll.aspx" />
@@ -993,17 +995,11 @@
     <Compile Include="SuperStats.aspx.designer.cs">
       <DependentUpon>SuperStats.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Web References\WebService\Reference.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\GRP-Webservice\HW.Grp.WebService\HW.Grp.WebService.csproj">
-      <Project>{00E6ACDE-4463-45E4-BCC4-7D4FCDEAFB6C}</Project>
-      <Name>HW.Grp.WebService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HW.Core\HW.Core.csproj">
-      <Project>{C7B845FD-7D23-42EF-9EA7-521A83C4EF60}</Project>
-      <Name>HW.Core</Name>
-    </ProjectReference>
+    <Compile Include="Web References\WebService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\de-DE.resx" />
@@ -1019,27 +1015,56 @@
   <ItemGroup>
     <Content Include="Layout.Master" />
     <None Include="Web References\WebService\Default.wsdl" />
-    <Content Include="Web References\WebService\DepartmentTree.datasource" />
-    <Content Include="Web References\WebService\Reference.map" />
-    <Content Include="Web References\WebService\SponsorAdministrator.datasource" />
-    <Content Include="Web References\WebService\User.datasource" />
+    <Content Include="Web References\WebService\DepartmentTree.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebService\ListURL.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Web References\WebService\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Web References\WebService\SponsorAdministrator.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebService\User.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
     <None Include="~etc\assets\css\main.css" />
     <None Include="~etc\assets\~etc\plasm\javascript\demo1.js" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\GRP-Webservice\HW.Grp.WebService\HW.Grp.WebService.csproj">
-      <Project>{00e6acde-4463-45e4-bcc4-7d4fcdeafb6c}</Project>
-      <Name>HW.Grp.WebService</Name>
+    <ProjectReference Include="..\HW.Core\HW.Core.csproj">
+      <Project>{c7b845fd-7d23-42ef-9ea7-521a83c4ef60}</Project>
+      <Name>HW.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\HW.Core\HW.Core.csproj">
       <Project>{c7b845fd-7d23-42ef-9ea7-521a83c4ef60}</Project>
       <Name>HW.Core</Name>
     </ProjectReference>
     <WebReferences Include="Web References\" />
+    <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://localhost:53850/Default.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\WebService\</RelPath>
+      <UpdateFromURL>http://localhost:53850/Default.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>HW_Grp_WebService_Soap</CachedSettingsPropName>
+    </WebReferenceUrl>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

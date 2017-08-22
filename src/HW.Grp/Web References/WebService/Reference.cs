@@ -42,6 +42,8 @@ namespace HW.Grp.WebService {
         
         private System.Threading.SendOrPostCallback ManagerLogOutOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetReportImageUrlOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -97,6 +99,9 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         public event ManagerLogOutCompletedEventHandler ManagerLogOutCompleted;
+        
+        /// <remarks/>
+        public event GetReportImageUrlCompletedEventHandler GetReportImageUrlCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ManagerLogin", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -293,6 +298,57 @@ namespace HW.Grp.WebService {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetReportImageUrl", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public ListURL[] GetReportImageUrl(string token, System.DateTime startDate, System.DateTime endDate, int LID, int sponsorAdminID, int sponsorID, int groupBy, string projectRoundUnit, int grouping, int anonymized, string selectedDepartment, int expirationMinutes) {
+            object[] results = this.Invoke("GetReportImageUrl", new object[] {
+                        token,
+                        startDate,
+                        endDate,
+                        LID,
+                        sponsorAdminID,
+                        sponsorID,
+                        groupBy,
+                        projectRoundUnit,
+                        grouping,
+                        anonymized,
+                        selectedDepartment,
+                        expirationMinutes});
+            return ((ListURL[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetReportImageUrlAsync(string token, System.DateTime startDate, System.DateTime endDate, int LID, int sponsorAdminID, int sponsorID, int groupBy, string projectRoundUnit, int grouping, int anonymized, string selectedDepartment, int expirationMinutes) {
+            this.GetReportImageUrlAsync(token, startDate, endDate, LID, sponsorAdminID, sponsorID, groupBy, projectRoundUnit, grouping, anonymized, selectedDepartment, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void GetReportImageUrlAsync(string token, System.DateTime startDate, System.DateTime endDate, int LID, int sponsorAdminID, int sponsorID, int groupBy, string projectRoundUnit, int grouping, int anonymized, string selectedDepartment, int expirationMinutes, object userState) {
+            if ((this.GetReportImageUrlOperationCompleted == null)) {
+                this.GetReportImageUrlOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetReportImageUrlOperationCompleted);
+            }
+            this.InvokeAsync("GetReportImageUrl", new object[] {
+                        token,
+                        startDate,
+                        endDate,
+                        LID,
+                        sponsorAdminID,
+                        sponsorID,
+                        groupBy,
+                        projectRoundUnit,
+                        grouping,
+                        anonymized,
+                        selectedDepartment,
+                        expirationMinutes}, this.GetReportImageUrlOperationCompleted, userState);
+        }
+        
+        private void OnGetReportImageUrlOperationCompleted(object arg) {
+            if ((this.GetReportImageUrlCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetReportImageUrlCompleted(this, new GetReportImageUrlCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -481,6 +537,39 @@ namespace HW.Grp.WebService {
             }
             set {
                 this.errorsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class ListURL {
+        
+        private int idField;
+        
+        private string urlField;
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Url {
+            get {
+                return this.urlField;
+            }
+            set {
+                this.urlField = value;
             }
         }
     }
@@ -978,6 +1067,32 @@ namespace HW.Grp.WebService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void GetReportImageUrlCompletedEventHandler(object sender, GetReportImageUrlCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetReportImageUrlCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetReportImageUrlCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public ListURL[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((ListURL[])(this.results[0]));
             }
         }
     }

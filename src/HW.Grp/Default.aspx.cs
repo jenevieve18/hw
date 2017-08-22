@@ -12,6 +12,7 @@ using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
 using HW.Core.Helpers;
 using HW.Grp.WebService;
+using System.IO;
 
 namespace HW.Grp
 {
@@ -32,20 +33,19 @@ namespace HW.Grp
 //		protected IList<AdminNews> adminNews; 
         
 		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
-		
-//		public Default() : this(new SqlSponsorRepository(), new SqlNewsRepository())
-//		{
-//		}
-//		
-//		public Default(ISponsorRepository sponsorRepo, INewsRepository newsRepo)
-//		{
-//			this.sponsorRepo = sponsorRepo;
-//			this.newsRepo = newsRepo;
-//		}
-		
-        /*
+        protected string imagePath = "";
 
-		public void Index()
+        //		public Default() : this(new SqlSponsorRepository(), new SqlNewsRepository())
+        //		{
+        //		}
+        //		
+        //		public Default(ISponsorRepository sponsorRepo, INewsRepository newsRepo)
+        //		{
+        //			this.sponsorRepo = sponsorRepo;
+        //			this.newsRepo = newsRepo;
+        //		}
+
+        public void Index()
 		{
 			adminNews = newsRepo.FindTop3AdminNews();
 		}
@@ -154,9 +154,22 @@ namespace HW.Grp
                             Session["SeeUsers"] = serviceResponse.SeeUsers ? 1 : 0;
                             Session["ReadOnly"] = serviceResponse.ReadOnly ? 1 : 0;
 
-                            //ManagerFunction firstFunction = functionRepo.ReadFirstFunctionBySponsorAdmin(serviceResponse.Id);
-                            //firstUrl = firstFunction.URL + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
-                            firstUrl = "org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
+                            if (Session["SponsorID"] != null)
+                            {
+                                //imagePath = "D:\\Projects\\HealthWatch\\HW\\src\\HW.Grp\\img\\Sponsor" + Session["SponsorID"].ToString();
+                                imagePath = Server.MapPath("~\\img\\Sponsor" + Session["SponsorID"].ToString());
+                                /// <summary>
+                                /// Check if Sponsor image directory exist
+                                /// if true then delete
+                                /// </summary>
+                                if (Directory.Exists(imagePath))
+                                {
+                                    Directory.Delete(imagePath, true);
+                                }
+                            }
+
+                            ManagerFunction firstFunction = functionRepo.ReadFirstFunctionBySponsorAdmin(serviceResponse.Id);
+                            firstUrl = firstFunction.URL + "?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
                             Response.Redirect(firstUrl, true);
                         }
                     }
@@ -167,7 +180,19 @@ namespace HW.Grp
                 }
             }
 
-            /*
+            if (Session["SponsorID"] != null)
+            {
+                imagePath = Server.MapPath("~\\img\\Sponsor" + Session["SponsorID"].ToString());
+                /// <summary>
+                /// Check if Sponsor image directory exist
+                /// if true then delete during logout
+                /// </summary>
+                if (Directory.Exists(imagePath))
+                {
+                    Directory.Delete(imagePath, true);
+                }
+            }
+
             if (Session["SponsorAdminID"] != null && Request.QueryString["Logout"] != null)
             {
                 if (Session["Token"] != null){
