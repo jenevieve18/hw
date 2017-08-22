@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
       <s:element name="ManagerLogin">
         <s:complexType>
           <s:sequence>
@@ -171,6 +172,330 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="FindBySponsorAndLanguage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="LangID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindBySponsorAndLanguageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FindBySponsorAndLanguageResult" type="tns:ArrayOfSponsorProjectRoundUnit" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfSponsorProjectRoundUnit">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SponsorProjectRoundUnit" nillable="true" type="tns:SponsorProjectRoundUnit" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SponsorProjectRoundUnit">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ProjectRoundUnit">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Navigation" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ProjectRoundUnitID" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="ProjectRoundUnit" type="tns:ProjectRoundUnit" />
+              <s:element minOccurs="1" maxOccurs="1" name="DefaultAggregation" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ProjectRoundUnit">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ReadSponsorProject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorProjectID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadSponsorProjectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadSponsorProjectResult" type="tns:ReportPartLang" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReportPartLang">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Subject" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Header" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Footer" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="StartDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="EndDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReportPart" type="tns:ReportPart" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ReportPart">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Type" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ReportPartID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="FindSponsorProjects">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindSponsorProjectsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FindSponsorProjectsResult" type="tns:ArrayOfSponsorProject" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfSponsorProject">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SponsorProject" nillable="true" type="tns:SponsorProject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SponsorProject">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Sponsor" type="tns:Sponsor" />
+          <s:element minOccurs="1" maxOccurs="1" name="StartDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="EndDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Subject" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Header" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Sponsor">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="SponsorID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Application" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProjectRoundUnitID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Closed" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Deleted" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="SuperSponsorID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ConsentText" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="InviteSubject" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="InviteText" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="InviteLastSent" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="InviteReminderLastSent" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="InviteReminderSubject" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="InviteReminderText" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AllMessageSubject" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AllMessageBody" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="AllMessageLastSent" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="ForceLID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="LoginSubject" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LoginText" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LoginDays" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LoginWeekday" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LoginLastSent" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="SponsorKey" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TreatmentOffer" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="TreatmentOfferText" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TreatmentOfferEmail" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TreatmentOfferIfNeededText" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TreatmentOfferBQ" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TreatmentOfferBQfn" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TreatmentOfferBQmorethan" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="InfoText" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AlternativeTreatmentOfferText" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AlternativeTreatmentOfferEmail" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SponsorApiKey" nillable="true" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="MinUserCountToDisclose" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="EmailFrom" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Comment" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DefaultPlotType" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="FindByProjectAndLanguage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="projectRoundUnitID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="langID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindByProjectAndLanguageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FindByProjectAndLanguageResult" type="tns:ArrayOfReportPartLang" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfReportPartLang">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ReportPartLang" nillable="true" type="tns:ReportPartLang" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="FindByProjectAndLanguage2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="projectRoundUnitID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="langID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="departmentID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindByProjectAndLanguage2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FindByProjectAndLanguage2Result" type="tns:ArrayOfReportPartLang" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindBySponsorWithSponsorAdminInDepth">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorAdminID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindBySponsorWithSponsorAdminInDepthResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FindBySponsorWithSponsorAdminInDepthResult" type="tns:ArrayOfSponsorDepartment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfSponsorDepartment">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SponsorDepartment" nillable="true" type="tns:SponsorDepartment" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SponsorDepartment">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ShortName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Depth" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Siblings" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LoginDays" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LoginWeekDay" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="FindBySponsorBackgroundQuestion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindBySponsorBackgroundQuestionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FindBySponsorBackgroundQuestionResult" type="tns:ArrayOfSponsorBackgroundQuestion" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfSponsorBackgroundQuestion">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SponsorBackgroundQuestion" nillable="true" type="tns:SponsorBackgroundQuestion" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SponsorBackgroundQuestion">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackgroundQuestion" type="tns:BackgroundQuestion" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="BackgroundQuestion">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Internal" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetSponsor">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSponsorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSponsorResult" type="tns:Sponsor" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindByLanguage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="LID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindByLanguageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FindByLanguageResult" type="tns:ArrayOfPlotTypeLanguage" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfPlotTypeLanguage">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PlotTypeLanguage" nillable="true" type="tns:PlotTypeLanguage" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PlotTypeLanguage">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseModel">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="PlotType" type="tns:PlotType" />
+              <s:element minOccurs="0" maxOccurs="1" name="Language" type="tns:Language" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ShortName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="SupportsMultipleSeries" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="PlotType">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseModel">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Language">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseModel">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
       <s:element name="ManagerLogOut">
         <s:complexType>
           <s:sequence>
@@ -225,8 +550,23 @@
       <s:element name="DepartmentTree" nillable="true" type="tns:DepartmentTree" />
       <s:element name="ArrayOfUser" nillable="true" type="tns:ArrayOfUser" />
       <s:element name="User" nillable="true" type="tns:User" />
+      <s:element name="ArrayOfSponsorProjectRoundUnit" nillable="true" type="tns:ArrayOfSponsorProjectRoundUnit" />
+      <s:element name="ReportPartLang" nillable="true" type="tns:ReportPartLang" />
+      <s:element name="ArrayOfSponsorProject" nillable="true" type="tns:ArrayOfSponsorProject" />
+      <s:element name="ArrayOfReportPartLang" nillable="true" type="tns:ArrayOfReportPartLang" />
+      <s:element name="ArrayOfSponsorDepartment" nillable="true" type="tns:ArrayOfSponsorDepartment" />
+      <s:element name="ArrayOfSponsorBackgroundQuestion" nillable="true" type="tns:ArrayOfSponsorBackgroundQuestion" />
+      <s:element name="Sponsor" nillable="true" type="tns:Sponsor" />
+      <s:element name="ArrayOfPlotTypeLanguage" nillable="true" type="tns:ArrayOfPlotTypeLanguage" />
       <s:element name="boolean" type="s:boolean" />
       <s:element name="ArrayOfListURL" nillable="true" type="tns:ArrayOfListURL" />
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="ManagerLoginSoapIn">
@@ -258,6 +598,60 @@
   </wsdl:message>
   <wsdl:message name="GetUserInfoSoapOut">
     <wsdl:part name="parameters" element="tns:GetUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorAndLanguageSoapIn">
+    <wsdl:part name="parameters" element="tns:FindBySponsorAndLanguage" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorAndLanguageSoapOut">
+    <wsdl:part name="parameters" element="tns:FindBySponsorAndLanguageResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadSponsorProjectSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadSponsorProject" />
+  </wsdl:message>
+  <wsdl:message name="ReadSponsorProjectSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadSponsorProjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindSponsorProjectsSoapIn">
+    <wsdl:part name="parameters" element="tns:FindSponsorProjects" />
+  </wsdl:message>
+  <wsdl:message name="FindSponsorProjectsSoapOut">
+    <wsdl:part name="parameters" element="tns:FindSponsorProjectsResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindByProjectAndLanguageSoapIn">
+    <wsdl:part name="parameters" element="tns:FindByProjectAndLanguage" />
+  </wsdl:message>
+  <wsdl:message name="FindByProjectAndLanguageSoapOut">
+    <wsdl:part name="parameters" element="tns:FindByProjectAndLanguageResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindByProjectAndLanguage2SoapIn">
+    <wsdl:part name="parameters" element="tns:FindByProjectAndLanguage2" />
+  </wsdl:message>
+  <wsdl:message name="FindByProjectAndLanguage2SoapOut">
+    <wsdl:part name="parameters" element="tns:FindByProjectAndLanguage2Response" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorWithSponsorAdminInDepthSoapIn">
+    <wsdl:part name="parameters" element="tns:FindBySponsorWithSponsorAdminInDepth" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorWithSponsorAdminInDepthSoapOut">
+    <wsdl:part name="parameters" element="tns:FindBySponsorWithSponsorAdminInDepthResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorBackgroundQuestionSoapIn">
+    <wsdl:part name="parameters" element="tns:FindBySponsorBackgroundQuestion" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorBackgroundQuestionSoapOut">
+    <wsdl:part name="parameters" element="tns:FindBySponsorBackgroundQuestionResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSponsorSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSponsor" />
+  </wsdl:message>
+  <wsdl:message name="GetSponsorSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSponsorResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindByLanguageSoapIn">
+    <wsdl:part name="parameters" element="tns:FindByLanguage" />
+  </wsdl:message>
+  <wsdl:message name="FindByLanguageSoapOut">
+    <wsdl:part name="parameters" element="tns:FindByLanguageResponse" />
   </wsdl:message>
   <wsdl:message name="ManagerLogOutSoapIn">
     <wsdl:part name="parameters" element="tns:ManagerLogOut" />
@@ -311,6 +705,83 @@
   <wsdl:message name="GetUserInfoHttpPostOut">
     <wsdl:part name="Body" element="tns:User" />
   </wsdl:message>
+  <wsdl:message name="FindBySponsorAndLanguageHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="LangID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorAndLanguageHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfSponsorProjectRoundUnit" />
+  </wsdl:message>
+  <wsdl:message name="ReadSponsorProjectHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorProjectID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ReadSponsorProjectHttpPostOut">
+    <wsdl:part name="Body" element="tns:ReportPartLang" />
+  </wsdl:message>
+  <wsdl:message name="FindSponsorProjectsHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FindSponsorProjectsHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfSponsorProject" />
+  </wsdl:message>
+  <wsdl:message name="FindByProjectAndLanguageHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="projectRoundUnitID" type="s:string" />
+    <wsdl:part name="langID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FindByProjectAndLanguageHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfReportPartLang" />
+  </wsdl:message>
+  <wsdl:message name="FindByProjectAndLanguage2HttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="projectRoundUnitID" type="s:string" />
+    <wsdl:part name="langID" type="s:string" />
+    <wsdl:part name="departmentID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FindByProjectAndLanguage2HttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfReportPartLang" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorWithSponsorAdminInDepthHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="sponsorAdminID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorWithSponsorAdminInDepthHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfSponsorDepartment" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorBackgroundQuestionHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorBackgroundQuestionHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfSponsorBackgroundQuestion" />
+  </wsdl:message>
+  <wsdl:message name="GetSponsorHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSponsorHttpPostOut">
+    <wsdl:part name="Body" element="tns:Sponsor" />
+  </wsdl:message>
+  <wsdl:message name="FindByLanguageHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="LID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FindByLanguageHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfPlotTypeLanguage" />
+  </wsdl:message>
   <wsdl:message name="ManagerLogOutHttpPostIn">
     <wsdl:part name="token" type="s:string" />
   </wsdl:message>
@@ -359,6 +830,42 @@
       <wsdl:input message="tns:GetUserInfoSoapIn" />
       <wsdl:output message="tns:GetUserInfoSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="FindBySponsorAndLanguage">
+      <wsdl:input message="tns:FindBySponsorAndLanguageSoapIn" />
+      <wsdl:output message="tns:FindBySponsorAndLanguageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadSponsorProject">
+      <wsdl:input message="tns:ReadSponsorProjectSoapIn" />
+      <wsdl:output message="tns:ReadSponsorProjectSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindSponsorProjects">
+      <wsdl:input message="tns:FindSponsorProjectsSoapIn" />
+      <wsdl:output message="tns:FindSponsorProjectsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindByProjectAndLanguage">
+      <wsdl:input message="tns:FindByProjectAndLanguageSoapIn" />
+      <wsdl:output message="tns:FindByProjectAndLanguageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindByProjectAndLanguage2">
+      <wsdl:input message="tns:FindByProjectAndLanguage2SoapIn" />
+      <wsdl:output message="tns:FindByProjectAndLanguage2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorWithSponsorAdminInDepth">
+      <wsdl:input message="tns:FindBySponsorWithSponsorAdminInDepthSoapIn" />
+      <wsdl:output message="tns:FindBySponsorWithSponsorAdminInDepthSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorBackgroundQuestion">
+      <wsdl:input message="tns:FindBySponsorBackgroundQuestionSoapIn" />
+      <wsdl:output message="tns:FindBySponsorBackgroundQuestionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSponsor">
+      <wsdl:input message="tns:GetSponsorSoapIn" />
+      <wsdl:output message="tns:GetSponsorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindByLanguage">
+      <wsdl:input message="tns:FindByLanguageSoapIn" />
+      <wsdl:output message="tns:FindByLanguageSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="ManagerLogOut">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
       <wsdl:input message="tns:ManagerLogOutSoapIn" />
@@ -394,6 +901,42 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get user with the specified userID</wsdl:documentation>
       <wsdl:input message="tns:GetUserInfoHttpPostIn" />
       <wsdl:output message="tns:GetUserInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorAndLanguage">
+      <wsdl:input message="tns:FindBySponsorAndLanguageHttpPostIn" />
+      <wsdl:output message="tns:FindBySponsorAndLanguageHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadSponsorProject">
+      <wsdl:input message="tns:ReadSponsorProjectHttpPostIn" />
+      <wsdl:output message="tns:ReadSponsorProjectHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindSponsorProjects">
+      <wsdl:input message="tns:FindSponsorProjectsHttpPostIn" />
+      <wsdl:output message="tns:FindSponsorProjectsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindByProjectAndLanguage">
+      <wsdl:input message="tns:FindByProjectAndLanguageHttpPostIn" />
+      <wsdl:output message="tns:FindByProjectAndLanguageHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindByProjectAndLanguage2">
+      <wsdl:input message="tns:FindByProjectAndLanguage2HttpPostIn" />
+      <wsdl:output message="tns:FindByProjectAndLanguage2HttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorWithSponsorAdminInDepth">
+      <wsdl:input message="tns:FindBySponsorWithSponsorAdminInDepthHttpPostIn" />
+      <wsdl:output message="tns:FindBySponsorWithSponsorAdminInDepthHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorBackgroundQuestion">
+      <wsdl:input message="tns:FindBySponsorBackgroundQuestionHttpPostIn" />
+      <wsdl:output message="tns:FindBySponsorBackgroundQuestionHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSponsor">
+      <wsdl:input message="tns:GetSponsorHttpPostIn" />
+      <wsdl:output message="tns:GetSponsorHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindByLanguage">
+      <wsdl:input message="tns:FindByLanguageHttpPostIn" />
+      <wsdl:output message="tns:FindByLanguageHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="ManagerLogOut">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
@@ -446,6 +989,87 @@
     </wsdl:operation>
     <wsdl:operation name="GetUserInfo">
       <soap:operation soapAction="http://tempuri.org/GetUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorAndLanguage">
+      <soap:operation soapAction="http://tempuri.org/FindBySponsorAndLanguage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadSponsorProject">
+      <soap:operation soapAction="http://tempuri.org/ReadSponsorProject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindSponsorProjects">
+      <soap:operation soapAction="http://tempuri.org/FindSponsorProjects" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindByProjectAndLanguage">
+      <soap:operation soapAction="http://tempuri.org/FindByProjectAndLanguage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindByProjectAndLanguage2">
+      <soap:operation soapAction="http://tempuri.org/FindByProjectAndLanguage2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorWithSponsorAdminInDepth">
+      <soap:operation soapAction="http://tempuri.org/FindBySponsorWithSponsorAdminInDepth" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorBackgroundQuestion">
+      <soap:operation soapAction="http://tempuri.org/FindBySponsorBackgroundQuestion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSponsor">
+      <soap:operation soapAction="http://tempuri.org/GetSponsor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindByLanguage">
+      <soap:operation soapAction="http://tempuri.org/FindByLanguage" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -519,6 +1143,87 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="FindBySponsorAndLanguage">
+      <soap12:operation soapAction="http://tempuri.org/FindBySponsorAndLanguage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadSponsorProject">
+      <soap12:operation soapAction="http://tempuri.org/ReadSponsorProject" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindSponsorProjects">
+      <soap12:operation soapAction="http://tempuri.org/FindSponsorProjects" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindByProjectAndLanguage">
+      <soap12:operation soapAction="http://tempuri.org/FindByProjectAndLanguage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindByProjectAndLanguage2">
+      <soap12:operation soapAction="http://tempuri.org/FindByProjectAndLanguage2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorWithSponsorAdminInDepth">
+      <soap12:operation soapAction="http://tempuri.org/FindBySponsorWithSponsorAdminInDepth" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorBackgroundQuestion">
+      <soap12:operation soapAction="http://tempuri.org/FindBySponsorBackgroundQuestion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSponsor">
+      <soap12:operation soapAction="http://tempuri.org/GetSponsor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindByLanguage">
+      <soap12:operation soapAction="http://tempuri.org/FindByLanguage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ManagerLogOut">
       <soap12:operation soapAction="http://tempuri.org/ManagerLogOut" style="document" />
       <wsdl:input>
@@ -585,6 +1290,87 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="FindBySponsorAndLanguage">
+      <http:operation location="/FindBySponsorAndLanguage" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadSponsorProject">
+      <http:operation location="/ReadSponsorProject" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindSponsorProjects">
+      <http:operation location="/FindSponsorProjects" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindByProjectAndLanguage">
+      <http:operation location="/FindByProjectAndLanguage" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindByProjectAndLanguage2">
+      <http:operation location="/FindByProjectAndLanguage2" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorWithSponsorAdminInDepth">
+      <http:operation location="/FindBySponsorWithSponsorAdminInDepth" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorBackgroundQuestion">
+      <http:operation location="/FindBySponsorBackgroundQuestion" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSponsor">
+      <http:operation location="/GetSponsor" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindByLanguage">
+      <http:operation location="/FindByLanguage" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ManagerLogOut">
       <http:operation location="/ManagerLogOut" />
       <wsdl:input>
@@ -606,13 +1392,13 @@
   </wsdl:binding>
   <wsdl:service name="Soap">
     <wsdl:port name="SoapSoap" binding="tns:SoapSoap">
-      <soap:address location="http://localhost:53850/Default.asmx" />
+      <soap:address location="http://localhost:53850/default.asmx" />
     </wsdl:port>
     <wsdl:port name="SoapSoap12" binding="tns:SoapSoap12">
-      <soap12:address location="http://localhost:53850/Default.asmx" />
+      <soap12:address location="http://localhost:53850/default.asmx" />
     </wsdl:port>
     <wsdl:port name="SoapHttpPost" binding="tns:SoapHttpPost">
-      <http:address location="http://localhost:53850/Default.asmx" />
+      <http:address location="http://localhost:53850/default.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

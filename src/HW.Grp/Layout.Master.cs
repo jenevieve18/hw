@@ -57,7 +57,7 @@ namespace HW.Grp
                 var f1 = new ManagerFunctionLang
                 {
                     Function = "Statistics",
-                    URL = "statistics.aspx",
+                    URL = "stats.aspx",
                     Expl = "view results and compare groups",
                 };
                 functions.Add(f1);

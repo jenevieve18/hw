@@ -50,7 +50,6 @@ namespace HW.Grp
 			adminNews = newsRepo.FindTop3AdminNews();
 		}
         */
-
 		protected CultureInfo GetCultureInfo(int lid)
 		{
             switch (lid) {

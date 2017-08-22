@@ -15,42 +15,48 @@ using System.Text;
 using System.Net;
 using System.IO;
 using System.Web.Services;
+using GrpModel = HW.Grp.WebService;
+using System.Collections;
 
 namespace HW.Grp
 {
 	public partial class Stats : System.Web.UI.Page
 	{
-
+        
         Grp.WebService.Soap service = new WebService.Soap();
 
+        
+
+
         SqlSponsorRepository sponsorRepo = new SqlSponsorRepository();
-		SqlSponsorProjectRepository sponsorProjectRepo = new SqlSponsorProjectRepository();
-		SqlSponsorBQRepository sponsorBQRepo = new SqlSponsorBQRepository();
-		SqlSponsorProjectRoundUnitRepository sponsorProjectRoundUnitRepo = new SqlSponsorProjectRoundUnitRepository();
-		
-		SqlUserRepository userRepository = new SqlUserRepository();
-		
-		SqlProjectRepository projRepository = new SqlProjectRepository();
-		
-		SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
-		
-		SqlReportRepository reportRepository = new SqlReportRepository();
-		SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
-		
-		IList<Department> departments;
+        SqlSponsorProjectRepository sponsorProjectRepo = new SqlSponsorProjectRepository();
+        SqlSponsorBQRepository sponsorBQRepo = new SqlSponsorBQRepository();
+        SqlSponsorProjectRoundUnitRepository sponsorProjectRoundUnitRepo = new SqlSponsorProjectRoundUnitRepository();
+
+        SqlUserRepository userRepository = new SqlUserRepository();
+
+        SqlProjectRepository projRepository = new SqlProjectRepository();
+
+        SqlDepartmentRepository departmentRepository = new SqlDepartmentRepository();
+        
+
+        SqlReportRepository reportRepository = new SqlReportRepository();
+        SqlPlotTypeRepository plotRepository = new SqlPlotTypeRepository();
+
+        IList<Department> departments;
 		IList<SponsorBackgroundQuestion> questions;
 		int sponsorID = 0;
 		int sponsorAdminID = 0;
 		
-		protected IList<IReportPart> reportParts = null;
+		protected List<Grp.WebService.ReportPartLang> reportParts = null;
 		protected IList<BaseModel> urlModels;
 		protected IList<PlotTypeLanguage> plotTypes = new List<PlotTypeLanguage>();
 		
 		protected DateTime startDate;
 		protected DateTime endDate;
-		protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
-		
-		protected Sponsor sponsor;
+        protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
+		protected GrpModel.Sponsor sponsor;
+
         protected string ReportPartID = "";
 
 		public IList<SponsorProjectRoundUnit> SponsorProjectRoundUnits {
@@ -150,10 +156,18 @@ namespace HW.Grp
 		IList<BaseModel> SelectedQuestions {
 			get {
 				var selectedQuestions = new List<BaseModel>();
-//				foreach (var q in sponsorRepo.FindBySponsor(sponsorID)) {
-				foreach (var q in sponsorBQRepo.FindBySponsor(sponsorID)) {
+                //				foreach (var q in sponsorRepo.FindBySponsor(sponsorID)) {
+                var soap = new HW.Grp.WebService.Soap();
+                var token = Session["Token"].ToString();
+                var sponsorBQ = soap.FindBySponsorBackgroundQuestion(token, sponsorID, 20); 
+
+                foreach (var q in sponsorBQ) {
 					if (BQ.Items.FindByValue(q.Id.ToString()).Selected) {
-						selectedQuestions.Add(q);
+                        BaseModel newQ = new BaseModel
+                        {
+                            Id = q.Id
+                        };
+						selectedQuestions.Add(newQ);
 					}
 				}
 				return selectedQuestions;
@@ -173,7 +187,7 @@ namespace HW.Grp
 			}
 		}
 		
-		public void SetReportPartLanguages(IList<IReportPart> reportParts, IList<BaseModel> urlModels)
+		public void SetReportPartLanguages(List<Grp.WebService.ReportPartLang> reportParts, IList<BaseModel> urlModels)
 		{
 			this.reportParts = reportParts;
 			this.urlModels = urlModels;
@@ -199,16 +213,23 @@ namespace HW.Grp
                 default: return new CultureInfo("en-US");
             }
 		}
-		
-		public void SaveAdminSession(int SponsorAdminSessionID, int ManagerFunction, DateTime date)
-		{
-			sponsorRepo.SaveSponsorAdminSessionFunction(SponsorAdminSessionID, ManagerFunction, date);
-		}
+		/// <summary>
+        /// This commented function will save the Admin Session of the user.
+        /// </summary>
+        /// <param name="sponsorID"></param>
+        /// <param name="sponsorAdminID"></param>
+		//public void SaveAdminSession(int SponsorAdminSessionID, int ManagerFunction, DateTime date)
+		//{
+		//	sponsorRepo.SaveSponsorAdminSessionFunction(SponsorAdminSessionID, ManagerFunction, date);
+		//}
 		
 		public void Index(int sponsorID, int sponsorAdminID)
 		{
-			if (sponsorID != 0) {
-				if (!IsPostBack) {
+            var soapService = new GrpModel.Soap();
+            if (sponsorID != 0) {
+                var token = Session["Token"].ToString();
+
+                if (!IsPostBack) {
 					
 					startDate = ToDate(DateTime.Now.Year - 1, DateTime.Now.Month, DateTime.Now.Day);
 					endDate = DateTime.Now;
@@ -227,17 +248,86 @@ namespace HW.Grp
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit", "Users on unit"), "1"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit.subunit", "Users on unit+subunits"), "2"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "background.variable", "Background variable"), "3"));
+                    
+                    /// This function is moved to Grp WS
+                    //SponsorProjectRoundUnits = sponsorRepo.FindBySponsorAndLanguage(sponsorID, lid);
 
-                    SponsorProjectRoundUnits = sponsorRepo.FindBySponsorAndLanguage(sponsorID, lid);
+                    var fbsal = soapService.FindBySponsorAndLanguage(token, sponsorID, lid, 20);
+                    var enumSpru = new List<SponsorProjectRoundUnit>();
+                    foreach (var item in fbsal)
+                    {
+                        var spru = new SponsorProjectRoundUnit
+                        {
+                            Navigation = item.Navigation,
+                            ProjectRoundUnitID = item.ProjectRoundUnitID,
+                            DefaultAggregation = item.DefaultAggregation,
+                            ProjectRoundUnit = new ProjectRoundUnit { Id = item.ProjectRoundUnit1.Id }
+                        };
+                        enumSpru.Add(spru);
+                    }
+                    SponsorProjectRoundUnits = enumSpru;
 
-                    SponsorProjects = sponsorProjectRepo.FindSponsorProjects(sponsorID);
 
-					BackgroundQuestions = sponsorBQRepo.FindBySponsor(sponsorID);
+                    var sp = soapService.FindSponsorProjects(token, sponsorID, 20);
+                    var enumSP = new List<SponsorProject>();
+                    foreach(var i in sp)
+                    {
+                        var fsp = new SponsorProject
+                        {
+                            Id = i.Id,
+                            Sponsor = new Sponsor { Id = i.Sponsor.Id },
+                            StartDate = i.StartDate,
+                            EndDate = i.EndDate,
+                            Subject = i.Subject
+                        };
+                        enumSP.Add(fsp);
+                    }
+                    SponsorProjects = enumSP;
+                    /// This function is moved to Grp WS
+                    //SponsorProjects = sponsorProjectRepo.FindSponsorProjects(sponsorID);
+                    /// This function is moved to Grp WS
+                    //BackgroundQuestions = sponsorBQRepo.FindBySponsor(sponsorID);
+
+                    var questions = soapService.FindBySponsorBackgroundQuestion(token, sponsorID, 20);
+                    var enumQuestions = new List<SponsorBackgroundQuestion>();
+                    foreach(var i in questions)
+                    {
+                        var q = new SponsorBackgroundQuestion
+                        {
+                            Id = i.Id,
+                            BackgroundQuestion = new BackgroundQuestion { Internal = i.BackgroundQuestion.Internal }
+                        };
+                        enumQuestions.Add(q);
+                    }
+
+                    BackgroundQuestions = enumQuestions;
+
 				} else {
 					startDate = GetDateFromString(Request.Form["startDate"]);
 					endDate = GetDateFromString(Request.Form["endDate"]);
 				}
-				Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
+                /// This function is moved to Grp WS
+                //Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
+
+                var xdepartment = soapService.FindBySponsorWithSponsorAdminInDepth(token, sponsorID, sponsorAdminID, 20);
+                var departments = new List<Department>();
+                foreach(var i in xdepartment)
+                {
+                    var d = new Department
+                    {
+                        Name = i.Name,
+                        Id  = i.Id,
+                        ShortName = i.ShortName,
+                        Depth = i.Depth,
+                        Siblings = i.Siblings,
+                        LoginDays = i.LoginDays,
+                        LoginWeekDay = i.LoginWeekDay
+                    };
+                    departments.Add(d);
+                }
+                Departments = departments;
+
+
 			} else {
 				Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
 			}
@@ -259,23 +349,43 @@ namespace HW.Grp
 
             sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 			sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+            var token = Session["Token"].ToString();
+            /// This function is moved to Grp WS
+            //HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
+            /// This function is moved to Grp WS
+            //sponsor = sponsorRepo.Read(sponsorID);
+            var soapService = new HW.Grp.WebService.Soap();
+            sponsor = soapService.GetSponsor(token, sponsorID, 20);
 
-            HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
+            /// This function is moved to Grp WS
+            //var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+            //if (userSession != null)
+            //{
+            //    lid = userSession.Lang;
+            //}
 
-            sponsor = sponsorRepo.Read(sponsorID);
+            lid = 2;
 
-            var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
-            if (userSession != null)
+            var soapResult = soapService.FindByLanguage(token, lid, 20);
+            var types =  new List<PlotTypeLanguage>();
+            foreach (var i in soapResult)
             {
-                lid = userSession.Lang;
+                var p = new PlotTypeLanguage
+                {
+                    PlotType = new PlotType {  Id = i.PlotType.Id },
+                    Name = i.Name,
+                    Description = i.Description,
+                    ShortName = i.ShortName,
+                    SupportsMultipleSeries = i.SupportsMultipleSeries
+                };
+                types.Add(p);
+
             }
+            plotTypes = types;
+            /// This function is commented for saving admin session and will be creating this function soon.
+            //SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
 
-
-            plotTypes = plotRepository.FindByLanguage(lid);
-			
-			SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
-			
-			Index(sponsorID, sponsorAdminID);
+            Index(sponsorID, sponsorAdminID);
 
             if(reportParts == null)
             {
@@ -438,7 +548,7 @@ namespace HW.Grp
                 Q additionalQuery = GetGID(urlModels);
                 bool forSingleSeries = (SelectedDepartments.Count <= 1 && (Grouping.SelectedValue == "1" || Grouping.SelectedValue == "2")) || Grouping.SelectedValue == "0";
                 imageBuilder += "<div class=\"report-parts\">";
-                if (reportParts[0] is ReportPartLang)
+                if (reportParts[0] is Grp.WebService.ReportPartLang)
                 {
                     imageBuilder += "<div class=\"action\">";
                     imageBuilder += "<div class=\"chart-descriptions\" title=" + R.Str(lid, "chart.description", "Chart Descriptions") + ">";
@@ -513,7 +623,8 @@ namespace HW.Grp
                     imageBuilder += "</div>";
                     imageBuilder += "</div>";
                     imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change.all", "Change all graphs to:") + "</span>";
-                    imageBuilder += "<select onchange=\"__doPostBack()\" runat=\"server\" id=\"selectID\" class=\"plot-types small\">";
+                    imageBuilder += "<select onchange=\"onChanged(0, " + sponsorID + ")\" runat=\"server\" id=\"selectID0\" class=\"plot-types small\">";
+                    //imageBuilder += "<select onchange=\"__doPostBack()\" runat=\"server\" id=\"selectID\" class=\"plot-types small\">";
                     //imageBuilder += "<option value = \"1\">Line</ option >";
                     //imageBuilder += "<option value = \"2\">Line (± SD)</ option >";
                     //imageBuilder += "<option value = \"3\">Line (± 1.96 SD)</ option >";
@@ -606,7 +717,7 @@ namespace HW.Grp
                     imageBuilder += "</div>";
                     imageBuilder += "<div class=\"report-part-header\">" + r.Header + "</div>";
                     imageBuilder += "<div class=\"report-part-content\">";
-                    if (r is ReportPartLang)
+                    if (r is Grp.WebService.ReportPartLang)
                     {
                         // Session["Token"].ToString() + 
                         // + Session["Token"].ToString() 
@@ -667,17 +778,25 @@ namespace HW.Grp
                     }
                     else
                     {
-                        imageBuilder += "<span class=\"hidden hidden-image-url\">" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "</span>";
-                        imageBuilder += "<img class=\"report-part-graph\" src=" + soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0] + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)) + " alt=\"\" />";
+                        /// <summary>
+                        /// Generate image filepath + filename
+                        /// </summary>
+                        var saveImage = imagePath + "\\" + r.ReportPart.Id.ToString() + ".png";
+                        var imageSource = "img/Sponsor" + sponsorID + "/" + r.ReportPart.Id.ToString() + ".png";
+                        var imageUrl = soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0]; //+ "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue));
+
+                        /// <summary>
+                        /// Download and save the image file to GRP
+                        /// </summary>
+                        WebClient webClient = new WebClient();
+                        webClient.DownloadFile(imageUrl, saveImage);
+                        webClient.Dispose();
+
+                        imageBuilder += "<span id=\"HiddenID" + r.ReportPart.Id + "\" class=\"hidden hidden-image-url\">" + imageUrl + "</span>";
+                        imageBuilder += "<img id=\"ImageID" + r.ReportPart.Id + "\" class=\"report-part-graph\" src=" + imageSource + " alt=\"\"/>";
                         imageBuilder += "<div class=\"action\">";
                         imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change", "Change this graph to:") + "</span>";
-                        imageBuilder += "<select onchange=\"__doPostBack()\" runat=\"server\" id=\"selectID\"  class=\"plot-types small\">";
-                        //////////imageBuilder += "<option value = \"1\">Line</ option >";
-                        //////////imageBuilder += "<option value = \"2\">Line (± SD)</ option >";
-                        //////////imageBuilder += "<option value = \"3\">Line (± 1.96 SD)</ option >";
-                        //////////imageBuilder += "<option value = \"4\">Boxplot(Min / Max)</ option >";
-                        //////////imageBuilder += "<option value = \"5\">Boxplot (Tukey)</ option >";
-                        //////////imageBuilder += "<option value = \"6\">Bar</ option >";
+                        imageBuilder += "<select onchange=\"onChanged(" + r.ReportPart.Id + ", " + sponsorID + ")\" runat=\"server\" id=\"selectID" + r.ReportPart.Id + "\"  class=\"plot-types small\">";
                         var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje", SupportsMultipleSeries = true } :
                                            new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line", SupportsMultipleSeries = true };
                         foreach (var p in new PlotTypeLanguage[] { xxx })
@@ -720,20 +839,30 @@ namespace HW.Grp
             StatisticImage.Text = imageBuilder;
         }
 
-        IList<IReportPart> GetReportParts(string project)
+        List<Grp.WebService.ReportPartLang> GetReportParts(string project)
 		{
-			var parts = new List<IReportPart>();
+            var soapService = new Grp.WebService.Soap();
+            
+			var parts = new List<Grp.WebService.ReportPartLang> ();
 			if (project.Contains("SPRU")) {
 				int selectedProjectRoundUnitID = ConvertHelper.ToInt32(project.Replace("SPRU", ""));
 				int selectedDepartmentID = departments[0].Id;
-				var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, lid, selectedDepartmentID);
-				if (reportParts.Count <= 0) {
-					reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, lid);
-				}
-				parts.AddRange(reportParts);
+                /// This function is moved to Grp WS
+                //var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, lid, selectedDepartmentID);
+
+                var reportParts = soapService.FindByProjectAndLanguage2(Session["Token"].ToString(), selectedProjectRoundUnitID, lid, selectedDepartmentID, 20);
+
+                if (reportParts.Count <= 0) {
+                    /// This function is moved to Grp WS
+					//reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, lid);
+                    reportParts = soapService.FindByProjectAndLanguage(Session["Token"].ToString(), selectedProjectRoundUnitID, lid, 20);
+                }
+				parts.AddRange(reportParts.AsEnumerable());
 			} else {
 				int sponsorProjectID = ConvertHelper.ToInt32(project.Replace("SP", ""));
-				var sponsorProject = sponsorProjectRepo.Read(sponsorProjectID);
+                /// This function is moved to Grp WS
+                //var sponsorProject = sponsorProjectRepo.Read(sponsorProjectID);
+                var sponsorProject = soapService.ReadSponsorProject(Session["Token"].ToString(), sponsorProjectID, 20);
 				parts.Add(sponsorProject);
 			}
 			return parts;

@@ -20,8 +20,9 @@ namespace HW.Grp.WebService {
     using System.Web.Services.Protocols;
     using System.Xml.Serialization;
     using System.ComponentModel;
-    
-    
+    using System.Collections.Generic;
+
+
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -39,6 +40,24 @@ namespace HW.Grp.WebService {
         private System.Threading.SendOrPostCallback GetUsersInDepartmentOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetUserInfoOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback FindBySponsorAndLanguageOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback ReadSponsorProjectOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback FindSponsorProjectsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback FindByProjectAndLanguageOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback FindByProjectAndLanguage2OperationCompleted;
+        
+        private System.Threading.SendOrPostCallback FindBySponsorWithSponsorAdminInDepthOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback FindBySponsorBackgroundQuestionOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetSponsorOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback FindByLanguageOperationCompleted;
         
         private System.Threading.SendOrPostCallback ManagerLogOutOperationCompleted;
         
@@ -96,6 +115,33 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         public event GetUserInfoCompletedEventHandler GetUserInfoCompleted;
+        
+        /// <remarks/>
+        public event FindBySponsorAndLanguageCompletedEventHandler FindBySponsorAndLanguageCompleted;
+        
+        /// <remarks/>
+        public event ReadSponsorProjectCompletedEventHandler ReadSponsorProjectCompleted;
+        
+        /// <remarks/>
+        public event FindSponsorProjectsCompletedEventHandler FindSponsorProjectsCompleted;
+        
+        /// <remarks/>
+        public event FindByProjectAndLanguageCompletedEventHandler FindByProjectAndLanguageCompleted;
+        
+        /// <remarks/>
+        public event FindByProjectAndLanguage2CompletedEventHandler FindByProjectAndLanguage2Completed;
+        
+        /// <remarks/>
+        public event FindBySponsorWithSponsorAdminInDepthCompletedEventHandler FindBySponsorWithSponsorAdminInDepthCompleted;
+        
+        /// <remarks/>
+        public event FindBySponsorBackgroundQuestionCompletedEventHandler FindBySponsorBackgroundQuestionCompleted;
+        
+        /// <remarks/>
+        public event GetSponsorCompletedEventHandler GetSponsorCompleted;
+        
+        /// <remarks/>
+        public event FindByLanguageCompletedEventHandler FindByLanguageCompleted;
         
         /// <remarks/>
         public event ManagerLogOutCompletedEventHandler ManagerLogOutCompleted;
@@ -265,6 +311,313 @@ namespace HW.Grp.WebService {
             if ((this.GetUserInfoCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetUserInfoCompleted(this, new GetUserInfoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FindBySponsorAndLanguage", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public SponsorProjectRoundUnit[] FindBySponsorAndLanguage(string token, int sponsorID, int LangID, int expirationMinutes) {
+            object[] results = this.Invoke("FindBySponsorAndLanguage", new object[] {
+                        token,
+                        sponsorID,
+                        LangID,
+                        expirationMinutes});
+            return ((SponsorProjectRoundUnit[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void FindBySponsorAndLanguageAsync(string token, int sponsorID, int LangID, int expirationMinutes) {
+            this.FindBySponsorAndLanguageAsync(token, sponsorID, LangID, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void FindBySponsorAndLanguageAsync(string token, int sponsorID, int LangID, int expirationMinutes, object userState) {
+            if ((this.FindBySponsorAndLanguageOperationCompleted == null)) {
+                this.FindBySponsorAndLanguageOperationCompleted = new System.Threading.SendOrPostCallback(this.OnFindBySponsorAndLanguageOperationCompleted);
+            }
+            this.InvokeAsync("FindBySponsorAndLanguage", new object[] {
+                        token,
+                        sponsorID,
+                        LangID,
+                        expirationMinutes}, this.FindBySponsorAndLanguageOperationCompleted, userState);
+        }
+        
+        private void OnFindBySponsorAndLanguageOperationCompleted(object arg) {
+            if ((this.FindBySponsorAndLanguageCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.FindBySponsorAndLanguageCompleted(this, new FindBySponsorAndLanguageCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ReadSponsorProject", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public ReportPartLang ReadSponsorProject(string token, int sponsorProjectID, int expirationMinutes) {
+            object[] results = this.Invoke("ReadSponsorProject", new object[] {
+                        token,
+                        sponsorProjectID,
+                        expirationMinutes});
+            return ((ReportPartLang)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ReadSponsorProjectAsync(string token, int sponsorProjectID, int expirationMinutes) {
+            this.ReadSponsorProjectAsync(token, sponsorProjectID, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void ReadSponsorProjectAsync(string token, int sponsorProjectID, int expirationMinutes, object userState) {
+            if ((this.ReadSponsorProjectOperationCompleted == null)) {
+                this.ReadSponsorProjectOperationCompleted = new System.Threading.SendOrPostCallback(this.OnReadSponsorProjectOperationCompleted);
+            }
+            this.InvokeAsync("ReadSponsorProject", new object[] {
+                        token,
+                        sponsorProjectID,
+                        expirationMinutes}, this.ReadSponsorProjectOperationCompleted, userState);
+        }
+        
+        private void OnReadSponsorProjectOperationCompleted(object arg) {
+            if ((this.ReadSponsorProjectCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ReadSponsorProjectCompleted(this, new ReadSponsorProjectCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FindSponsorProjects", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public SponsorProject[] FindSponsorProjects(string token, int sponsorID, int expirationMinutes) {
+            object[] results = this.Invoke("FindSponsorProjects", new object[] {
+                        token,
+                        sponsorID,
+                        expirationMinutes});
+            return ((SponsorProject[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void FindSponsorProjectsAsync(string token, int sponsorID, int expirationMinutes) {
+            this.FindSponsorProjectsAsync(token, sponsorID, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void FindSponsorProjectsAsync(string token, int sponsorID, int expirationMinutes, object userState) {
+            if ((this.FindSponsorProjectsOperationCompleted == null)) {
+                this.FindSponsorProjectsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnFindSponsorProjectsOperationCompleted);
+            }
+            this.InvokeAsync("FindSponsorProjects", new object[] {
+                        token,
+                        sponsorID,
+                        expirationMinutes}, this.FindSponsorProjectsOperationCompleted, userState);
+        }
+        
+        private void OnFindSponsorProjectsOperationCompleted(object arg) {
+            if ((this.FindSponsorProjectsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.FindSponsorProjectsCompleted(this, new FindSponsorProjectsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FindByProjectAndLanguage", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public List<ReportPartLang> FindByProjectAndLanguage(string token, int projectRoundUnitID, int langID, int expirationMinutes) {
+            object[] results = this.Invoke("FindByProjectAndLanguage", new object[] {
+                        token,
+                        projectRoundUnitID,
+                        langID,
+                        expirationMinutes});
+            return ((List<ReportPartLang>)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void FindByProjectAndLanguageAsync(string token, int projectRoundUnitID, int langID, int expirationMinutes) {
+            this.FindByProjectAndLanguageAsync(token, projectRoundUnitID, langID, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void FindByProjectAndLanguageAsync(string token, int projectRoundUnitID, int langID, int expirationMinutes, object userState) {
+            if ((this.FindByProjectAndLanguageOperationCompleted == null)) {
+                this.FindByProjectAndLanguageOperationCompleted = new System.Threading.SendOrPostCallback(this.OnFindByProjectAndLanguageOperationCompleted);
+            }
+            this.InvokeAsync("FindByProjectAndLanguage", new object[] {
+                        token,
+                        projectRoundUnitID,
+                        langID,
+                        expirationMinutes}, this.FindByProjectAndLanguageOperationCompleted, userState);
+        }
+        
+        private void OnFindByProjectAndLanguageOperationCompleted(object arg) {
+            if ((this.FindByProjectAndLanguageCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.FindByProjectAndLanguageCompleted(this, new FindByProjectAndLanguageCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FindByProjectAndLanguage2", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public List<ReportPartLang> FindByProjectAndLanguage2(string token, int projectRoundUnitID, int langID, int departmentID, int expirationMinutes) {
+            object[] results = this.Invoke("FindByProjectAndLanguage2", new object[] {
+                        token,
+                        projectRoundUnitID,
+                        langID,
+                        departmentID,
+                        expirationMinutes});
+            return ((List<ReportPartLang>)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void FindByProjectAndLanguage2Async(string token, int projectRoundUnitID, int langID, int departmentID, int expirationMinutes) {
+            this.FindByProjectAndLanguage2Async(token, projectRoundUnitID, langID, departmentID, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void FindByProjectAndLanguage2Async(string token, int projectRoundUnitID, int langID, int departmentID, int expirationMinutes, object userState) {
+            if ((this.FindByProjectAndLanguage2OperationCompleted == null)) {
+                this.FindByProjectAndLanguage2OperationCompleted = new System.Threading.SendOrPostCallback(this.OnFindByProjectAndLanguage2OperationCompleted);
+            }
+            this.InvokeAsync("FindByProjectAndLanguage2", new object[] {
+                        token,
+                        projectRoundUnitID,
+                        langID,
+                        departmentID,
+                        expirationMinutes}, this.FindByProjectAndLanguage2OperationCompleted, userState);
+        }
+        
+        private void OnFindByProjectAndLanguage2OperationCompleted(object arg) {
+            if ((this.FindByProjectAndLanguage2Completed != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.FindByProjectAndLanguage2Completed(this, new FindByProjectAndLanguage2CompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FindBySponsorWithSponsorAdminInDepth", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public SponsorDepartment[] FindBySponsorWithSponsorAdminInDepth(string token, int sponsorID, int sponsorAdminID, int expirationMinutes) {
+            object[] results = this.Invoke("FindBySponsorWithSponsorAdminInDepth", new object[] {
+                        token,
+                        sponsorID,
+                        sponsorAdminID,
+                        expirationMinutes});
+            return ((SponsorDepartment[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void FindBySponsorWithSponsorAdminInDepthAsync(string token, int sponsorID, int sponsorAdminID, int expirationMinutes) {
+            this.FindBySponsorWithSponsorAdminInDepthAsync(token, sponsorID, sponsorAdminID, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void FindBySponsorWithSponsorAdminInDepthAsync(string token, int sponsorID, int sponsorAdminID, int expirationMinutes, object userState) {
+            if ((this.FindBySponsorWithSponsorAdminInDepthOperationCompleted == null)) {
+                this.FindBySponsorWithSponsorAdminInDepthOperationCompleted = new System.Threading.SendOrPostCallback(this.OnFindBySponsorWithSponsorAdminInDepthOperationCompleted);
+            }
+            this.InvokeAsync("FindBySponsorWithSponsorAdminInDepth", new object[] {
+                        token,
+                        sponsorID,
+                        sponsorAdminID,
+                        expirationMinutes}, this.FindBySponsorWithSponsorAdminInDepthOperationCompleted, userState);
+        }
+        
+        private void OnFindBySponsorWithSponsorAdminInDepthOperationCompleted(object arg) {
+            if ((this.FindBySponsorWithSponsorAdminInDepthCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.FindBySponsorWithSponsorAdminInDepthCompleted(this, new FindBySponsorWithSponsorAdminInDepthCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FindBySponsorBackgroundQuestion", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public SponsorBackgroundQuestion[] FindBySponsorBackgroundQuestion(string token, int sponsorID, int expirationMinutes) {
+            object[] results = this.Invoke("FindBySponsorBackgroundQuestion", new object[] {
+                        token,
+                        sponsorID,
+                        expirationMinutes});
+            return ((SponsorBackgroundQuestion[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void FindBySponsorBackgroundQuestionAsync(string token, int sponsorID, int expirationMinutes) {
+            this.FindBySponsorBackgroundQuestionAsync(token, sponsorID, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void FindBySponsorBackgroundQuestionAsync(string token, int sponsorID, int expirationMinutes, object userState) {
+            if ((this.FindBySponsorBackgroundQuestionOperationCompleted == null)) {
+                this.FindBySponsorBackgroundQuestionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnFindBySponsorBackgroundQuestionOperationCompleted);
+            }
+            this.InvokeAsync("FindBySponsorBackgroundQuestion", new object[] {
+                        token,
+                        sponsorID,
+                        expirationMinutes}, this.FindBySponsorBackgroundQuestionOperationCompleted, userState);
+        }
+        
+        private void OnFindBySponsorBackgroundQuestionOperationCompleted(object arg) {
+            if ((this.FindBySponsorBackgroundQuestionCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.FindBySponsorBackgroundQuestionCompleted(this, new FindBySponsorBackgroundQuestionCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetSponsor", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Sponsor GetSponsor(string token, int sponsorID, int expirationMinutes) {
+            object[] results = this.Invoke("GetSponsor", new object[] {
+                        token,
+                        sponsorID,
+                        expirationMinutes});
+            return ((Sponsor)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetSponsorAsync(string token, int sponsorID, int expirationMinutes) {
+            this.GetSponsorAsync(token, sponsorID, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void GetSponsorAsync(string token, int sponsorID, int expirationMinutes, object userState) {
+            if ((this.GetSponsorOperationCompleted == null)) {
+                this.GetSponsorOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetSponsorOperationCompleted);
+            }
+            this.InvokeAsync("GetSponsor", new object[] {
+                        token,
+                        sponsorID,
+                        expirationMinutes}, this.GetSponsorOperationCompleted, userState);
+        }
+        
+        private void OnGetSponsorOperationCompleted(object arg) {
+            if ((this.GetSponsorCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetSponsorCompleted(this, new GetSponsorCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FindByLanguage", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public PlotTypeLanguage[] FindByLanguage(string token, int LID, int expirationMinutes) {
+            object[] results = this.Invoke("FindByLanguage", new object[] {
+                        token,
+                        LID,
+                        expirationMinutes});
+            return ((PlotTypeLanguage[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void FindByLanguageAsync(string token, int LID, int expirationMinutes) {
+            this.FindByLanguageAsync(token, LID, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void FindByLanguageAsync(string token, int LID, int expirationMinutes, object userState) {
+            if ((this.FindByLanguageOperationCompleted == null)) {
+                this.FindByLanguageOperationCompleted = new System.Threading.SendOrPostCallback(this.OnFindByLanguageOperationCompleted);
+            }
+            this.InvokeAsync("FindByLanguage", new object[] {
+                        token,
+                        LID,
+                        expirationMinutes}, this.FindByLanguageOperationCompleted, userState);
+        }
+        
+        private void OnFindByLanguageOperationCompleted(object arg) {
+            if ((this.FindByLanguageCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.FindByLanguageCompleted(this, new FindByLanguageCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -506,6 +859,9 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Language))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PlotType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PlotTypeLanguage))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(User))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Sponsors))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SponsorAdministrator))]
@@ -570,6 +926,966 @@ namespace HW.Grp.WebService {
             }
             set {
                 this.urlField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class BackgroundQuestion {
+        
+        private string internalField;
+        
+        /// <remarks/>
+        public string Internal {
+            get {
+                return this.internalField;
+            }
+            set {
+                this.internalField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class SponsorBackgroundQuestion {
+        
+        private int idField;
+        
+        private BackgroundQuestion backgroundQuestionField;
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public BackgroundQuestion BackgroundQuestion {
+            get {
+                return this.backgroundQuestionField;
+            }
+            set {
+                this.backgroundQuestionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class SponsorDepartment {
+        
+        private string nameField;
+        
+        private int idField;
+        
+        private string shortNameField;
+        
+        private int depthField;
+        
+        private int siblingsField;
+        
+        private int loginDaysField;
+        
+        private int loginWeekDayField;
+        
+        /// <remarks/>
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ShortName {
+            get {
+                return this.shortNameField;
+            }
+            set {
+                this.shortNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Depth {
+            get {
+                return this.depthField;
+            }
+            set {
+                this.depthField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Siblings {
+            get {
+                return this.siblingsField;
+            }
+            set {
+                this.siblingsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int LoginDays {
+            get {
+                return this.loginDaysField;
+            }
+            set {
+                this.loginDaysField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int LoginWeekDay {
+            get {
+                return this.loginWeekDayField;
+            }
+            set {
+                this.loginWeekDayField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Sponsor {
+        
+        private int sponsorIDField;
+        
+        private string nameField;
+        
+        private int idField;
+        
+        private string applicationField;
+        
+        private int projectRoundUnitIDField;
+        
+        private System.Nullable<System.DateTime> closedField;
+        
+        private System.Nullable<System.DateTime> deletedField;
+        
+        private int superSponsorIDField;
+        
+        private string consentTextField;
+        
+        private string inviteSubjectField;
+        
+        private string inviteTextField;
+        
+        private System.Nullable<System.DateTime> inviteLastSentField;
+        
+        private System.Nullable<System.DateTime> inviteReminderLastSentField;
+        
+        private string inviteReminderSubjectField;
+        
+        private string inviteReminderTextField;
+        
+        private string allMessageSubjectField;
+        
+        private string allMessageBodyField;
+        
+        private System.Nullable<System.DateTime> allMessageLastSentField;
+        
+        private int forceLIDField;
+        
+        private string loginSubjectField;
+        
+        private string loginTextField;
+        
+        private System.Nullable<int> loginDaysField;
+        
+        private System.Nullable<int> loginWeekdayField;
+        
+        private int lIDField;
+        
+        private System.Nullable<System.DateTime> loginLastSentField;
+        
+        private string sponsorKeyField;
+        
+        private int treatmentOfferField;
+        
+        private string treatmentOfferTextField;
+        
+        private string treatmentOfferEmailField;
+        
+        private string treatmentOfferIfNeededTextField;
+        
+        private int treatmentOfferBQField;
+        
+        private int treatmentOfferBQfnField;
+        
+        private int treatmentOfferBQmorethanField;
+        
+        private string infoTextField;
+        
+        private string alternativeTreatmentOfferTextField;
+        
+        private string alternativeTreatmentOfferEmailField;
+        
+        private System.Nullable<System.Guid> sponsorApiKeyField;
+        
+        private int minUserCountToDiscloseField;
+        
+        private string emailFromField;
+        
+        private string commentField;
+        
+        private int defaultPlotTypeField;
+        
+        /// <remarks/>
+        public int SponsorID {
+            get {
+                return this.sponsorIDField;
+            }
+            set {
+                this.sponsorIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Application {
+            get {
+                return this.applicationField;
+            }
+            set {
+                this.applicationField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int ProjectRoundUnitID {
+            get {
+                return this.projectRoundUnitIDField;
+            }
+            set {
+                this.projectRoundUnitIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> Closed {
+            get {
+                return this.closedField;
+            }
+            set {
+                this.closedField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> Deleted {
+            get {
+                return this.deletedField;
+            }
+            set {
+                this.deletedField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int SuperSponsorID {
+            get {
+                return this.superSponsorIDField;
+            }
+            set {
+                this.superSponsorIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ConsentText {
+            get {
+                return this.consentTextField;
+            }
+            set {
+                this.consentTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string InviteSubject {
+            get {
+                return this.inviteSubjectField;
+            }
+            set {
+                this.inviteSubjectField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string InviteText {
+            get {
+                return this.inviteTextField;
+            }
+            set {
+                this.inviteTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> InviteLastSent {
+            get {
+                return this.inviteLastSentField;
+            }
+            set {
+                this.inviteLastSentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> InviteReminderLastSent {
+            get {
+                return this.inviteReminderLastSentField;
+            }
+            set {
+                this.inviteReminderLastSentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string InviteReminderSubject {
+            get {
+                return this.inviteReminderSubjectField;
+            }
+            set {
+                this.inviteReminderSubjectField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string InviteReminderText {
+            get {
+                return this.inviteReminderTextField;
+            }
+            set {
+                this.inviteReminderTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string AllMessageSubject {
+            get {
+                return this.allMessageSubjectField;
+            }
+            set {
+                this.allMessageSubjectField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string AllMessageBody {
+            get {
+                return this.allMessageBodyField;
+            }
+            set {
+                this.allMessageBodyField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> AllMessageLastSent {
+            get {
+                return this.allMessageLastSentField;
+            }
+            set {
+                this.allMessageLastSentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int ForceLID {
+            get {
+                return this.forceLIDField;
+            }
+            set {
+                this.forceLIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string LoginSubject {
+            get {
+                return this.loginSubjectField;
+            }
+            set {
+                this.loginSubjectField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string LoginText {
+            get {
+                return this.loginTextField;
+            }
+            set {
+                this.loginTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> LoginDays {
+            get {
+                return this.loginDaysField;
+            }
+            set {
+                this.loginDaysField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> LoginWeekday {
+            get {
+                return this.loginWeekdayField;
+            }
+            set {
+                this.loginWeekdayField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int LID {
+            get {
+                return this.lIDField;
+            }
+            set {
+                this.lIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> LoginLastSent {
+            get {
+                return this.loginLastSentField;
+            }
+            set {
+                this.loginLastSentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SponsorKey {
+            get {
+                return this.sponsorKeyField;
+            }
+            set {
+                this.sponsorKeyField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int TreatmentOffer {
+            get {
+                return this.treatmentOfferField;
+            }
+            set {
+                this.treatmentOfferField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TreatmentOfferText {
+            get {
+                return this.treatmentOfferTextField;
+            }
+            set {
+                this.treatmentOfferTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TreatmentOfferEmail {
+            get {
+                return this.treatmentOfferEmailField;
+            }
+            set {
+                this.treatmentOfferEmailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TreatmentOfferIfNeededText {
+            get {
+                return this.treatmentOfferIfNeededTextField;
+            }
+            set {
+                this.treatmentOfferIfNeededTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int TreatmentOfferBQ {
+            get {
+                return this.treatmentOfferBQField;
+            }
+            set {
+                this.treatmentOfferBQField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int TreatmentOfferBQfn {
+            get {
+                return this.treatmentOfferBQfnField;
+            }
+            set {
+                this.treatmentOfferBQfnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int TreatmentOfferBQmorethan {
+            get {
+                return this.treatmentOfferBQmorethanField;
+            }
+            set {
+                this.treatmentOfferBQmorethanField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string InfoText {
+            get {
+                return this.infoTextField;
+            }
+            set {
+                this.infoTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string AlternativeTreatmentOfferText {
+            get {
+                return this.alternativeTreatmentOfferTextField;
+            }
+            set {
+                this.alternativeTreatmentOfferTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string AlternativeTreatmentOfferEmail {
+            get {
+                return this.alternativeTreatmentOfferEmailField;
+            }
+            set {
+                this.alternativeTreatmentOfferEmailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.Guid> SponsorApiKey {
+            get {
+                return this.sponsorApiKeyField;
+            }
+            set {
+                this.sponsorApiKeyField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int MinUserCountToDisclose {
+            get {
+                return this.minUserCountToDiscloseField;
+            }
+            set {
+                this.minUserCountToDiscloseField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string EmailFrom {
+            get {
+                return this.emailFromField;
+            }
+            set {
+                this.emailFromField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Comment {
+            get {
+                return this.commentField;
+            }
+            set {
+                this.commentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int DefaultPlotType {
+            get {
+                return this.defaultPlotTypeField;
+            }
+            set {
+                this.defaultPlotTypeField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class SponsorProject {
+        
+        private int idField;
+        
+        private Sponsor sponsorField;
+        
+        private System.Nullable<System.DateTime> startDateField;
+        
+        private System.Nullable<System.DateTime> endDateField;
+        
+        private string subjectField;
+        
+        private string headerField;
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public Sponsor Sponsor {
+            get {
+                return this.sponsorField;
+            }
+            set {
+                this.sponsorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> StartDate {
+            get {
+                return this.startDateField;
+            }
+            set {
+                this.startDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> EndDate {
+            get {
+                return this.endDateField;
+            }
+            set {
+                this.endDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Subject {
+            get {
+                return this.subjectField;
+            }
+            set {
+                this.subjectField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Header {
+            get {
+                return this.headerField;
+            }
+            set {
+                this.headerField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class ReportPart {
+        
+        private int idField;
+        
+        private int typeField;
+        
+        private int reportPartIDField;
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Type {
+            get {
+                return this.typeField;
+            }
+            set {
+                this.typeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int ReportPartID {
+            get {
+                return this.reportPartIDField;
+            }
+            set {
+                this.reportPartIDField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class ReportPartLang {
+        
+        private int idField;
+        
+        private string subjectField;
+        
+        private string headerField;
+        
+        private string footerField;
+        
+        private System.Nullable<System.DateTime> startDateField;
+        
+        private System.Nullable<System.DateTime> endDateField;
+        
+        private ReportPart reportPartField;
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Subject {
+            get {
+                return this.subjectField;
+            }
+            set {
+                this.subjectField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Header {
+            get {
+                return this.headerField;
+            }
+            set {
+                this.headerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Footer {
+            get {
+                return this.footerField;
+            }
+            set {
+                this.footerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> StartDate {
+            get {
+                return this.startDateField;
+            }
+            set {
+                this.startDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> EndDate {
+            get {
+                return this.endDateField;
+            }
+            set {
+                this.endDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ReportPart ReportPart {
+            get {
+                return this.reportPartField;
+            }
+            set {
+                this.reportPartField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SponsorProjectRoundUnit))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class ProjectRoundUnit {
+        
+        private int idField;
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class SponsorProjectRoundUnit : ProjectRoundUnit {
+        
+        private string navigationField;
+        
+        private int projectRoundUnitIDField;
+        
+        private ProjectRoundUnit projectRoundUnit1Field;
+        
+        private int defaultAggregationField;
+        
+        /// <remarks/>
+        public string Navigation {
+            get {
+                return this.navigationField;
+            }
+            set {
+                this.navigationField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int ProjectRoundUnitID {
+            get {
+                return this.projectRoundUnitIDField;
+            }
+            set {
+                this.projectRoundUnitIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ProjectRoundUnit")]
+        public ProjectRoundUnit ProjectRoundUnit1 {
+            get {
+                return this.projectRoundUnit1Field;
+            }
+            set {
+                this.projectRoundUnit1Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int DefaultAggregation {
+            get {
+                return this.defaultAggregationField;
+            }
+            set {
+                this.defaultAggregationField = value;
             }
         }
     }
@@ -814,6 +2130,141 @@ namespace HW.Grp.WebService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Language : BaseModel {
+        
+        private string nameField;
+        
+        /// <remarks/>
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class PlotType : BaseModel {
+        
+        private string nameField;
+        
+        private string descriptionField;
+        
+        /// <remarks/>
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class PlotTypeLanguage : BaseModel {
+        
+        private PlotType plotTypeField;
+        
+        private Language languageField;
+        
+        private string nameField;
+        
+        private string descriptionField;
+        
+        private string shortNameField;
+        
+        private bool supportsMultipleSeriesField;
+        
+        /// <remarks/>
+        public PlotType PlotType {
+            get {
+                return this.plotTypeField;
+            }
+            set {
+                this.plotTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public Language Language {
+            get {
+                return this.languageField;
+            }
+            set {
+                this.languageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ShortName {
+            get {
+                return this.shortNameField;
+            }
+            set {
+                this.shortNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool SupportsMultipleSeries {
+            get {
+                return this.supportsMultipleSeriesField;
+            }
+            set {
+                this.supportsMultipleSeriesField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
     public partial class User : BaseModel {
         
         private System.Nullable<System.DateTime> sentField;
@@ -1041,6 +2492,240 @@ namespace HW.Grp.WebService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((User)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void FindBySponsorAndLanguageCompletedEventHandler(object sender, FindBySponsorAndLanguageCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class FindBySponsorAndLanguageCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal FindBySponsorAndLanguageCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public SponsorProjectRoundUnit[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((SponsorProjectRoundUnit[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void ReadSponsorProjectCompletedEventHandler(object sender, ReadSponsorProjectCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ReadSponsorProjectCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ReadSponsorProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public ReportPartLang Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((ReportPartLang)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void FindSponsorProjectsCompletedEventHandler(object sender, FindSponsorProjectsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class FindSponsorProjectsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal FindSponsorProjectsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public SponsorProject[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((SponsorProject[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void FindByProjectAndLanguageCompletedEventHandler(object sender, FindByProjectAndLanguageCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class FindByProjectAndLanguageCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal FindByProjectAndLanguageCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public ReportPartLang[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((ReportPartLang[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void FindByProjectAndLanguage2CompletedEventHandler(object sender, FindByProjectAndLanguage2CompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class FindByProjectAndLanguage2CompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal FindByProjectAndLanguage2CompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public ReportPartLang[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((ReportPartLang[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void FindBySponsorWithSponsorAdminInDepthCompletedEventHandler(object sender, FindBySponsorWithSponsorAdminInDepthCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class FindBySponsorWithSponsorAdminInDepthCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal FindBySponsorWithSponsorAdminInDepthCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public SponsorDepartment[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((SponsorDepartment[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void FindBySponsorBackgroundQuestionCompletedEventHandler(object sender, FindBySponsorBackgroundQuestionCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class FindBySponsorBackgroundQuestionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal FindBySponsorBackgroundQuestionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public SponsorBackgroundQuestion[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((SponsorBackgroundQuestion[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void GetSponsorCompletedEventHandler(object sender, GetSponsorCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetSponsorCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetSponsorCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Sponsor Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Sponsor)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void FindByLanguageCompletedEventHandler(object sender, FindByLanguageCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class FindByLanguageCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal FindByLanguageCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public PlotTypeLanguage[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((PlotTypeLanguage[])(this.results[0]));
             }
         }
     }
