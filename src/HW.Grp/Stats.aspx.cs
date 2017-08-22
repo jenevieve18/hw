@@ -54,8 +54,7 @@ namespace HW.Grp
 		
 		protected DateTime startDate;
 		protected DateTime endDate;
-        //protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
-        protected int lid = 2;
+        protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
 		protected GrpModel.Sponsor sponsor;
 
         protected string ReportPartID = "";
@@ -214,7 +213,11 @@ namespace HW.Grp
                 default: return new CultureInfo("en-US");
             }
 		}
-		
+		/// <summary>
+        /// This commented function will save the Admin Session of the user.
+        /// </summary>
+        /// <param name="sponsorID"></param>
+        /// <param name="sponsorAdminID"></param>
 		//public void SaveAdminSession(int SponsorAdminSessionID, int ManagerFunction, DateTime date)
 		//{
 		//	sponsorRepo.SaveSponsorAdminSessionFunction(SponsorAdminSessionID, ManagerFunction, date);
@@ -245,6 +248,8 @@ namespace HW.Grp
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit", "Users on unit"), "1"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "users.unit.subunit", "Users on unit+subunits"), "2"));
 					Grouping.Items.Add(new ListItem(R.Str(lid, "background.variable", "Background variable"), "3"));
+                    
+                    /// This function is moved to Grp WS
                     //SponsorProjectRoundUnits = sponsorRepo.FindBySponsorAndLanguage(sponsorID, lid);
 
                     var fbsal = soapService.FindBySponsorAndLanguage(token, sponsorID, lid, 20);
@@ -278,9 +283,9 @@ namespace HW.Grp
                         enumSP.Add(fsp);
                     }
                     SponsorProjects = enumSP;
-
+                    /// This function is moved to Grp WS
                     //SponsorProjects = sponsorProjectRepo.FindSponsorProjects(sponsorID);
-
+                    /// This function is moved to Grp WS
                     //BackgroundQuestions = sponsorBQRepo.FindBySponsor(sponsorID);
 
                     var questions = soapService.FindBySponsorBackgroundQuestion(token, sponsorID, 20);
@@ -301,6 +306,7 @@ namespace HW.Grp
 					startDate = GetDateFromString(Request.Form["startDate"]);
 					endDate = GetDateFromString(Request.Form["endDate"]);
 				}
+                /// This function is moved to Grp WS
                 //Departments = departmentRepository.FindBySponsorWithSponsorAdminInDepth(sponsorID, sponsorAdminID);
 
                 var xdepartment = soapService.FindBySponsorWithSponsorAdminInDepth(token, sponsorID, sponsorAdminID, 20);
@@ -344,12 +350,14 @@ namespace HW.Grp
             sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 			sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
             var token = Session["Token"].ToString();
+            /// This function is moved to Grp WS
             //HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
-
+            /// This function is moved to Grp WS
             //sponsor = sponsorRepo.Read(sponsorID);
             var soapService = new HW.Grp.WebService.Soap();
             sponsor = soapService.GetSponsor(token, sponsorID, 20);
 
+            /// This function is moved to Grp WS
             //var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
             //if (userSession != null)
             //{
@@ -374,10 +382,10 @@ namespace HW.Grp
 
             }
             plotTypes = types;
-			
-			//SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
-			
-			Index(sponsorID, sponsorAdminID);
+            /// This function is commented for saving admin session and will be creating this function soon.
+            //SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Statistics, DateTime.Now);
+
+            Index(sponsorID, sponsorAdminID);
 
             if(reportParts == null)
             {
@@ -839,17 +847,20 @@ namespace HW.Grp
 			if (project.Contains("SPRU")) {
 				int selectedProjectRoundUnitID = ConvertHelper.ToInt32(project.Replace("SPRU", ""));
 				int selectedDepartmentID = departments[0].Id;
+                /// This function is moved to Grp WS
                 //var reportParts = reportRepository.FindByProjectAndLanguage2(selectedProjectRoundUnitID, lid, selectedDepartmentID);
 
-               var reportParts = soapService.FindByProjectAndLanguage2(Session["Token"].ToString(), selectedProjectRoundUnitID, lid, selectedDepartmentID, 20);
+                var reportParts = soapService.FindByProjectAndLanguage2(Session["Token"].ToString(), selectedProjectRoundUnitID, lid, selectedDepartmentID, 20);
 
                 if (reportParts.Count <= 0) {
+                    /// This function is moved to Grp WS
 					//reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, lid);
                     reportParts = soapService.FindByProjectAndLanguage(Session["Token"].ToString(), selectedProjectRoundUnitID, lid, 20);
                 }
 				parts.AddRange(reportParts.AsEnumerable());
 			} else {
 				int sponsorProjectID = ConvertHelper.ToInt32(project.Replace("SP", ""));
+                /// This function is moved to Grp WS
                 //var sponsorProject = sponsorProjectRepo.Read(sponsorProjectID);
                 var sponsorProject = soapService.ReadSponsorProject(Session["Token"].ToString(), sponsorProjectID, 20);
 				parts.Add(sponsorProject);
