@@ -534,8 +534,8 @@ namespace HW.Grp
 
             if (departments.Count > 0)
             {
-                var reportParts = GetReportParts(ProjectRoundUnitID.SelectedValue);
-                SetReportPartLanguages(reportParts, GetUrlModels(grouping));
+                var currentReportParts = GetReportParts(ProjectRoundUnitID.SelectedValue);
+                SetReportPartLanguages(currentReportParts, GetUrlModels(grouping));
             }
 
             /// <summary>
