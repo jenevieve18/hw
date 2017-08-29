@@ -118,6 +118,27 @@
           <s:element minOccurs="1" maxOccurs="1" name="DepthX" type="s:int" />
         </s:sequence>
       </s:complexType>
+      <s:element name="GetCheckReturnIpAddress">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ipAddress" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCheckReturnIpAddressResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCheckReturnIpAddressResult" type="tns:Realm" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Realm">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="SponsorId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="RealmType" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="RealmIdentifier" type="s:string" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="GetUsersInDepartment">
         <s:complexType>
           <s:sequence>
@@ -548,6 +569,7 @@
       </s:complexType>
       <s:element name="SponsorAdministrator" nillable="true" type="tns:SponsorAdministrator" />
       <s:element name="DepartmentTree" nillable="true" type="tns:DepartmentTree" />
+      <s:element name="Realm" nillable="true" type="tns:Realm" />
       <s:element name="ArrayOfUser" nillable="true" type="tns:ArrayOfUser" />
       <s:element name="User" nillable="true" type="tns:User" />
       <s:element name="ArrayOfSponsorProjectRoundUnit" nillable="true" type="tns:ArrayOfSponsorProjectRoundUnit" />
@@ -586,6 +608,12 @@
   </wsdl:message>
   <wsdl:message name="GetDepartmentTreeSoapOut">
     <wsdl:part name="parameters" element="tns:GetDepartmentTreeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCheckReturnIpAddressSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCheckReturnIpAddress" />
+  </wsdl:message>
+  <wsdl:message name="GetCheckReturnIpAddressSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCheckReturnIpAddressResponse" />
   </wsdl:message>
   <wsdl:message name="GetUsersInDepartmentSoapIn">
     <wsdl:part name="parameters" element="tns:GetUsersInDepartment" />
@@ -687,6 +715,12 @@
   </wsdl:message>
   <wsdl:message name="GetDepartmentTreeHttpPostOut">
     <wsdl:part name="Body" element="tns:DepartmentTree" />
+  </wsdl:message>
+  <wsdl:message name="GetCheckReturnIpAddressHttpPostIn">
+    <wsdl:part name="ipAddress" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCheckReturnIpAddressHttpPostOut">
+    <wsdl:part name="Body" element="tns:Realm" />
   </wsdl:message>
   <wsdl:message name="GetUsersInDepartmentHttpPostIn">
     <wsdl:part name="token" type="s:string" />
@@ -820,6 +854,11 @@
       <wsdl:input message="tns:GetDepartmentTreeSoapIn" />
       <wsdl:output message="tns:GetDepartmentTreeSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="GetCheckReturnIpAddress">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">GetReturnIpAddress check if that Ip address is realm identifier/If the sponsorId,RealmIdentifier,RealmType has valuew means part of realm </wsdl:documentation>
+      <wsdl:input message="tns:GetCheckReturnIpAddressSoapIn" />
+      <wsdl:output message="tns:GetCheckReturnIpAddressSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetUsersInDepartment">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate a list of users under a specific department</wsdl:documentation>
       <wsdl:input message="tns:GetUsersInDepartmentSoapIn" />
@@ -831,38 +870,47 @@
       <wsdl:output message="tns:GetUserInfoSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FindBySponsorAndLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will find (Navigation, ProjectRoundUnitID, DefaultAggregation, ProjectRoundUnit) which will be using for filling in the fields on Survey dropdown list using sponsorID and langID</wsdl:documentation>
       <wsdl:input message="tns:FindBySponsorAndLanguageSoapIn" />
       <wsdl:output message="tns:FindBySponsorAndLanguageSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="ReadSponsorProject">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the data for ReportPartLang.</wsdl:documentation>
       <wsdl:input message="tns:ReadSponsorProjectSoapIn" />
       <wsdl:output message="tns:ReadSponsorProjectSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FindSponsorProjects">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get data for SponsorProject.</wsdl:documentation>
       <wsdl:input message="tns:FindSponsorProjectsSoapIn" />
       <wsdl:output message="tns:FindSponsorProjectsSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FindByProjectAndLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the SponsorProjectUnit.</wsdl:documentation>
       <wsdl:input message="tns:FindByProjectAndLanguageSoapIn" />
       <wsdl:output message="tns:FindByProjectAndLanguageSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FindByProjectAndLanguage2">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the SponsorProjectUnit.  The only difference with the other one is that it has departmentID parameter.</wsdl:documentation>
       <wsdl:input message="tns:FindByProjectAndLanguage2SoapIn" />
       <wsdl:output message="tns:FindByProjectAndLanguage2SoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FindBySponsorWithSponsorAdminInDepth">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the depth of each department.</wsdl:documentation>
       <wsdl:input message="tns:FindBySponsorWithSponsorAdminInDepthSoapIn" />
       <wsdl:output message="tns:FindBySponsorWithSponsorAdminInDepthSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FindBySponsorBackgroundQuestion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the background questions.</wsdl:documentation>
       <wsdl:input message="tns:FindBySponsorBackgroundQuestionSoapIn" />
       <wsdl:output message="tns:FindBySponsorBackgroundQuestionSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="GetSponsor">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the user's sponsor details.</wsdl:documentation>
       <wsdl:input message="tns:GetSponsorSoapIn" />
       <wsdl:output message="tns:GetSponsorSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FindByLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the PlotTypeLanguage details using the language ID</wsdl:documentation>
       <wsdl:input message="tns:FindByLanguageSoapIn" />
       <wsdl:output message="tns:FindByLanguageSoapOut" />
     </wsdl:operation>
@@ -892,6 +940,11 @@
       <wsdl:input message="tns:GetDepartmentTreeHttpPostIn" />
       <wsdl:output message="tns:GetDepartmentTreeHttpPostOut" />
     </wsdl:operation>
+    <wsdl:operation name="GetCheckReturnIpAddress">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">GetReturnIpAddress check if that Ip address is realm identifier/If the sponsorId,RealmIdentifier,RealmType has valuew means part of realm </wsdl:documentation>
+      <wsdl:input message="tns:GetCheckReturnIpAddressHttpPostIn" />
+      <wsdl:output message="tns:GetCheckReturnIpAddressHttpPostOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetUsersInDepartment">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate a list of users under a specific department</wsdl:documentation>
       <wsdl:input message="tns:GetUsersInDepartmentHttpPostIn" />
@@ -903,38 +956,47 @@
       <wsdl:output message="tns:GetUserInfoHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FindBySponsorAndLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will find (Navigation, ProjectRoundUnitID, DefaultAggregation, ProjectRoundUnit) which will be using for filling in the fields on Survey dropdown list using sponsorID and langID</wsdl:documentation>
       <wsdl:input message="tns:FindBySponsorAndLanguageHttpPostIn" />
       <wsdl:output message="tns:FindBySponsorAndLanguageHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="ReadSponsorProject">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the data for ReportPartLang.</wsdl:documentation>
       <wsdl:input message="tns:ReadSponsorProjectHttpPostIn" />
       <wsdl:output message="tns:ReadSponsorProjectHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FindSponsorProjects">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get data for SponsorProject.</wsdl:documentation>
       <wsdl:input message="tns:FindSponsorProjectsHttpPostIn" />
       <wsdl:output message="tns:FindSponsorProjectsHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FindByProjectAndLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the SponsorProjectUnit.</wsdl:documentation>
       <wsdl:input message="tns:FindByProjectAndLanguageHttpPostIn" />
       <wsdl:output message="tns:FindByProjectAndLanguageHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FindByProjectAndLanguage2">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the SponsorProjectUnit.  The only difference with the other one is that it has departmentID parameter.</wsdl:documentation>
       <wsdl:input message="tns:FindByProjectAndLanguage2HttpPostIn" />
       <wsdl:output message="tns:FindByProjectAndLanguage2HttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FindBySponsorWithSponsorAdminInDepth">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the depth of each department.</wsdl:documentation>
       <wsdl:input message="tns:FindBySponsorWithSponsorAdminInDepthHttpPostIn" />
       <wsdl:output message="tns:FindBySponsorWithSponsorAdminInDepthHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FindBySponsorBackgroundQuestion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the background questions.</wsdl:documentation>
       <wsdl:input message="tns:FindBySponsorBackgroundQuestionHttpPostIn" />
       <wsdl:output message="tns:FindBySponsorBackgroundQuestionHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="GetSponsor">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the user's sponsor details.</wsdl:documentation>
       <wsdl:input message="tns:GetSponsorHttpPostIn" />
       <wsdl:output message="tns:GetSponsorHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FindByLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the PlotTypeLanguage details using the language ID</wsdl:documentation>
       <wsdl:input message="tns:FindByLanguageHttpPostIn" />
       <wsdl:output message="tns:FindByLanguageHttpPostOut" />
     </wsdl:operation>
@@ -971,6 +1033,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetDepartmentTree">
       <soap:operation soapAction="http://tempuri.org/GetDepartmentTree" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckReturnIpAddress">
+      <soap:operation soapAction="http://tempuri.org/GetCheckReturnIpAddress" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1125,6 +1196,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetCheckReturnIpAddress">
+      <soap12:operation soapAction="http://tempuri.org/GetCheckReturnIpAddress" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetUsersInDepartment">
       <soap12:operation soapAction="http://tempuri.org/GetUsersInDepartment" style="document" />
       <wsdl:input>
@@ -1272,6 +1352,15 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetCheckReturnIpAddress">
+      <http:operation location="/GetCheckReturnIpAddress" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetUsersInDepartment">
       <http:operation location="/GetUsersInDepartment" />
       <wsdl:input>
@@ -1392,13 +1481,13 @@
   </wsdl:binding>
   <wsdl:service name="Soap">
     <wsdl:port name="SoapSoap" binding="tns:SoapSoap">
-      <soap:address location="http://localhost:53850/default.asmx" />
+      <soap:address location="http://localhost:5677/Default.asmx" />
     </wsdl:port>
     <wsdl:port name="SoapSoap12" binding="tns:SoapSoap12">
-      <soap12:address location="http://localhost:53850/default.asmx" />
+      <soap12:address location="http://localhost:5677/Default.asmx" />
     </wsdl:port>
     <wsdl:port name="SoapHttpPost" binding="tns:SoapHttpPost">
-      <http:address location="http://localhost:53850/default.asmx" />
+      <http:address location="http://localhost:5677/Default.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
