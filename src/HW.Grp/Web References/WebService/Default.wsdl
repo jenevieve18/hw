@@ -517,6 +517,22 @@
           </s:extension>
         </s:complexContent>
       </s:complexType>
+      <s:element name="ConsumeSignedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorAdminID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="samlParameter" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsumeSignedResponseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsumeSignedResponseResult" type="tns:SponsorAdministrator" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="ManagerLogOut">
         <s:complexType>
           <s:sequence>
@@ -681,6 +697,12 @@
   <wsdl:message name="FindByLanguageSoapOut">
     <wsdl:part name="parameters" element="tns:FindByLanguageResponse" />
   </wsdl:message>
+  <wsdl:message name="ConsumeSignedResponseSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsumeSignedResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsumeSignedResponseSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsumeSignedResponseResponse" />
+  </wsdl:message>
   <wsdl:message name="ManagerLogOutSoapIn">
     <wsdl:part name="parameters" element="tns:ManagerLogOut" />
   </wsdl:message>
@@ -816,6 +838,14 @@
   <wsdl:message name="FindByLanguageHttpPostOut">
     <wsdl:part name="Body" element="tns:ArrayOfPlotTypeLanguage" />
   </wsdl:message>
+  <wsdl:message name="ConsumeSignedResponseHttpPostIn">
+    <wsdl:part name="sponsorAdminID" type="s:string" />
+    <wsdl:part name="samlParameter" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ConsumeSignedResponseHttpPostOut">
+    <wsdl:part name="Body" element="tns:SponsorAdministrator" />
+  </wsdl:message>
   <wsdl:message name="ManagerLogOutHttpPostIn">
     <wsdl:part name="token" type="s:string" />
   </wsdl:message>
@@ -914,6 +944,11 @@
       <wsdl:input message="tns:FindByLanguageSoapIn" />
       <wsdl:output message="tns:FindByLanguageSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="ConsumeSignedResponse">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will validate the SAML and check the value if it is a valid sponsor.</wsdl:documentation>
+      <wsdl:input message="tns:ConsumeSignedResponseSoapIn" />
+      <wsdl:output message="tns:ConsumeSignedResponseSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="ManagerLogOut">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
       <wsdl:input message="tns:ManagerLogOutSoapIn" />
@@ -999,6 +1034,11 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the PlotTypeLanguage details using the language ID</wsdl:documentation>
       <wsdl:input message="tns:FindByLanguageHttpPostIn" />
       <wsdl:output message="tns:FindByLanguageHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsumeSignedResponse">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will validate the SAML and check the value if it is a valid sponsor.</wsdl:documentation>
+      <wsdl:input message="tns:ConsumeSignedResponseHttpPostIn" />
+      <wsdl:output message="tns:ConsumeSignedResponseHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="ManagerLogOut">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
@@ -1141,6 +1181,15 @@
     </wsdl:operation>
     <wsdl:operation name="FindByLanguage">
       <soap:operation soapAction="http://tempuri.org/FindByLanguage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsumeSignedResponse">
+      <soap:operation soapAction="http://tempuri.org/ConsumeSignedResponse" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1304,6 +1353,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ConsumeSignedResponse">
+      <soap12:operation soapAction="http://tempuri.org/ConsumeSignedResponse" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ManagerLogOut">
       <soap12:operation soapAction="http://tempuri.org/ManagerLogOut" style="document" />
       <wsdl:input>
@@ -1453,6 +1511,15 @@
     </wsdl:operation>
     <wsdl:operation name="FindByLanguage">
       <http:operation location="/FindByLanguage" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsumeSignedResponse">
+      <http:operation location="/ConsumeSignedResponse" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

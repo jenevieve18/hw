@@ -23,7 +23,7 @@ namespace HW.Grp.WebService {
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="SoapSoap", Namespace="http://tempuri.org/")]
@@ -59,6 +59,8 @@ namespace HW.Grp.WebService {
         private System.Threading.SendOrPostCallback GetSponsorOperationCompleted;
         
         private System.Threading.SendOrPostCallback FindByLanguageOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback ConsumeSignedResponseOperationCompleted;
         
         private System.Threading.SendOrPostCallback ManagerLogOutOperationCompleted;
         
@@ -146,6 +148,9 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         public event FindByLanguageCompletedEventHandler FindByLanguageCompleted;
+        
+        /// <remarks/>
+        public event ConsumeSignedResponseCompletedEventHandler ConsumeSignedResponseCompleted;
         
         /// <remarks/>
         public event ManagerLogOutCompletedEventHandler ManagerLogOutCompleted;
@@ -651,6 +656,39 @@ namespace HW.Grp.WebService {
             if ((this.FindByLanguageCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.FindByLanguageCompleted(this, new FindByLanguageCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ConsumeSignedResponse", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public SponsorAdministrator ConsumeSignedResponse(int sponsorAdminID, string samlParameter, int expirationMinutes) {
+            object[] results = this.Invoke("ConsumeSignedResponse", new object[] {
+                        sponsorAdminID,
+                        samlParameter,
+                        expirationMinutes});
+            return ((SponsorAdministrator)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ConsumeSignedResponseAsync(int sponsorAdminID, string samlParameter, int expirationMinutes) {
+            this.ConsumeSignedResponseAsync(sponsorAdminID, samlParameter, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void ConsumeSignedResponseAsync(int sponsorAdminID, string samlParameter, int expirationMinutes, object userState) {
+            if ((this.ConsumeSignedResponseOperationCompleted == null)) {
+                this.ConsumeSignedResponseOperationCompleted = new System.Threading.SendOrPostCallback(this.OnConsumeSignedResponseOperationCompleted);
+            }
+            this.InvokeAsync("ConsumeSignedResponse", new object[] {
+                        sponsorAdminID,
+                        samlParameter,
+                        expirationMinutes}, this.ConsumeSignedResponseOperationCompleted, userState);
+        }
+        
+        private void OnConsumeSignedResponseOperationCompleted(object arg) {
+            if ((this.ConsumeSignedResponseCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ConsumeSignedResponseCompleted(this, new ConsumeSignedResponseCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -2445,11 +2483,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void ManagerLoginCompletedEventHandler(object sender, ManagerLoginCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ManagerLoginCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2471,11 +2509,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void SuperAdminTokenCompletedEventHandler(object sender, SuperAdminTokenCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SuperAdminTokenCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2497,11 +2535,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void GetDepartmentTreeCompletedEventHandler(object sender, GetDepartmentTreeCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetDepartmentTreeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2523,11 +2561,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void GetCheckReturnIpAddressCompletedEventHandler(object sender, GetCheckReturnIpAddressCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetCheckReturnIpAddressCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2549,11 +2587,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void GetUsersInDepartmentCompletedEventHandler(object sender, GetUsersInDepartmentCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetUsersInDepartmentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2575,11 +2613,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void GetUserInfoCompletedEventHandler(object sender, GetUserInfoCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetUserInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2601,11 +2639,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void FindBySponsorAndLanguageCompletedEventHandler(object sender, FindBySponsorAndLanguageCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class FindBySponsorAndLanguageCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2627,11 +2665,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void ReadSponsorProjectCompletedEventHandler(object sender, ReadSponsorProjectCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ReadSponsorProjectCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2653,11 +2691,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void FindSponsorProjectsCompletedEventHandler(object sender, FindSponsorProjectsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class FindSponsorProjectsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2679,11 +2717,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void FindByProjectAndLanguageCompletedEventHandler(object sender, FindByProjectAndLanguageCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class FindByProjectAndLanguageCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2705,11 +2743,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void FindByProjectAndLanguage2CompletedEventHandler(object sender, FindByProjectAndLanguage2CompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class FindByProjectAndLanguage2CompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2731,11 +2769,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void FindBySponsorWithSponsorAdminInDepthCompletedEventHandler(object sender, FindBySponsorWithSponsorAdminInDepthCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class FindBySponsorWithSponsorAdminInDepthCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2757,11 +2795,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void FindBySponsorBackgroundQuestionCompletedEventHandler(object sender, FindBySponsorBackgroundQuestionCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class FindBySponsorBackgroundQuestionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2783,11 +2821,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void GetSponsorCompletedEventHandler(object sender, GetSponsorCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetSponsorCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2809,11 +2847,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void FindByLanguageCompletedEventHandler(object sender, FindByLanguageCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class FindByLanguageCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2835,11 +2873,37 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void ConsumeSignedResponseCompletedEventHandler(object sender, ConsumeSignedResponseCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ConsumeSignedResponseCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ConsumeSignedResponseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public SponsorAdministrator Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((SponsorAdministrator)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void ManagerLogOutCompletedEventHandler(object sender, ManagerLogOutCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ManagerLogOutCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -2861,11 +2925,11 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void GetReportImageUrlCompletedEventHandler(object sender, GetReportImageUrlCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetReportImageUrlCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
