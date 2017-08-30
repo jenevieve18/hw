@@ -121,7 +121,7 @@
       <s:element name="GetCheckReturnIpAddress">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="ipAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ip" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -520,7 +520,7 @@
       <s:element name="ConsumeSignedResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="sponsorAdminID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
             <s:element minOccurs="0" maxOccurs="1" name="samlParameter" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
           </s:sequence>
@@ -739,7 +739,7 @@
     <wsdl:part name="Body" element="tns:DepartmentTree" />
   </wsdl:message>
   <wsdl:message name="GetCheckReturnIpAddressHttpPostIn">
-    <wsdl:part name="ipAddress" type="s:string" />
+    <wsdl:part name="ip" type="s:string" />
   </wsdl:message>
   <wsdl:message name="GetCheckReturnIpAddressHttpPostOut">
     <wsdl:part name="Body" element="tns:Realm" />
@@ -839,7 +839,7 @@
     <wsdl:part name="Body" element="tns:ArrayOfPlotTypeLanguage" />
   </wsdl:message>
   <wsdl:message name="ConsumeSignedResponseHttpPostIn">
-    <wsdl:part name="sponsorAdminID" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
     <wsdl:part name="samlParameter" type="s:string" />
     <wsdl:part name="expirationMinutes" type="s:string" />
   </wsdl:message>

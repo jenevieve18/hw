@@ -257,24 +257,24 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetCheckReturnIpAddress", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public Realm GetCheckReturnIpAddress(string ipAddress) {
+        public Realm GetCheckReturnIpAddress(string ip) {
             object[] results = this.Invoke("GetCheckReturnIpAddress", new object[] {
-                        ipAddress});
+                        ip});
             return ((Realm)(results[0]));
         }
         
         /// <remarks/>
-        public void GetCheckReturnIpAddressAsync(string ipAddress) {
-            this.GetCheckReturnIpAddressAsync(ipAddress, null);
+        public void GetCheckReturnIpAddressAsync(string ip) {
+            this.GetCheckReturnIpAddressAsync(ip, null);
         }
         
         /// <remarks/>
-        public void GetCheckReturnIpAddressAsync(string ipAddress, object userState) {
+        public void GetCheckReturnIpAddressAsync(string ip, object userState) {
             if ((this.GetCheckReturnIpAddressOperationCompleted == null)) {
                 this.GetCheckReturnIpAddressOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetCheckReturnIpAddressOperationCompleted);
             }
             this.InvokeAsync("GetCheckReturnIpAddress", new object[] {
-                        ipAddress}, this.GetCheckReturnIpAddressOperationCompleted, userState);
+                        ip}, this.GetCheckReturnIpAddressOperationCompleted, userState);
         }
         
         private void OnGetCheckReturnIpAddressOperationCompleted(object arg) {
@@ -661,26 +661,26 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ConsumeSignedResponse", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public SponsorAdministrator ConsumeSignedResponse(int sponsorAdminID, string samlParameter, int expirationMinutes) {
+        public SponsorAdministrator ConsumeSignedResponse(int sponsorID, string samlParameter, int expirationMinutes) {
             object[] results = this.Invoke("ConsumeSignedResponse", new object[] {
-                        sponsorAdminID,
+                        sponsorID,
                         samlParameter,
                         expirationMinutes});
             return ((SponsorAdministrator)(results[0]));
         }
         
         /// <remarks/>
-        public void ConsumeSignedResponseAsync(int sponsorAdminID, string samlParameter, int expirationMinutes) {
-            this.ConsumeSignedResponseAsync(sponsorAdminID, samlParameter, expirationMinutes, null);
+        public void ConsumeSignedResponseAsync(int sponsorID, string samlParameter, int expirationMinutes) {
+            this.ConsumeSignedResponseAsync(sponsorID, samlParameter, expirationMinutes, null);
         }
         
         /// <remarks/>
-        public void ConsumeSignedResponseAsync(int sponsorAdminID, string samlParameter, int expirationMinutes, object userState) {
+        public void ConsumeSignedResponseAsync(int sponsorID, string samlParameter, int expirationMinutes, object userState) {
             if ((this.ConsumeSignedResponseOperationCompleted == null)) {
                 this.ConsumeSignedResponseOperationCompleted = new System.Threading.SendOrPostCallback(this.OnConsumeSignedResponseOperationCompleted);
             }
             this.InvokeAsync("ConsumeSignedResponse", new object[] {
-                        sponsorAdminID,
+                        sponsorID,
                         samlParameter,
                         expirationMinutes}, this.ConsumeSignedResponseOperationCompleted, userState);
         }

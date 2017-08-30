@@ -13,7 +13,7 @@ using HW.Core.Repositories.Sql;
 using HW.Core.Helpers;
 using HW.Grp.WebService;
 using System.IO;
-using HW.Core.Util;
+using HW.Core.Util.Saml;
 using System.Configuration;
 
 namespace HW.Grp
@@ -251,7 +251,7 @@ namespace HW.Grp
                         // create saml request to IDP
                         var samlEndPoint = ConfigurationManager.AppSettings["SAMLEndpoint"].ToString();
 
-                        var request = new Saml.AuthRequest(
+                        var request = new AuthRequest(
                             ConfigurationManager.AppSettings["SAMLIssuer"].ToString(),
                             ConfigurationManager.AppSettings["SAMLAssertionURL"].ToString()
                             );
