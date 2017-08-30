@@ -90,6 +90,7 @@
       <s:complexType name="DepartmentTree">
         <s:sequence>
           <s:element minOccurs="1" maxOccurs="1" name="SponsorID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="HideEmail" type="s:int" />
           <s:element minOccurs="1" maxOccurs="1" name="TotalCount" type="s:int" />
           <s:element minOccurs="0" maxOccurs="1" name="TotalCountReceiveInvitation" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Departments" type="tns:ArrayOfDepartment" />
@@ -831,38 +832,47 @@
       <wsdl:output message="tns:GetUserInfoSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FindBySponsorAndLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will find (Navigation, ProjectRoundUnitID, DefaultAggregation, ProjectRoundUnit) which will be using for filling in the fields on Survey dropdown list using sponsorID and langID</wsdl:documentation>
       <wsdl:input message="tns:FindBySponsorAndLanguageSoapIn" />
       <wsdl:output message="tns:FindBySponsorAndLanguageSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="ReadSponsorProject">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the data for ReportPartLang.</wsdl:documentation>
       <wsdl:input message="tns:ReadSponsorProjectSoapIn" />
       <wsdl:output message="tns:ReadSponsorProjectSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FindSponsorProjects">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get data for SponsorProject.</wsdl:documentation>
       <wsdl:input message="tns:FindSponsorProjectsSoapIn" />
       <wsdl:output message="tns:FindSponsorProjectsSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FindByProjectAndLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the SponsorProjectUnit.</wsdl:documentation>
       <wsdl:input message="tns:FindByProjectAndLanguageSoapIn" />
       <wsdl:output message="tns:FindByProjectAndLanguageSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FindByProjectAndLanguage2">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the SponsorProjectUnit.  The only difference with the other one is that it has departmentID parameter.</wsdl:documentation>
       <wsdl:input message="tns:FindByProjectAndLanguage2SoapIn" />
       <wsdl:output message="tns:FindByProjectAndLanguage2SoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FindBySponsorWithSponsorAdminInDepth">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the depth of each department.</wsdl:documentation>
       <wsdl:input message="tns:FindBySponsorWithSponsorAdminInDepthSoapIn" />
       <wsdl:output message="tns:FindBySponsorWithSponsorAdminInDepthSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FindBySponsorBackgroundQuestion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the background questions.</wsdl:documentation>
       <wsdl:input message="tns:FindBySponsorBackgroundQuestionSoapIn" />
       <wsdl:output message="tns:FindBySponsorBackgroundQuestionSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="GetSponsor">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the user's sponsor details.</wsdl:documentation>
       <wsdl:input message="tns:GetSponsorSoapIn" />
       <wsdl:output message="tns:GetSponsorSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FindByLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the PlotTypeLanguage details using the language ID</wsdl:documentation>
       <wsdl:input message="tns:FindByLanguageSoapIn" />
       <wsdl:output message="tns:FindByLanguageSoapOut" />
     </wsdl:operation>
@@ -903,38 +913,47 @@
       <wsdl:output message="tns:GetUserInfoHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FindBySponsorAndLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will find (Navigation, ProjectRoundUnitID, DefaultAggregation, ProjectRoundUnit) which will be using for filling in the fields on Survey dropdown list using sponsorID and langID</wsdl:documentation>
       <wsdl:input message="tns:FindBySponsorAndLanguageHttpPostIn" />
       <wsdl:output message="tns:FindBySponsorAndLanguageHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="ReadSponsorProject">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the data for ReportPartLang.</wsdl:documentation>
       <wsdl:input message="tns:ReadSponsorProjectHttpPostIn" />
       <wsdl:output message="tns:ReadSponsorProjectHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FindSponsorProjects">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get data for SponsorProject.</wsdl:documentation>
       <wsdl:input message="tns:FindSponsorProjectsHttpPostIn" />
       <wsdl:output message="tns:FindSponsorProjectsHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FindByProjectAndLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the SponsorProjectUnit.</wsdl:documentation>
       <wsdl:input message="tns:FindByProjectAndLanguageHttpPostIn" />
       <wsdl:output message="tns:FindByProjectAndLanguageHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FindByProjectAndLanguage2">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the SponsorProjectUnit.  The only difference with the other one is that it has departmentID parameter.</wsdl:documentation>
       <wsdl:input message="tns:FindByProjectAndLanguage2HttpPostIn" />
       <wsdl:output message="tns:FindByProjectAndLanguage2HttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FindBySponsorWithSponsorAdminInDepth">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the depth of each department.</wsdl:documentation>
       <wsdl:input message="tns:FindBySponsorWithSponsorAdminInDepthHttpPostIn" />
       <wsdl:output message="tns:FindBySponsorWithSponsorAdminInDepthHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FindBySponsorBackgroundQuestion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the background questions.</wsdl:documentation>
       <wsdl:input message="tns:FindBySponsorBackgroundQuestionHttpPostIn" />
       <wsdl:output message="tns:FindBySponsorBackgroundQuestionHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="GetSponsor">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the user's sponsor details.</wsdl:documentation>
       <wsdl:input message="tns:GetSponsorHttpPostIn" />
       <wsdl:output message="tns:GetSponsorHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FindByLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the PlotTypeLanguage details using the language ID</wsdl:documentation>
       <wsdl:input message="tns:FindByLanguageHttpPostIn" />
       <wsdl:output message="tns:FindByLanguageHttpPostOut" />
     </wsdl:operation>
@@ -1392,13 +1411,13 @@
   </wsdl:binding>
   <wsdl:service name="Soap">
     <wsdl:port name="SoapSoap" binding="tns:SoapSoap">
-      <soap:address location="http://localhost:53850/default.asmx" />
+      <soap:address location="http://localhost:53850/Default.asmx" />
     </wsdl:port>
     <wsdl:port name="SoapSoap12" binding="tns:SoapSoap12">
-      <soap12:address location="http://localhost:53850/default.asmx" />
+      <soap12:address location="http://localhost:53850/Default.asmx" />
     </wsdl:port>
     <wsdl:port name="SoapHttpPost" binding="tns:SoapHttpPost">
-      <http:address location="http://localhost:53850/default.asmx" />
+      <http:address location="http://localhost:53850/Default.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

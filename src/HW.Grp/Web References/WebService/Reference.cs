@@ -20,9 +20,8 @@ namespace HW.Grp.WebService {
     using System.Web.Services.Protocols;
     using System.Xml.Serialization;
     using System.ComponentModel;
-    using System.Collections.Generic;
-
-
+    
+    
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -417,13 +416,13 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FindByProjectAndLanguage", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public List<ReportPartLang> FindByProjectAndLanguage(string token, int projectRoundUnitID, int langID, int expirationMinutes) {
+        public ReportPartLang[] FindByProjectAndLanguage(string token, int projectRoundUnitID, int langID, int expirationMinutes) {
             object[] results = this.Invoke("FindByProjectAndLanguage", new object[] {
                         token,
                         projectRoundUnitID,
                         langID,
                         expirationMinutes});
-            return ((List<ReportPartLang>)(results[0]));
+            return ((ReportPartLang[])(results[0]));
         }
         
         /// <remarks/>
@@ -452,14 +451,14 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FindByProjectAndLanguage2", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public List<ReportPartLang> FindByProjectAndLanguage2(string token, int projectRoundUnitID, int langID, int departmentID, int expirationMinutes) {
+        public ReportPartLang[] FindByProjectAndLanguage2(string token, int projectRoundUnitID, int langID, int departmentID, int expirationMinutes) {
             object[] results = this.Invoke("FindByProjectAndLanguage2", new object[] {
                         token,
                         projectRoundUnitID,
                         langID,
                         departmentID,
                         expirationMinutes});
-            return ((List<ReportPartLang>)(results[0]));
+            return ((ReportPartLang[])(results[0]));
         }
         
         /// <remarks/>
@@ -2077,6 +2076,8 @@ namespace HW.Grp.WebService {
         
         private int sponsorIDField;
         
+        private int hideEmailField;
+        
         private int totalCountField;
         
         private string totalCountReceiveInvitationField;
@@ -2090,6 +2091,16 @@ namespace HW.Grp.WebService {
             }
             set {
                 this.sponsorIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int HideEmail {
+            get {
+                return this.hideEmailField;
+            }
+            set {
+                this.hideEmailField = value;
             }
         }
         
