@@ -20,9 +20,8 @@ namespace HW.Grp.WebService {
     using System.Web.Services.Protocols;
     using System.Xml.Serialization;
     using System.ComponentModel;
-    using System.Collections.Generic;
-
-
+    
+    
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -36,6 +35,8 @@ namespace HW.Grp.WebService {
         private System.Threading.SendOrPostCallback SuperAdminTokenOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetDepartmentTreeOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetCheckReturnIpAddressOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetUsersInDepartmentOperationCompleted;
         
@@ -58,6 +59,8 @@ namespace HW.Grp.WebService {
         private System.Threading.SendOrPostCallback GetSponsorOperationCompleted;
         
         private System.Threading.SendOrPostCallback FindByLanguageOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback ConsumeSignedResponseOperationCompleted;
         
         private System.Threading.SendOrPostCallback ManagerLogOutOperationCompleted;
         
@@ -111,6 +114,9 @@ namespace HW.Grp.WebService {
         public event GetDepartmentTreeCompletedEventHandler GetDepartmentTreeCompleted;
         
         /// <remarks/>
+        public event GetCheckReturnIpAddressCompletedEventHandler GetCheckReturnIpAddressCompleted;
+        
+        /// <remarks/>
         public event GetUsersInDepartmentCompletedEventHandler GetUsersInDepartmentCompleted;
         
         /// <remarks/>
@@ -142,6 +148,9 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         public event FindByLanguageCompletedEventHandler FindByLanguageCompleted;
+        
+        /// <remarks/>
+        public event ConsumeSignedResponseCompletedEventHandler ConsumeSignedResponseCompleted;
         
         /// <remarks/>
         public event ManagerLogOutCompletedEventHandler ManagerLogOutCompleted;
@@ -243,6 +252,35 @@ namespace HW.Grp.WebService {
             if ((this.GetDepartmentTreeCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetDepartmentTreeCompleted(this, new GetDepartmentTreeCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetCheckReturnIpAddress", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Realm GetCheckReturnIpAddress(string ip) {
+            object[] results = this.Invoke("GetCheckReturnIpAddress", new object[] {
+                        ip});
+            return ((Realm)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetCheckReturnIpAddressAsync(string ip) {
+            this.GetCheckReturnIpAddressAsync(ip, null);
+        }
+        
+        /// <remarks/>
+        public void GetCheckReturnIpAddressAsync(string ip, object userState) {
+            if ((this.GetCheckReturnIpAddressOperationCompleted == null)) {
+                this.GetCheckReturnIpAddressOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetCheckReturnIpAddressOperationCompleted);
+            }
+            this.InvokeAsync("GetCheckReturnIpAddress", new object[] {
+                        ip}, this.GetCheckReturnIpAddressOperationCompleted, userState);
+        }
+        
+        private void OnGetCheckReturnIpAddressOperationCompleted(object arg) {
+            if ((this.GetCheckReturnIpAddressCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetCheckReturnIpAddressCompleted(this, new GetCheckReturnIpAddressCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -417,13 +455,13 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FindByProjectAndLanguage", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public List<ReportPartLang> FindByProjectAndLanguage(string token, int projectRoundUnitID, int langID, int expirationMinutes) {
+        public ReportPartLang[] FindByProjectAndLanguage(string token, int projectRoundUnitID, int langID, int expirationMinutes) {
             object[] results = this.Invoke("FindByProjectAndLanguage", new object[] {
                         token,
                         projectRoundUnitID,
                         langID,
                         expirationMinutes});
-            return ((List<ReportPartLang>)(results[0]));
+            return ((ReportPartLang[])(results[0]));
         }
         
         /// <remarks/>
@@ -452,14 +490,14 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FindByProjectAndLanguage2", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public List<ReportPartLang> FindByProjectAndLanguage2(string token, int projectRoundUnitID, int langID, int departmentID, int expirationMinutes) {
+        public ReportPartLang[] FindByProjectAndLanguage2(string token, int projectRoundUnitID, int langID, int departmentID, int expirationMinutes) {
             object[] results = this.Invoke("FindByProjectAndLanguage2", new object[] {
                         token,
                         projectRoundUnitID,
                         langID,
                         departmentID,
                         expirationMinutes});
-            return ((List<ReportPartLang>)(results[0]));
+            return ((ReportPartLang[])(results[0]));
         }
         
         /// <remarks/>
@@ -618,6 +656,39 @@ namespace HW.Grp.WebService {
             if ((this.FindByLanguageCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.FindByLanguageCompleted(this, new FindByLanguageCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ConsumeSignedResponse", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public SponsorAdministrator ConsumeSignedResponse(int sponsorID, string samlParameter, int expirationMinutes) {
+            object[] results = this.Invoke("ConsumeSignedResponse", new object[] {
+                        sponsorID,
+                        samlParameter,
+                        expirationMinutes});
+            return ((SponsorAdministrator)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ConsumeSignedResponseAsync(int sponsorID, string samlParameter, int expirationMinutes) {
+            this.ConsumeSignedResponseAsync(sponsorID, samlParameter, expirationMinutes, null);
+        }
+        
+        /// <remarks/>
+        public void ConsumeSignedResponseAsync(int sponsorID, string samlParameter, int expirationMinutes, object userState) {
+            if ((this.ConsumeSignedResponseOperationCompleted == null)) {
+                this.ConsumeSignedResponseOperationCompleted = new System.Threading.SendOrPostCallback(this.OnConsumeSignedResponseOperationCompleted);
+            }
+            this.InvokeAsync("ConsumeSignedResponse", new object[] {
+                        sponsorID,
+                        samlParameter,
+                        expirationMinutes}, this.ConsumeSignedResponseOperationCompleted, userState);
+        }
+        
+        private void OnConsumeSignedResponseOperationCompleted(object arg) {
+            if ((this.ConsumeSignedResponseCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ConsumeSignedResponseCompleted(this, new ConsumeSignedResponseCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -1896,6 +1967,51 @@ namespace HW.Grp.WebService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Realm {
+        
+        private int sponsorIdField;
+        
+        private int realmTypeField;
+        
+        private string realmIdentifierField;
+        
+        /// <remarks/>
+        public int SponsorId {
+            get {
+                return this.sponsorIdField;
+            }
+            set {
+                this.sponsorIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int RealmType {
+            get {
+                return this.realmTypeField;
+            }
+            set {
+                this.realmTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string RealmIdentifier {
+            get {
+                return this.realmIdentifierField;
+            }
+            set {
+                this.realmIdentifierField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
     public partial class Department {
         
         private string tokenField;
@@ -2446,6 +2562,32 @@ namespace HW.Grp.WebService {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void GetCheckReturnIpAddressCompletedEventHandler(object sender, GetCheckReturnIpAddressCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetCheckReturnIpAddressCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetCheckReturnIpAddressCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Realm Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Realm)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void GetUsersInDepartmentCompletedEventHandler(object sender, GetUsersInDepartmentCompletedEventArgs e);
     
     /// <remarks/>
@@ -2726,6 +2868,32 @@ namespace HW.Grp.WebService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((PlotTypeLanguage[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void ConsumeSignedResponseCompletedEventHandler(object sender, ConsumeSignedResponseCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ConsumeSignedResponseCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ConsumeSignedResponseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public SponsorAdministrator Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((SponsorAdministrator)(this.results[0]));
             }
         }
     }

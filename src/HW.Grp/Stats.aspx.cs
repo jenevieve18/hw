@@ -349,6 +349,11 @@ namespace HW.Grp
 
             sponsorID = Convert.ToInt32(HttpContext.Current.Session["SponsorID"]);
 			sponsorAdminID = Convert.ToInt32(HttpContext.Current.Session["SponsorAdminID"]);
+            /// Added to check token if it is null or not
+            if (Session["Token"] == null)
+            {
+                Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next(), true);
+            } 
             var token = Session["Token"].ToString();
             /// This function is moved to Grp WS
             //HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Statistics), "default.aspx", true);
@@ -852,7 +857,7 @@ namespace HW.Grp
 
                 var reportParts = soapService.FindByProjectAndLanguage2(Session["Token"].ToString(), selectedProjectRoundUnitID, lid, selectedDepartmentID, 20);
 
-                if (reportParts.Count <= 0) {
+                if (reportParts.Length <= 0) {
                     /// This function is moved to Grp WS
 					//reportParts = reportRepository.FindByProjectAndLanguage(selectedProjectRoundUnitID, lid);
                     reportParts = soapService.FindByProjectAndLanguage(Session["Token"].ToString(), selectedProjectRoundUnitID, lid, 20);
