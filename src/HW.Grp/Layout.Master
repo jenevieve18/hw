@@ -85,7 +85,7 @@
                     <div class="gears">
                         <span><%= sponsorName %></span>
                         <span style="color: white;"><%= sponsorAdminID %></span><br>
-                        <% if (Session["IPAddress"] == null) { %>
+                        <% if (Session["IPAddress"].ToString() == "Not RealmIdentifier") { %>
                         <%= HtmlHelper.Anchor(R.Str(lid, "settings", "Settings"), "Settings.aspx", "class='active'", true)  %>&nbsp;&nbsp;
 					    <% } %>
                         <%= HtmlHelper.Anchor(R.Str(lid, "logout", "Log out"), "Default.aspx?Logout=1", "class='active'", true)  %>
