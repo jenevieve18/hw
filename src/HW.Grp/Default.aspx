@@ -81,6 +81,7 @@
     </form>
 
     <div class="footer">
+       <asp:Label ID="messageID" runat="server" ></asp:Label><br /><br /><br /><br />
         &copy; Interactive Health Group <%= DateTime.Now.ToString("yyyy") %><br />
         Version <%= typeof(Default).Assembly.GetName().Version%>
     </div>

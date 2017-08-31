@@ -105,6 +105,7 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
@@ -249,6 +250,7 @@
     <Compile Include="Services\ReportService2.cs" />
     <Compile Include="Services\SponsorService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Util\Saml.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

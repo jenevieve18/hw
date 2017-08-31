@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="HW_Grp_WebService_Soap" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost:53850/Default.asmx</Value>
+      <Value Profile="(Default)">http://localhost:5677/Default.asmx</Value>
     </Setting>
   </Settings>
 </SettingsFile>
