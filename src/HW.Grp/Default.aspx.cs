@@ -68,6 +68,8 @@ namespace HW.Grp
         {
             lid = 2;
             var service = new Soap();
+
+            // tests.Text = "<i class='icon-circle-arrow-right'></i>&nbsp;" + R.Str(lid, "login.signinIDP", "Sign in using IdP") + "";
             //var userSession = new UserSession { HostAddress = Request.UserHostAddress, Agent = Request.UserAgent, Lang = ConvertHelper.ToInt32(Request.QueryString["lid"]) };
             //userRepository.SaveSessionIf(Request.QueryString["lid"] != null, userSession);
             //if (Request.QueryString["r"] != null) {
@@ -80,6 +82,7 @@ namespace HW.Grp
 
             //Index();
 
+           
             if (Session["IPAddress"] == null && Session["SponsorID"] == null)
             {
                 ipAddress = Request.UserHostAddress;
@@ -102,6 +105,7 @@ namespace HW.Grp
 
             if (Session["IPAddress"] != null)
             {
+                
                 if (Session["IPAddress"].ToString() == "Not RealmIdentifier")
                 {
                     if (((Request.Form["ANV"] != null && Request.Form["ANV"] != "") && (Request.Form["LOS"] != null && Request.Form["LOS"] != "")) || Request.QueryString["SKEY"] != null || Request.QueryString["SAKEY"] != null)
@@ -224,10 +228,8 @@ namespace HW.Grp
 
                 else
                 {
-                    //form1.Visible = false;
-                    //messageID.Text = "IDP Process!";
 
-                    if (Request.QueryString["Logout"] != null)
+                   if (Request.QueryString["Logout"] != null)
                     {
                         if (Session["Token"] != null)
                         {
@@ -317,6 +319,11 @@ namespace HW.Grp
                     }
                 }
             }
+            //tests.ServerClick += new EventHandler(RedirectPage);
+        }
+        protected void RedirectPage(object sender, EventArgs e)
+        {
+            Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next());
         }
     }
 }
