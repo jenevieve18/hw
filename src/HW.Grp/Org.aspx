@@ -6,13 +6,16 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="contentgroup grid_16">
         <div id="contextbar">
+            <% if(hideEmailSearch == 0) {%>
             <div class="top">
                 <div class="search">
                     <%= R.Str(lid, "search.email", "Search user by email") %>
                     <asp:TextBox ID="SearchEmail" runat="server" />
                     <asp:Button ID="Search" CssClass="btn" Text="Search" runat="server" />
                 </div>
+              
             </div>
+              <% }; %>
             <div class="bottom" id="ActionNav" runat="server">
                 <a class="add-unit" href="org.aspx?Action=AddUnit"><%= R.Str(lid, "unit.add", "Add unit")%></a>
                 <a class="import-unit" href="org.aspx?Action=ImportUnit"><%= R.Str(lid, "unit.import", "Import units")%></a>

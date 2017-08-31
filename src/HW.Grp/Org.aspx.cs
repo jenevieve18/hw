@@ -39,6 +39,7 @@ namespace HW.Grp
 		IAdmin sponsor;
         //SqlUserRepository userRepository = new SqlUserRepository();/*commented w/out DB connectionString*/
         protected int lid = LanguageFactory.GetLanguageID(HttpContext.Current.Request);
+        protected int hideEmailSearch = 0;
 
 
         /// <summary>
@@ -1208,6 +1209,7 @@ VALUES ({0},1,NULL,{1},GETDATE())",
                 UX = soapResponse.TotalCount;
                 totalActivated = soapResponse.Departments[0].TotalActive;
                 IX = Convert.ToInt32(soapResponse.TotalCountReceiveInvitation.Replace("%", ""));
+                hideEmailSearch = soapResponse.HideEmail;
                 /// <summary>
                 /// Populate Department Tree from GRP-WS return.
                 /// </summary>
@@ -1276,7 +1278,7 @@ VALUES ({0},1,NULL,{1},GETDATE())",
                         ),
                         (
                             soapResponse.Departments[listCount].Total > 0 /*rs.GetInt32(3) > 0*/
-                            ? "<span onclick='getDepartmentUser(\"" + Session["Token"].ToString() + "\", " + sponsorID + ", " + soapResponse.Departments[listCount].DepartmentId + ");'><img src='assets/theme1/img/usr_on.gif' border='0'/></A></span>"
+                            ? (soapResponse.HideEmail == 1 ? "" : "<span onclick='getDepartmentUser(\"" + Session["Token"].ToString() + "\", " + sponsorID + ", " + soapResponse.Departments[listCount].DepartmentId + ");'><img src='assets/theme1/img/usr_on.gif' border='0'/></A></span>")
                             : (
                                 Convert.ToInt32(Session["ReadOnly"]) == 0
                                 ? "<a href='org.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next() + "&DeleteDID=" + soapResponse.Departments[listCount].DepartmentId + "'><img src='assets/theme1/img/unt_del.gif' border='0'/></a>"

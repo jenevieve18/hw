@@ -2193,6 +2193,8 @@ namespace HW.Grp.WebService {
         
         private int sponsorIDField;
         
+        private int hideEmailField;
+        
         private int totalCountField;
         
         private string totalCountReceiveInvitationField;
@@ -2206,6 +2208,16 @@ namespace HW.Grp.WebService {
             }
             set {
                 this.sponsorIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int HideEmail {
+            get {
+                return this.hideEmailField;
+            }
+            set {
+                this.hideEmailField = value;
             }
         }
         
