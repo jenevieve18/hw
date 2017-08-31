@@ -29,10 +29,13 @@
     <form id="form1" runat="server" class="form-signin">
 
         <header>
+           <center>
             <asp:Image ID="Image1" runat="server" ImageUrl="assets/theme2/img/hwlogo.png" />
+         
             <h2>
                 <%= R.Str(lid, "login.header", "Group administration") %>
             </h2>
+            </center>
         </header>
         <%--<p style="font-size: 14px">
             <small>
@@ -54,12 +57,29 @@
             </div>
         <% } %>
 
-        <%= FormHelper.Input("ANV", "", string.Format("class='input-block-level' placeholder='{0}'", R.Str(lid, "user.name", "Email or Username")))%>
-        <%= FormHelper.Password("LOS", "", string.Format("class='input-block-level' placeholder='{0}'", R.Str(lid, "user.password", "Password")))%>
+     
+      <%if(Session["IPAddress"].ToString() == "Not RealmIdentifier"){ %>
 
-        <button class="btn btn-large btn-info" type="submit">
-            <i class="icon-circle-arrow-right"></i><%= R.Str(lid, "login.signin", "Sign in") %>
-        </button>
+           <%= FormHelper.Input("ANV", "", string.Format("class='input-block-level' placeholder='{0}'", R.Str(lid, "user.name", "Email or Username")))%>
+           <%= FormHelper.Password("LOS", "", string.Format("class='input-block-level' placeholder='{0}'", R.Str(lid, "user.password", "Password")))%>
+       
+
+            <button class="btn btn-large btn-info" type="submit">
+                <i class="icon-circle-arrow-right"></i><%= R.Str(lid, "login.signin", "Sign in") %>
+            </button>
+	   <% } %>
+
+
+        <%else {%>
+           <center>
+                <button class="btn btn-large btn-info" type="submit">
+                <i class="icon-circle-arrow-right"></i>&nbsp;<%= R.Str(lid, "login.signinIDP", "Sign in using IdP") %>
+               </button>&nbsp;&nbsp;
+           </center>
+
+
+         <%   }%>
+
 
        <%-- <% if (adminNews.Count > 0) { %>
             <hr />
@@ -79,12 +99,16 @@
             </div>
         <% } %>--%>
     </form>
+      <%if(Session["IPAddress"].ToString() == "Not RealmIdentifier"){ %>
 
+        <asp:Label ID="Label1" runat="server" ></asp:Label><br /><br /><br /><br />
+        &copy; Interactive Health Group <%= DateTime.Now.ToString("yyyy") %><br />
+        Version <%= typeof(Default).Assembly.GetName().Version%>
+	   <% } %>
     <div class="footer">
        <asp:Label ID="messageID" runat="server" ></asp:Label><br /><br /><br /><br />
         &copy; Interactive Health Group <%= DateTime.Now.ToString("yyyy") %><br />
         Version <%= typeof(Default).Assembly.GetName().Version%>
     </div>
-
 </body>
 </html>
