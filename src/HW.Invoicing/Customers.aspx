@@ -6,6 +6,11 @@
         background-color: #47a447;
         border-color: #398439;
     }
+    .badge-sm {
+        font-size: 5px;
+        border-radius: 5px;
+        padding: 3px;
+    }
 </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -46,9 +51,9 @@
                             <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="badge badge-sm">&nbsp;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge badge-sm badge-success">&nbsp;</span>
                                 <% } %>
                                 <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>                                
                             </td>
@@ -65,9 +70,9 @@
                             <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="badge badge-sm">&nbsp;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge badge-sm badge-success">&nbsp;</span>
                                 <% } %>
                                 <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                             </td>
@@ -97,9 +102,9 @@
                         <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="badge badge-sm">&nbsp;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge badge-sm badge-success">&nbsp;</span>
                                 <% } %>
                             <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                         </td>
@@ -144,9 +149,9 @@
                             <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="badge badge-sm">&nbsp;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge badge-sm badge-success">&nbsp;</span>
                                 <% } %>
                                 <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>
                             </td>
@@ -163,9 +168,9 @@
                             <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="badge badge-sm">&nbsp;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge badge-sm badge-success">&nbsp;</span>
                                 <% } %>
                                 <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                             </td>
@@ -196,9 +201,9 @@
                             <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="badge badge-sm">&nbsp;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge badge-sm badge-success">&nbsp;</span>
                                 <% } %>
                                 <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>
                             </td>
@@ -215,9 +220,9 @@
                             <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="badge badge-sm">&nbsp;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge badge-sm badge-success">&nbsp;</span>
                                 <% } %>
                                 <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                             </td>
@@ -247,9 +252,9 @@
                         <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="badge badge-sm">&nbsp;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge badge-sm badge-success">&nbsp;</span>
                                 <% } %>
                             <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                         </td>
