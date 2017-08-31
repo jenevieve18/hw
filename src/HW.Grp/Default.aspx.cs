@@ -98,7 +98,6 @@ namespace HW.Grp
                 else
                 {
                     Session["IPAddress"] = ipAddressResponse.RealmIdentifier;
-                    messageID.Text = Session["IPAddress"].ToString();
 
                 }
             }

@@ -99,16 +99,19 @@
             </div>
         <% } %>--%>
     </form>
-      <%if(Session["IPAddress"].ToString() == "Not RealmIdentifier"){ %>
-
-        <asp:Label ID="Label1" runat="server" ></asp:Label><br /><br /><br /><br />
+      <%if (Session["IPAddress"].ToString() == "Not RealmIdentifier")
+              { %>
+    <div class="footer">
         &copy; Interactive Health Group <%= DateTime.Now.ToString("yyyy") %><br />
         Version <%= typeof(Default).Assembly.GetName().Version%>
-	   <% } %>
+        </div>
+	   <% }
+              else
+              { %>
     <div class="footer">
-       <asp:Label ID="messageID" runat="server" ></asp:Label><br /><br /><br /><br />
         &copy; Interactive Health Group <%= DateTime.Now.ToString("yyyy") %><br />
         Version <%= typeof(Default).Assembly.GetName().Version%>
     </div>
+    <% } %>
 </body>
 </html>
