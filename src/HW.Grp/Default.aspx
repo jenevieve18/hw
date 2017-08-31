@@ -72,8 +72,8 @@
 
         <%else {%>
            <center>
-                <button class="btn btn-large btn-info" type="submit">
-                <i class="icon-circle-arrow-right"></i>&nbsp;<%= R.Str(lid, "login.signinIDP", "Sign in using IdP") %>
+                <button class="btn btn-large btn-info" runat="server" onserverclick="RedirectPage">
+                    <i class="icon-circle-arrow-right"></i><%= R.Str(lid, "login.signinIDP", "Sign in using IdP") %>
                </button>&nbsp;&nbsp;
            </center>
 

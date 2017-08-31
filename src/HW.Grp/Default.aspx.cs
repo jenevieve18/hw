@@ -68,6 +68,8 @@ namespace HW.Grp
         {
             lid = 2;
             var service = new Soap();
+
+            // tests.Text = "<i class='icon-circle-arrow-right'></i>&nbsp;" + R.Str(lid, "login.signinIDP", "Sign in using IdP") + "";
             //var userSession = new UserSession { HostAddress = Request.UserHostAddress, Agent = Request.UserAgent, Lang = ConvertHelper.ToInt32(Request.QueryString["lid"]) };
             //userRepository.SaveSessionIf(Request.QueryString["lid"] != null, userSession);
             //if (Request.QueryString["r"] != null) {
@@ -80,6 +82,7 @@ namespace HW.Grp
 
             //Index();
 
+           
             if (Session["IPAddress"] == null && Session["SponsorID"] == null)
             {
                 ipAddress = Request.UserHostAddress;
@@ -225,7 +228,8 @@ namespace HW.Grp
 
                 else
                 {
-                    if (Request.QueryString["Logout"] != null && Session["SponsorAdminID"] !=null )
+
+                   if (Request.QueryString["Logout"] != null)
                     {
                         if (Session["Token"] != null)
                         {
@@ -235,7 +239,7 @@ namespace HW.Grp
                             var logoutResponse = service.ManagerLogOut(Session["Token"].ToString());
                         }
                         Session.Remove("Token");
-                        Session.Remove("SponsorAdminID");             
+                        Session.Remove("SponsorAdminID");
                         Session.Remove("Sponsor");
                         Session.Remove("Anonymized");
                         Session.Remove("SeeUsers");
@@ -315,6 +319,11 @@ namespace HW.Grp
                     }
                 }
             }
+            //tests.ServerClick += new EventHandler(RedirectPage);
+        }
+        protected void RedirectPage(object sender, EventArgs e)
+        {
+            Response.Redirect("default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next());
         }
     }
 }
