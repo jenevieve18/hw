@@ -27,7 +27,8 @@ namespace HW.Grp
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			HtmlHelper.RedirectIf(Session["SponsorAdminID"] == null, "default.aspx", true);
+            HtmlHelper.RedirectIf(Session["IPAddress"].ToString() != "Not RealmIdentifier", "default.aspx", true);
+            HtmlHelper.RedirectIf(Session["SponsorAdminID"] == null, "default.aspx", true);
 			
 //			lid = ConvertHelper.ToInt32(Session["lid"], 2);
 			var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
