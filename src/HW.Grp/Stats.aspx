@@ -111,5 +111,14 @@
             }
             
         }
+
+        function onClicked(id) {
+            //alert(id);
+            var url = document.getElementById(id).innerText;
+            //$.ajax({
+            //    url: url
+            //})
+            window.open(url, "_blank", "comma,delimited,list,of,window,features");
+        }
     </script>
 </asp:Content>
