@@ -81,7 +81,6 @@ namespace HW.Grp
             //}
 
             //Index();
-            var idpUrl = "";
 
            
             if (Session["IPAddress"] == null && Session["SponsorID"] == null)
@@ -94,7 +93,7 @@ namespace HW.Grp
                     Session["IPAddress"] = ipAddressResponse.RealmIdentifier;
                     Session["SponsorID"] = ipAddressResponse.SponsorId;
                     Session["RealmType"] = ipAddressResponse.RealmType;
-                    idpUrl = ipAddressResponse.IdpUrl;
+                    Session["IdpUrl"] = ipAddressResponse.IdpUrl;
                 }
 
                 else
@@ -252,7 +251,7 @@ namespace HW.Grp
                     else if (Request.Form["SAMLResponse"] == null)
                     {
                         // create saml request to IDP
-                        var samlEndPoint = idpUrl;
+                        var samlEndPoint = Session["IdpUrl"].ToString();
 
                         var request = new AuthRequest(
                             ConfigurationManager.AppSettings["SAMLIssuer"].ToString(),
