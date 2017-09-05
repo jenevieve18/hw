@@ -81,6 +81,7 @@ namespace HW.Grp
             //}
 
             //Index();
+            var idpUrl = "";
 
            
             if (Session["IPAddress"] == null && Session["SponsorID"] == null)
@@ -93,6 +94,7 @@ namespace HW.Grp
                     Session["IPAddress"] = ipAddressResponse.RealmIdentifier;
                     Session["SponsorID"] = ipAddressResponse.SponsorId;
                     Session["RealmType"] = ipAddressResponse.RealmType;
+                    idpUrl = ipAddressResponse.IdpUrl;
                 }
 
                 else
@@ -250,7 +252,7 @@ namespace HW.Grp
                     else if (Request.Form["SAMLResponse"] == null)
                     {
                         // create saml request to IDP
-                        var samlEndPoint = ConfigurationManager.AppSettings["SAMLEndpoint"].ToString();
+                        var samlEndPoint = idpUrl;
 
                         var request = new AuthRequest(
                             ConfigurationManager.AppSettings["SAMLIssuer"].ToString(),
@@ -263,11 +265,11 @@ namespace HW.Grp
                     else if (Request.Form["SAMLResponse"] != null)
                     {
                         string firstUrl = "default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
-                        var SAMLResponose = Request.Form["SAMLResponse"];
+                        var SAMLResponse = Request.Form["SAMLResponse"];
                         var sponsorID = Session["SponsorId"].ToString();
                         // Send response to GRP-WS for authentication.
                         // If token not null then proceed to org/specific page.
-                        var serviceResponse = service.ConsumeSignedResponse(Convert.ToInt32(sponsorID), SAMLResponose, 20);
+                        var serviceResponse = service.ConsumeSignedResponse(Convert.ToInt32(sponsorID), SAMLResponse, 20);
                         if (serviceResponse.Token != null)
                         {
                             firstUrl = "default.aspx?Logout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();

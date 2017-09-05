@@ -1975,6 +1975,8 @@ namespace HW.Grp.WebService {
         
         private string realmIdentifierField;
         
+        private string idpUrlField;
+        
         /// <remarks/>
         public int SponsorId {
             get {
@@ -2002,6 +2004,16 @@ namespace HW.Grp.WebService {
             }
             set {
                 this.realmIdentifierField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string IdpUrl {
+            get {
+                return this.idpUrlField;
+            }
+            set {
+                this.idpUrlField = value;
             }
         }
     }
