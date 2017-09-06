@@ -66,7 +66,7 @@
         var arraySelectIDs = [ <%= ReportPartID %>];
 
 
-        function onChanged(id, sponsorID) {
+        function onChanged(id, sponsorID, sponsorAdminID) {
             if (id != 0) {
 
                 var e = document.getElementById("selectID" + id);
@@ -80,7 +80,7 @@
                     type: "POST",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify({ "id": id, "value": plotType, "url": url, "sponsorID": sponsorID }),
+                    data: JSON.stringify({ "id": id, "value": plotType, "url": url, "sponsorID": sponsorID, "sponsorAdminID": sponsorAdminID }),
                     success: function (data) {
 
 

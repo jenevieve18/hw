@@ -574,7 +574,7 @@ namespace HW.Grp
                     imageBuilder += "</div>";
                     imageBuilder += "</div>";
                     imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change.all", "Change all graphs to:") + "</span>";
-                    imageBuilder += "<select onchange=\"onChanged(0, "+sponsorID+ ")\" runat=\"server\" id=\"selectID0\" class=\"plot-types small\">";
+                    imageBuilder += "<select onchange=\"onChanged(0, "+ sponsorID + "," + sponsorAdminID + ")\" runat=\"server\" id=\"selectID0\" class=\"plot-types small\">";
                     //imageBuilder += "<option value = \"1\">Line</ option >";
                     //imageBuilder += "<option value = \"2\">Line (± SD)</ option >";
                     //imageBuilder += "<option value = \"3\">Line (± 1.96 SD)</ option >";
@@ -636,7 +636,7 @@ namespace HW.Grp
                     imageBuilder += "</div>";
                     imageBuilder += "</div>";
                     imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change.all", "Change all graphs to:") + "</span>";
-                    imageBuilder += "<select onchange=\"onChanged(0, " + sponsorID + ")\" runat=\"server\" id=\"selectID0\" class=\"plot-types small\">";
+                    imageBuilder += "<select onchange=\"onChanged(0, " + sponsorID + "," + sponsorAdminID + ")\" runat=\"server\" id=\"selectID0\" class=\"plot-types small\">";
                     //imageBuilder += "<select onchange=\"__doPostBack()\" runat=\"server\" id=\"selectID\" class=\"plot-types small\">";
                     //imageBuilder += "<option value = \"1\">Line</ option >";
                     //imageBuilder += "<option value = \"2\">Line (± SD)</ option >";
@@ -705,7 +705,7 @@ namespace HW.Grp
 
                 var plotTyped = "&Plot=0";
 
-                var imagePath = Server.MapPath("~\\img\\Sponsor" + sponsorID);
+                var imagePath = Server.MapPath("~\\img\\Sponsor" + sponsorID + sponsorAdminID);
 
                 Directory.CreateDirectory(imagePath);
 
@@ -738,7 +738,7 @@ namespace HW.Grp
                         /// Generate image filepath + filename
                         /// </summary>
                         var saveImage = imagePath + "\\" +r.ReportPart.Id.ToString() + ".png";
-                        var imageSource = "img/Sponsor" + sponsorID + "/" + r.ReportPart.Id.ToString() + ".png";
+                        var imageSource = "img/Sponsor" + sponsorID + sponsorAdminID + "/" + r.ReportPart.Id.ToString() + ".png";
                         var imageUrl = soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0]; //+ "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue));
 
                         /// <summary>
@@ -752,7 +752,7 @@ namespace HW.Grp
                         imageBuilder += "<img id=\"ImageID"+r.ReportPart.Id+"\" class=\"report-part-graph\" src=" + imageSource + " alt=\"\"/>";
                         imageBuilder += "<div class=\"action\">";
                         imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change", "Change this graph to:") + "</span>";
-                        imageBuilder += "<select onchange=\"onChanged(" + r.ReportPart.Id + ", "+ sponsorID + ")\" runat=\"server\" id=\"selectID" + r.ReportPart.Id + "\"  class=\"plot-types small\">";
+                        imageBuilder += "<select onchange=\"onChanged(" + r.ReportPart.Id + ", "+ sponsorID + "," + sponsorAdminID  + ")\" runat=\"server\" id=\"selectID" + r.ReportPart.Id + "\"  class=\"plot-types small\">";
                         ////////imageBuilder += "<option value = \"1\">Line</ option >";
                         ////////imageBuilder += "<option value = \"2\">Line (± SD)</ option >";
                         ////////imageBuilder += "<option value = \"3\">Line (± 1.96 SD)</ option >";
@@ -803,7 +803,7 @@ namespace HW.Grp
                         /// Generate image filepath + filename
                         /// </summary>
                         var saveImage = imagePath + "\\" + r.ReportPart.Id.ToString() + ".png";
-                        var imageSource = "img/Sponsor" + sponsorID + "/" + r.ReportPart.Id.ToString() + ".png";
+                        var imageSource = "img/Sponsor" + sponsorID + sponsorAdminID + "/" + r.ReportPart.Id.ToString() + ".png";
                         var imageUrl = soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0]; //+ "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue));
 
                         /// <summary>
@@ -817,7 +817,7 @@ namespace HW.Grp
                         imageBuilder += "<img id=\"ImageID" + r.ReportPart.Id + "\" class=\"report-part-graph\" src=" + imageSource + " alt=\"\"/>";
                         imageBuilder += "<div class=\"action\">";
                         imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change", "Change this graph to:") + "</span>";
-                        imageBuilder += "<select onchange=\"onChanged(" + r.ReportPart.Id + ", " + sponsorID + ")\" runat=\"server\" id=\"selectID" + r.ReportPart.Id + "\"  class=\"plot-types small\">";
+                        imageBuilder += "<select onchange=\"onChanged(" + r.ReportPart.Id + ", " + sponsorID + "," + sponsorAdminID + ")\" runat=\"server\" id=\"selectID" + r.ReportPart.Id + "\"  class=\"plot-types small\">";
                         var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje", SupportsMultipleSeries = true } :
                                            new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line", SupportsMultipleSeries = true };
                         foreach (var p in new PlotTypeLanguage[] { xxx })
@@ -895,13 +895,13 @@ namespace HW.Grp
 		}
 
         [WebMethod]
-        public static string GetImage(int id, int value, string url, int sponsorID){
+        public static string GetImage(int id, int value, string url, int sponsorID, int sponsorAdminID){
 
             //Session["Token"].ToString() +
-            var imagePath = System.Web.Hosting.HostingEnvironment.MapPath("~\\img\\Sponsor" + sponsorID);
+            var imagePath = System.Web.Hosting.HostingEnvironment.MapPath("~\\img\\Sponsor" + sponsorID + sponsorAdminID);
             var saveImage = imagePath + "\\" +  id + ".png";
             var newUrl = url + "&Plot=" + value;
-            var imageSource = "img/Sponsor"+ sponsorID + "/" + id + ".png";
+            var imageSource = "img/Sponsor"+ sponsorID + sponsorAdminID + "/" + id + ".png";
 
             
 
