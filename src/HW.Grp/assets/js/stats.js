@@ -53,45 +53,52 @@ $(document).ready(function () {
     $('.report-part-subject').click(function () {
         $(this).closest('.report-part').find('.report-part-header').slideToggle();
     });
-    ////////$('.report-part .action .plot-types').change(function () {
-    ////////    var partContent = $(this).closest('.report-part-content');
-    ////////    var plotType = $(this).val();
-    ////////    //f($(this), plotType, false);
+    $('.report-part .action .plot-types').change(function () {
+        var partContent = $(this).closest('.report-part-content');
+        var plotType = $(this).val();
+        //f($(this), plotType, false);
 
-    ////////    var img = partContent.find('img.report-part-graph');
-    ////////    var imageUrl = partContent.find('.hidden-image-url').text();
-    ////////    console.log(imageUrl);
-    ////////    img.attr('src', imageUrl + '&PLOT=' + plotType);
+        var img = partContent.find('img.report-part-graph');
+        var imageUrl = partContent.find('.hidden-image-url').text();
+        console.log(imageUrl);
+        img.attr('src', imageUrl + '&PLOT=' + plotType);
 
-    ////////    var exportDocXUrl = partContent.find('.hidden-export-docx-url').text();
-    ////////    partContent.find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + plotType);
+        //var exportDocXUrl = partContent.find('.hidden-export-docx-url').text();
+        var exportDocXUrl = partContent.find('.hidden-export-docx-url').data('url');
+        //partContent.find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + plotType);
+        partContent.find('.hidden-export-docx-url').text(exportDocXUrl + '&PLOT=' + plotType);
 
-    ////////    var exportXlsXUrl = partContent.find('.hidden-export-xls-url').text();
-    ////////    partContent.find('.export-xls-url').attr('href', exportXlsXUrl + '&PLOT=' + plotType);
+        var exportXlsXUrl = partContent.find('.hidden-export-xls-url').data('url');
+        //partContent.find('.export-xls-url').attr('href', exportXlsXUrl + '&PLOT=' + plotType);
+        partContent.find('.hidden-export-xls-ur').text(exportXlsXUrl + '&PLOT=' + plotType);
 
-    ////////    var exportPptXUrl = partContent.find('.hidden-export-pptx-url').text();
-    ////////    partContent.find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + plotType);
-    ////////});
+        var exportPptXUrl = partContent.find('.hidden-export-pptx-url').data('url');
+        //partContent.find('.export-pptx-url').attr('href', exportPptXUrl + '&PLOT=' + plotType);
+        partContent.find('.hidden-export-pptx-url').text(exportPptXUrl + '&PLOT=' + plotType);
+    });
 
-    ////////$('.report-parts > .action .plot-types').change(function () {
-    ////////    var plotType = $(this).val();
+    $('.report-parts > .action .plot-types').change(function () {
+        var plotType = $(this).val();
 
-    ////////    var exportAllDocXUrl = $('.hidden-exportall-docx-url').text();
-    ////////    $('.exportall-docx-url').attr('href', exportAllDocXUrl + '&PLOT=' + plotType);
+        var exportAllDocXUrl = $('.hidden-exportall-docx-url').data('url');
+        //$('.exportall-docx-url').attr('href', exportAllDocXUrl + '&PLOT=' + plotType);
+        $('.hidden-exportall-docx-url').text(exportAllDocXUrl + '&PLOT=' + plotType);
 
-    ////////    var exportAllXlsUrl = $('.hidden-exportall-xls-url').text();
-    ////////    $('.exportall-xls-url').attr('href', exportAllXlsUrl + '&PLOT=' + plotType);
+        var exportAllXlsUrl = $('.hidden-exportall-xls-url').data('url');
+        //$('.exportall-xls-url').attr('href', exportAllXlsUrl + '&PLOT=' + plotType);
+        $('.hidden-exportall-xls-url').text(exportAllXlsUrl + '&PLOT=' + plotType);
 
-    ////////    var exportAllPptxUrl = $('.hidden-exportall-pptx-url').text();
-    ////////    $('.exportall-pptx-url').attr('href', exportAllPptxUrl + '&PLOT=' + plotType);
+        var exportAllPptxUrl = $('.hidden-exportall-pptx-url').data('url');
+        //$('.exportall-pptx-url').attr('href', exportAllPptxUrl + '&PLOT=' + plotType);
+        $('.hidden-exportall-pptx-url').text(exportAllPptxUrl + '&PLOT=' + plotType);
 
-    ////////    $.each($('.report-part-content'), function () {
-    ////////        var p = $(this).closest('.report-part').find('.action .plot-types');
-    ////////        p.val(plotType);
-    ////////        p.change();
+        $.each($('.report-part-content'), function () {
+            var p = $(this).closest('.report-part').find('.action .plot-types');
+            p.val(plotType);
+            p.change();
 
 
-    ////////    });
-    ////////});
+        });
+    });
 
 });
