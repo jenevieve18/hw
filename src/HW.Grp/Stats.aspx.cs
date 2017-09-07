@@ -611,7 +611,7 @@ namespace HW.Grp
                     imageBuilder += "<a class=\"exportall-xls-url\" runat=\"server\" onclick=\"onClicked('xls0')\">xls</a>";
                     imageBuilder += "</span>";
                     imageBuilder += "<span class=\"button white small export\">";
-                    imageBuilder += "<span id=\"xlsv0\" class=\"hidden hidden-exportall-xls-url\" data-url=\"" + exportAllXlsUrl + "&PLOT=" + PlotType.Verbose + "\">" + exportAllXlsUrl + "&PLOT=" + PlotType.Verbose + "</span>";
+                    imageBuilder += "<span id=\"xlsv0\" class=\"hidden hidden-exportall-xls-verbose-url\" data-url=\"" + exportAllXlsUrl + "&PLOT=" + PlotType.Verbose + "\">" + exportAllXlsUrl + "&PLOT=" + PlotType.Verbose + "</span>";
                     //imageBuilder += HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'");
                     imageBuilder += "<a class=\"exportall-xls-verbose-url\" runat=\"server\" onclick=\"onClicked('xlsv0')\">xls verbose</a>";
                     imageBuilder += "</span>";
@@ -677,9 +677,9 @@ namespace HW.Grp
                     imageBuilder += "<a class=\"exportall-xls-url\" runat=\"server\" onclick=\"onClicked('xls0')\">xls</a>";
                     imageBuilder += "</span>";
                     imageBuilder += "<span class=\"button white small export\">";
-                    imageBuilder += "<span id=\"xlsv0\" class=\"hidden hidden-exportall-xls-url\" data-url=\"" + exportAllXlsUrl + "&PLOT=" + PlotType.Verbose + "\">" + exportAllXlsUrl + "&PLOT=" + PlotType.Verbose + "</span>";
+                    imageBuilder += "<span id=\"xlsv0\" class=\"hidden hidden-exportall-xls-verbose-url\" data-url=\"" + exportAllXlsUrl + "&PLOT=" + PlotType.Verbose + "\">" + exportAllXlsUrl + "&PLOT=" + PlotType.Verbose + "</span>";
                     //imageBuilder += HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'");
-                    imageBuilder += "<a class=\"exportall-xls-url\" runat=\"server\" onclick=\"onClicked('xlsv0')\">xls verbose</a>";
+                    imageBuilder += "<a class=\"exportall-xls-verbose-url\" runat=\"server\" onclick=\"onClicked('xlsv0')\">xls verbose</a>";
                     imageBuilder += "</span>";
                     imageBuilder += "</div>";
                 }
