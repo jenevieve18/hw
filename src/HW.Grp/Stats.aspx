@@ -49,6 +49,15 @@
             </div>
         </div>
 
+        <%--<div>
+            <button id="testbutton" runat="server" onserverclick="ExportingAll"></button>
+        </div>
+        <div>
+            <span class="button white small export">
+                <a id="test123" class="exportall-docx-url" runat="server" onserverclick="ExportingAll">docx</a>
+            </span>
+        </div>--%>
+
         <!-- For Statistic Images -->
         <asp:Label ID="StatisticImage" runat="server" />
         <!-- End for Statistic Images -->
@@ -115,10 +124,19 @@
         function onClicked(id) {
             //alert(id);
             var url = document.getElementById(id).innerText;
+
+            window.open(url);
+
             //$.ajax({
-            //    url: url
-            //})
-            window.open(url, "_blank", "comma,delimited,list,of,window,features");
+            //    url: "Stats.aspx/ExportAll",
+            //    type: "POST",
+            //    dataType: "json",
+            //    contentType: "application/json; charset=utf-8",
+            //    data: JSON.stringify({"data": url}),
+            //    success: function (data) {
+            //        console.log("Success");
+            //    }
+            //});
         }
     </script>
 </asp:Content>
