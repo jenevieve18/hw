@@ -148,13 +148,16 @@
             </div>
             <div class="form-group">
                 <label for="<%= fileUploadInvoiceLogo.ClientID %>">Invoice Logo</label>
+                <div class="alert alert-info">
+                  <strong>Info!</strong> Image uploaded must be 300dpi, and to be scaled down to roughly 20-50% just for crispness of the image when exported to PDF.
+                </div>
                 <% if (company.HasInvoiceLogo) { %>
                     <br /><img src="uploads/<%= company.InvoiceLogo %>" style="width:<%= company.InvoiceLogoPercentage %>%" /><br /><br />
                 <% } %>
                 <asp:FileUpload ID="fileUploadInvoiceLogo" runat="server" />
             </div>
             <div class="form-group">
-	            <label for="<%= textBoxInvoiceLogoPercentage.ClientID %>">Invoice Log Percentage (ex. 100 for 100%)</label>
+	            <label for="<%= textBoxInvoiceLogoPercentage.ClientID %>">Invoice Logo Percentage (ex. 100 for 100%)</label>
                 <asp:TextBox ID="textBoxInvoiceLogoPercentage" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group">
