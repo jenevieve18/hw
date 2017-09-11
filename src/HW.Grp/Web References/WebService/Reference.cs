@@ -66,6 +66,10 @@ namespace HW.Grp.WebService {
         
         private System.Threading.SendOrPostCallback GetReportImageUrlOperationCompleted;
         
+        private System.Threading.SendOrPostCallback ExportAllOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback ExportOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -157,6 +161,12 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         public event GetReportImageUrlCompletedEventHandler GetReportImageUrlCompleted;
+        
+        /// <remarks/>
+        public event ExportAllCompletedEventHandler ExportAllCompleted;
+        
+        /// <remarks/>
+        public event ExportCompletedEventHandler ExportCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ManagerLogin", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -773,6 +783,237 @@ namespace HW.Grp.WebService {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ExportAll", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Exporter ExportAll(
+                    string token, 
+                    int groupBy, 
+                    int fromYear, 
+                    int toYear, 
+                    int fromMonth, 
+                    int toMonth, 
+                    int languageID, 
+                    string projectRoundUnitID, 
+                    int grouping, 
+                    int sponsorAdminID, 
+                    int sponsorID, 
+                    string groupID, 
+                    int plot, 
+                    string type, 
+                    bool answerKey, 
+                    string path, 
+                    int timeout) {
+            object[] results = this.Invoke("ExportAll", new object[] {
+                        token,
+                        groupBy,
+                        fromYear,
+                        toYear,
+                        fromMonth,
+                        toMonth,
+                        languageID,
+                        projectRoundUnitID,
+                        grouping,
+                        sponsorAdminID,
+                        sponsorID,
+                        groupID,
+                        plot,
+                        type,
+                        answerKey,
+                        path,
+                        timeout});
+            return ((Exporter)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ExportAllAsync(
+                    string token, 
+                    int groupBy, 
+                    int fromYear, 
+                    int toYear, 
+                    int fromMonth, 
+                    int toMonth, 
+                    int languageID, 
+                    string projectRoundUnitID, 
+                    int grouping, 
+                    int sponsorAdminID, 
+                    int sponsorID, 
+                    string groupID, 
+                    int plot, 
+                    string type, 
+                    bool answerKey, 
+                    string path, 
+                    int timeout) {
+            this.ExportAllAsync(token, groupBy, fromYear, toYear, fromMonth, toMonth, languageID, projectRoundUnitID, grouping, sponsorAdminID, sponsorID, groupID, plot, type, answerKey, path, timeout, null);
+        }
+        
+        /// <remarks/>
+        public void ExportAllAsync(
+                    string token, 
+                    int groupBy, 
+                    int fromYear, 
+                    int toYear, 
+                    int fromMonth, 
+                    int toMonth, 
+                    int languageID, 
+                    string projectRoundUnitID, 
+                    int grouping, 
+                    int sponsorAdminID, 
+                    int sponsorID, 
+                    string groupID, 
+                    int plot, 
+                    string type, 
+                    bool answerKey, 
+                    string path, 
+                    int timeout, 
+                    object userState) {
+            if ((this.ExportAllOperationCompleted == null)) {
+                this.ExportAllOperationCompleted = new System.Threading.SendOrPostCallback(this.OnExportAllOperationCompleted);
+            }
+            this.InvokeAsync("ExportAll", new object[] {
+                        token,
+                        groupBy,
+                        fromYear,
+                        toYear,
+                        fromMonth,
+                        toMonth,
+                        languageID,
+                        projectRoundUnitID,
+                        grouping,
+                        sponsorAdminID,
+                        sponsorID,
+                        groupID,
+                        plot,
+                        type,
+                        answerKey,
+                        path,
+                        timeout}, this.ExportAllOperationCompleted, userState);
+        }
+        
+        private void OnExportAllOperationCompleted(object arg) {
+            if ((this.ExportAllCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ExportAllCompleted(this, new ExportAllCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/Export", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Exporter Export(
+                    string token, 
+                    int groupBy, 
+                    int fromYear, 
+                    int toYear, 
+                    int fromMonth, 
+                    int toMonth, 
+                    int languageID, 
+                    string projectRoundUnitID, 
+                    int grouping, 
+                    int sponsorAdminID, 
+                    int sponsorID, 
+                    string groupID, 
+                    int reportPartID, 
+                    int plot, 
+                    string type, 
+                    bool answerKey, 
+                    string path, 
+                    int timeout) {
+            object[] results = this.Invoke("Export", new object[] {
+                        token,
+                        groupBy,
+                        fromYear,
+                        toYear,
+                        fromMonth,
+                        toMonth,
+                        languageID,
+                        projectRoundUnitID,
+                        grouping,
+                        sponsorAdminID,
+                        sponsorID,
+                        groupID,
+                        reportPartID,
+                        plot,
+                        type,
+                        answerKey,
+                        path,
+                        timeout});
+            return ((Exporter)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ExportAsync(
+                    string token, 
+                    int groupBy, 
+                    int fromYear, 
+                    int toYear, 
+                    int fromMonth, 
+                    int toMonth, 
+                    int languageID, 
+                    string projectRoundUnitID, 
+                    int grouping, 
+                    int sponsorAdminID, 
+                    int sponsorID, 
+                    string groupID, 
+                    int reportPartID, 
+                    int plot, 
+                    string type, 
+                    bool answerKey, 
+                    string path, 
+                    int timeout) {
+            this.ExportAsync(token, groupBy, fromYear, toYear, fromMonth, toMonth, languageID, projectRoundUnitID, grouping, sponsorAdminID, sponsorID, groupID, reportPartID, plot, type, answerKey, path, timeout, null);
+        }
+        
+        /// <remarks/>
+        public void ExportAsync(
+                    string token, 
+                    int groupBy, 
+                    int fromYear, 
+                    int toYear, 
+                    int fromMonth, 
+                    int toMonth, 
+                    int languageID, 
+                    string projectRoundUnitID, 
+                    int grouping, 
+                    int sponsorAdminID, 
+                    int sponsorID, 
+                    string groupID, 
+                    int reportPartID, 
+                    int plot, 
+                    string type, 
+                    bool answerKey, 
+                    string path, 
+                    int timeout, 
+                    object userState) {
+            if ((this.ExportOperationCompleted == null)) {
+                this.ExportOperationCompleted = new System.Threading.SendOrPostCallback(this.OnExportOperationCompleted);
+            }
+            this.InvokeAsync("Export", new object[] {
+                        token,
+                        groupBy,
+                        fromYear,
+                        toYear,
+                        fromMonth,
+                        toMonth,
+                        languageID,
+                        projectRoundUnitID,
+                        grouping,
+                        sponsorAdminID,
+                        sponsorID,
+                        groupID,
+                        reportPartID,
+                        plot,
+                        type,
+                        answerKey,
+                        path,
+                        timeout}, this.ExportOperationCompleted, userState);
+        }
+        
+        private void OnExportOperationCompleted(object arg) {
+            if ((this.ExportCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ExportCompleted(this, new ExportCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -964,6 +1205,51 @@ namespace HW.Grp.WebService {
             }
             set {
                 this.errorsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Exporter {
+        
+        private string base64StreamDataField;
+        
+        private string contentField;
+        
+        private string contentTypeField;
+        
+        /// <remarks/>
+        public string Base64StreamData {
+            get {
+                return this.base64StreamDataField;
+            }
+            set {
+                this.base64StreamDataField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Content {
+            get {
+                return this.contentField;
+            }
+            set {
+                this.contentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ContentType {
+            get {
+                return this.contentTypeField;
+            }
+            set {
+                this.contentTypeField = value;
             }
         }
     }
@@ -2970,6 +3256,58 @@ namespace HW.Grp.WebService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((ListURL[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void ExportAllCompletedEventHandler(object sender, ExportAllCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ExportAllCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ExportAllCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Exporter Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Exporter)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void ExportCompletedEventHandler(object sender, ExportCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ExportCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ExportCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Exporter Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Exporter)(this.results[0]));
             }
         }
     }

@@ -585,6 +585,74 @@
           <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="ExportAll">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="groupBy" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromYear" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="toYear" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromMonth" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="toMonth" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="projectRoundUnitID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="grouping" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorAdminID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="plot" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="answerKey" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="path" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timeout" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExportAllResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExportAllResult" type="tns:Exporter" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Exporter">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Base64StreamData" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ContentType" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Export">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="groupBy" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromYear" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="toYear" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromMonth" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="toMonth" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="projectRoundUnitID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="grouping" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorAdminID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="reportPartID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="plot" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="answerKey" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="path" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timeout" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExportResult" type="tns:Exporter" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="SponsorAdministrator" nillable="true" type="tns:SponsorAdministrator" />
       <s:element name="DepartmentTree" nillable="true" type="tns:DepartmentTree" />
       <s:element name="Realm" nillable="true" type="tns:Realm" />
@@ -600,6 +668,7 @@
       <s:element name="ArrayOfPlotTypeLanguage" nillable="true" type="tns:ArrayOfPlotTypeLanguage" />
       <s:element name="boolean" type="s:boolean" />
       <s:element name="ArrayOfListURL" nillable="true" type="tns:ArrayOfListURL" />
+      <s:element name="Exporter" nillable="true" type="tns:Exporter" />
     </s:schema>
     <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
       <s:simpleType name="guid">
@@ -716,6 +785,18 @@
   </wsdl:message>
   <wsdl:message name="GetReportImageUrlSoapOut">
     <wsdl:part name="parameters" element="tns:GetReportImageUrlResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExportAllSoapIn">
+    <wsdl:part name="parameters" element="tns:ExportAll" />
+  </wsdl:message>
+  <wsdl:message name="ExportAllSoapOut">
+    <wsdl:part name="parameters" element="tns:ExportAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExportSoapIn">
+    <wsdl:part name="parameters" element="tns:Export" />
+  </wsdl:message>
+  <wsdl:message name="ExportSoapOut">
+    <wsdl:part name="parameters" element="tns:ExportResponse" />
   </wsdl:message>
   <wsdl:message name="ManagerLoginHttpPostIn">
     <wsdl:part name="username" type="s:string" />
@@ -871,6 +952,51 @@
   <wsdl:message name="GetReportImageUrlHttpPostOut">
     <wsdl:part name="Body" element="tns:ArrayOfListURL" />
   </wsdl:message>
+  <wsdl:message name="ExportAllHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="groupBy" type="s:string" />
+    <wsdl:part name="fromYear" type="s:string" />
+    <wsdl:part name="toYear" type="s:string" />
+    <wsdl:part name="fromMonth" type="s:string" />
+    <wsdl:part name="toMonth" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="projectRoundUnitID" type="s:string" />
+    <wsdl:part name="grouping" type="s:string" />
+    <wsdl:part name="sponsorAdminID" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="groupID" type="s:string" />
+    <wsdl:part name="plot" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="answerKey" type="s:string" />
+    <wsdl:part name="path" type="s:string" />
+    <wsdl:part name="timeout" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExportAllHttpPostOut">
+    <wsdl:part name="Body" element="tns:Exporter" />
+  </wsdl:message>
+  <wsdl:message name="ExportHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="groupBy" type="s:string" />
+    <wsdl:part name="fromYear" type="s:string" />
+    <wsdl:part name="toYear" type="s:string" />
+    <wsdl:part name="fromMonth" type="s:string" />
+    <wsdl:part name="toMonth" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="projectRoundUnitID" type="s:string" />
+    <wsdl:part name="grouping" type="s:string" />
+    <wsdl:part name="sponsorAdminID" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="groupID" type="s:string" />
+    <wsdl:part name="reportPartID" type="s:string" />
+    <wsdl:part name="plot" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="answerKey" type="s:string" />
+    <wsdl:part name="path" type="s:string" />
+    <wsdl:part name="timeout" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExportHttpPostOut">
+    <wsdl:part name="Body" element="tns:Exporter" />
+  </wsdl:message>
   <wsdl:portType name="SoapSoap">
     <wsdl:operation name="ManagerLogin">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Validates a username and password combination and, if there is a match, returns a Sponsor Admin object including sponsor data with token, variable lifetime (max 20 minutes).</wsdl:documentation>
@@ -960,6 +1086,14 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate report image url and return array of urls.</wsdl:documentation>
       <wsdl:input message="tns:GetReportImageUrlSoapIn" />
       <wsdl:output message="tns:GetReportImageUrlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExportAll">
+      <wsdl:input message="tns:ExportAllSoapIn" />
+      <wsdl:output message="tns:ExportAllSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Export">
+      <wsdl:input message="tns:ExportSoapIn" />
+      <wsdl:output message="tns:ExportSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="SoapHttpPost">
@@ -1051,6 +1185,14 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate report image url and return array of urls.</wsdl:documentation>
       <wsdl:input message="tns:GetReportImageUrlHttpPostIn" />
       <wsdl:output message="tns:GetReportImageUrlHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExportAll">
+      <wsdl:input message="tns:ExportAllHttpPostIn" />
+      <wsdl:output message="tns:ExportAllHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Export">
+      <wsdl:input message="tns:ExportHttpPostIn" />
+      <wsdl:output message="tns:ExportHttpPostOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SoapSoap" type="tns:SoapSoap">
@@ -1210,6 +1352,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetReportImageUrl">
       <soap:operation soapAction="http://tempuri.org/GetReportImageUrl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExportAll">
+      <soap:operation soapAction="http://tempuri.org/ExportAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Export">
+      <soap:operation soapAction="http://tempuri.org/Export" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1382,6 +1542,24 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ExportAll">
+      <soap12:operation soapAction="http://tempuri.org/ExportAll" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Export">
+      <soap12:operation soapAction="http://tempuri.org/Export" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="SoapHttpPost" type="tns:SoapHttpPost">
     <http:binding verb="POST" />
@@ -1540,6 +1718,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetReportImageUrl">
       <http:operation location="/GetReportImageUrl" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExportAll">
+      <http:operation location="/ExportAll" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Export">
+      <http:operation location="/Export" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

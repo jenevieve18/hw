@@ -293,7 +293,7 @@ namespace HW.Grp
                                 if (Session["SponsorID"] != null)
                                 {
                                     //imagePath = "D:\\Projects\\HealthWatch\\HW\\src\\HW.Grp\\img\\Sponsor" + Session["SponsorID"].ToString();
-                                    imagePath = Server.MapPath("~\\img\\Sponsor" + Session["SponsorID"].ToString());
+                                    imagePath = Server.MapPath("~\\img\\Sponsor" + Session["SponsorID"].ToString() + Session["SponsorAdminID"].ToString());
                                     /// <summary>
                                     /// Check if Sponsor image directory exist
                                     /// if true then delete
