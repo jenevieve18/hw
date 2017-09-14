@@ -17,6 +17,7 @@ using System.IO;
 using System.Web.Services;
 using GrpModel = HW.Grp.WebService;
 using System.Collections;
+using System.Configuration;
 
 namespace HW.Grp
 {
@@ -512,6 +513,7 @@ namespace HW.Grp
         P GetPage(string page, int reportID, int reportPartLangID)
 		{
 			P p = new P(page);
+            p.Q.Add("Token", Session["Token"].ToString());
 			p.Q.Add("LangID", lid);
 			p.Q.Add("FY", startDate.Year);
 			p.Q.Add("TY", endDate.Year);
@@ -530,10 +532,10 @@ namespace HW.Grp
 
 		void ExecuteClick(object sender, EventArgs e)
 		{
-            images();
+            Images();
         }
 
-        void images() {
+        void Images() {
 
             int grouping = Convert.ToInt32(Grouping.SelectedValue);
 
@@ -542,6 +544,9 @@ namespace HW.Grp
                 var currentReportParts = GetReportParts(ProjectRoundUnitID.SelectedValue);
                 SetReportPartLanguages(currentReportParts, GetUrlModels(grouping));
             }
+
+            var grpWSUrl = ConfigurationManager.AppSettings["grpWSUrl"].ToString();
+            var grpUrl = ConfigurationManager.AppSettings["grpURL"].ToString();
 
             /// <summary>
             /// Generate HTML File to display in Statistic image.
@@ -570,7 +575,7 @@ namespace HW.Grp
                     imageBuilder += "</div>";
                     imageBuilder += "</div>";
                     imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change.all", "Change all graphs to:") + "</span>";
-                    imageBuilder += "<select onchange=\"onChanged(0, "+sponsorID+ ")\" runat=\"server\" id=\"selectID0\" class=\"plot-types small\">";
+                    imageBuilder += "<select onchange=\"onChanged(0, "+ sponsorID + "," + sponsorAdminID + ")\" runat=\"server\" id=\"selectID0\" class=\"plot-types small\">";
                     //imageBuilder += "<option value = \"1\">Line</ option >";
                     //imageBuilder += "<option value = \"2\">Line (± SD)</ option >";
                     //imageBuilder += "<option value = \"3\">Line (± 1.96 SD)</ option >";
@@ -588,23 +593,32 @@ namespace HW.Grp
                     imageBuilder += "</select>";
                     imageBuilder += "<span class=\"chart-descriptions-info\"></span>";
                     imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.export.all", "Export all graphs to:") + "</span>";
+
+
                     imageBuilder += "<span class=\"button white small export\">";
-                    string exportAllDocXUrl = GetExportAllUrl("docx", additionalQuery);
-                    imageBuilder += "<span class=\"hidden hidden-exportall-docx-url\">" + exportAllDocXUrl + "</span>";
-                    imageBuilder += HtmlHelper.Anchor("docx", exportAllDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-docx-url' target='_blank'");
+                    string exportAllDocXUrl = grpUrl + GetExportAllUrl("docx", additionalQuery);
+                    imageBuilder += "<span id=\"docx0\" class=\"hidden hidden-exportall-docx-url\" data-url=\"" + exportAllDocXUrl + "\">" + exportAllDocXUrl + "</span>";
+                    //imageBuilder += HtmlHelper.Anchor("docx", exportAllDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-docx-url' target='_blank'");
+                    imageBuilder += "<a class=\"exportall-docx-url\" runat=\"server\" onclick=\"onClicked('docx0')\">docx</a>";
+                    imageBuilder += "</span>";
+
+
+
+                    imageBuilder += "<span class=\"button white small export\">";
+                    string exportAllPptxUrl = grpUrl + GetExportAllUrl("pptx", additionalQuery);
+                    imageBuilder += "<span id=\"pptx0\" class=\"hidden hidden-exportall-pptx-url\" data-url=\"" + exportAllPptxUrl + "\">" + exportAllPptxUrl + "</span>";
+                    //imageBuilder += HtmlHelper.Anchor("pptx", exportAllPptxUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-pptx-url' target='_blank'");
+                    imageBuilder += "<a class=\"exportall-pptx-url\" runat=\"server\" onclick=\"onClicked('pptx0')\">pptx</a>";
+                    imageBuilder += "</span>";
+                    string exportAllXlsUrl = grpUrl + GetExportAllUrl("xls", additionalQuery);
+                    imageBuilder += "<span class=\"button white small export\">";
+                    imageBuilder += "<span id=\"xls0\" class=\"hidden hidden-exportall-xls-url\" data-url=\"" + exportAllXlsUrl + "\">" + exportAllXlsUrl + "</span>";
+                    //imageBuilder += HtmlHelper.Anchor("xls", exportAllXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-xls-url' target='_blank'");
+                    imageBuilder += "<a class=\"exportall-xls-url\" runat=\"server\" onclick=\"onClicked('xls0')\">xls</a>";
                     imageBuilder += "</span>";
                     imageBuilder += "<span class=\"button white small export\">";
-                    string exportAllPptxUrl = GetExportAllUrl("pptx", additionalQuery);
-                    imageBuilder += "<span class=\"hidden hidden-exportall-pptx-url\">" + exportAllPptxUrl + "</span>";
-                    imageBuilder += HtmlHelper.Anchor("pptx", exportAllPptxUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-pptx-url' target='_blank'");
-                    imageBuilder += "</span>";
-                    string exportAllXlsUrl = GetExportAllUrl("xls", additionalQuery);
-                    imageBuilder += "<span class=\"button white small export\">";
-                    imageBuilder += "<span class=\"hidden hidden-exportall-xls-url\">" + exportAllXlsUrl + "</span>";
-                    imageBuilder += HtmlHelper.Anchor("xls", exportAllXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-xls-url' target='_blank'");
-                    imageBuilder += "</span>";
-                    imageBuilder += "<span class=\"button white small export\">";
-                    imageBuilder += HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'");
+                    imageBuilder += "<span id=\"xlsv0\" class=\"hidden hidden-exportall-xls-verbose-url\" data-url=\"" + exportAllXlsUrl + "&PLOT=" + PlotType.Verbose + "\">" + exportAllXlsUrl + "&PLOT=" + PlotType.Verbose + "</span>";
+                    imageBuilder += "<a class=\"exportall-xls-verbose-url\" runat=\"server\" onclick=\"onClicked('xlsv0')\">xls verbose</a>";
                     imageBuilder += "</span>";
                     imageBuilder += "</div>";
                 }
@@ -628,7 +642,7 @@ namespace HW.Grp
                     imageBuilder += "</div>";
                     imageBuilder += "</div>";
                     imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change.all", "Change all graphs to:") + "</span>";
-                    imageBuilder += "<select onchange=\"onChanged(0, " + sponsorID + ")\" runat=\"server\" id=\"selectID0\" class=\"plot-types small\">";
+                    imageBuilder += "<select onchange=\"onChanged(0, " + sponsorID + "," + sponsorAdminID + ")\" runat=\"server\" id=\"selectID0\" class=\"plot-types small\">";
                     //imageBuilder += "<select onchange=\"__doPostBack()\" runat=\"server\" id=\"selectID\" class=\"plot-types small\">";
                     //imageBuilder += "<option value = \"1\">Line</ option >";
                     //imageBuilder += "<option value = \"2\">Line (± SD)</ option >";
@@ -650,22 +664,27 @@ namespace HW.Grp
                     imageBuilder += "<span class=\"chart-descriptions-info\"></span>";
                     imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.export.all", "Export all graphs to:") + "</span>";
                     imageBuilder += "<span class=\"button white small export\">";
-                    string exportAllDocXUrl = GetExportAllUrl2("docx", additionalQuery);
-                    imageBuilder += "<span class=\"hidden hidden-exportall-docx-url\">" + exportAllDocXUrl + "</span>";
-                    imageBuilder += HtmlHelper.Anchor("docx", exportAllDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-docx-url' target='_blank'");
+                    string exportAllDocXUrl = grpUrl + GetExportAllUrl2("docx", additionalQuery);
+                    imageBuilder += "<span class=\"hidden hidden-exportall-docx-url\" data-url=\"" + exportAllDocXUrl + "\">" + exportAllDocXUrl + "</span>";
+                    //imageBuilder += HtmlHelper.Anchor("docx", exportAllDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-docx-url' target='_blank'");
+                    imageBuilder += "<a class=\"exportall-xls-url\" runat=\"server\" onclick=\"onClicked('docx0')\">docx</a>";
                     imageBuilder += "</span>";
                     imageBuilder += "<span class=\"button white small export\">";
-                    string exportAllPptxUrl = GetExportAllUrl2("pptx", additionalQuery);
-                    imageBuilder += "<span class=\"hidden hidden-exportall-pptx-url\">" + exportAllPptxUrl + "</span>";
-                    imageBuilder += HtmlHelper.Anchor("pptx", exportAllPptxUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-pptx-url' target='_blank'");
+                    string exportAllPptxUrl = grpUrl + GetExportAllUrl2("pptx", additionalQuery);
+                    imageBuilder += "<span class=\"hidden hidden-exportall-pptx-url\" data-url=\"" + exportAllPptxUrl + "\">" + exportAllPptxUrl + "</span>";
+                    //imageBuilder += HtmlHelper.Anchor("pptx", exportAllPptxUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-pptx-url' target='_blank'");
+                    imageBuilder += "<a class=\"exportall-xls-url\" runat=\"server\" onclick=\"onClicked('pptx0')\">pptx</a>";
                     imageBuilder += "</span>";
-                    string exportAllXlsUrl = GetExportAllUrl2("xls", additionalQuery);
+                    string exportAllXlsUrl = grpUrl + GetExportAllUrl2("xls", additionalQuery);
                     imageBuilder += "<span class=\"button white small export\">";
-                    imageBuilder += "<span class=\"hidden hidden-exportall-xls-url\">" + exportAllXlsUrl + "</span>";
-                    imageBuilder += HtmlHelper.Anchor("xls", exportAllXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-xls-url' target='_blank'");
+                    imageBuilder += "<span class=\"hidden hidden-exportall-xls-url\" data-url=\"" + exportAllXlsUrl +"\">" + exportAllXlsUrl + "</span>";
+                    //imageBuilder += HtmlHelper.Anchor("xls", exportAllXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='exportall-xls-url' target='_blank'");
+                    imageBuilder += "<a class=\"exportall-xls-url\" runat=\"server\" onclick=\"onClicked('xls0')\">xls</a>";
                     imageBuilder += "</span>";
                     imageBuilder += "<span class=\"button white small export\">";
-                    imageBuilder += HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'");
+                    imageBuilder += "<span id=\"xlsv0\" class=\"hidden hidden-exportall-xls-verbose-url\" data-url=\"" + exportAllXlsUrl + "&PLOT=" + PlotType.Verbose + "\">" + exportAllXlsUrl + "&PLOT=" + PlotType.Verbose + "</span>";
+                    //imageBuilder += HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'");
+                    imageBuilder += "<a class=\"exportall-xls-verbose-url\" runat=\"server\" onclick=\"onClicked('xlsv0')\">xls verbose</a>";
                     imageBuilder += "</span>";
                     imageBuilder += "</div>";
                 }
@@ -697,7 +716,7 @@ namespace HW.Grp
 
                 var plotTyped = "&Plot=0";
 
-                var imagePath = Server.MapPath("~\\img\\Sponsor" + sponsorID);
+                var imagePath = Server.MapPath("~\\img\\Sponsor" + sponsorID + sponsorAdminID);
 
                 Directory.CreateDirectory(imagePath);
 
@@ -730,7 +749,7 @@ namespace HW.Grp
                         /// Generate image filepath + filename
                         /// </summary>
                         var saveImage = imagePath + "\\" +r.ReportPart.Id.ToString() + ".png";
-                        var imageSource = "img/Sponsor" + sponsorID + "/" + r.ReportPart.Id.ToString() + ".png";
+                        var imageSource = "img/Sponsor" + sponsorID + sponsorAdminID + "/" + r.ReportPart.Id.ToString() + ".png";
                         var imageUrl = soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0]; //+ "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue));
 
                         /// <summary>
@@ -744,7 +763,7 @@ namespace HW.Grp
                         imageBuilder += "<img id=\"ImageID"+r.ReportPart.Id+"\" class=\"report-part-graph\" src=" + imageSource + " alt=\"\"/>";
                         imageBuilder += "<div class=\"action\">";
                         imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change", "Change this graph to:") + "</span>";
-                        imageBuilder += "<select onchange=\"onChanged(" + r.ReportPart.Id + ", "+ sponsorID + ")\" runat=\"server\" id=\"selectID" + r.ReportPart.Id + "\"  class=\"plot-types small\">";
+                        imageBuilder += "<select onchange=\"onChanged(" + r.ReportPart.Id + ", "+ sponsorID + "," + sponsorAdminID  + ")\" runat=\"server\" id=\"selectID" + r.ReportPart.Id + "\"  class=\"plot-types small\">";
                         ////////imageBuilder += "<option value = \"1\">Line</ option >";
                         ////////imageBuilder += "<option value = \"2\">Line (± SD)</ option >";
                         ////////imageBuilder += "<option value = \"3\">Line (± 1.96 SD)</ option >";
@@ -761,23 +780,31 @@ namespace HW.Grp
                         };
                         imageBuilder += "</select>";
                         imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.export", "Export this graph to:") + "</span>";
+
                         imageBuilder += "<span class=\"button white small export\">";
-                        string exportDocXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery);
-                        imageBuilder += "<span class=\"hidden hidden-export-docx-url\">" + exportDocXUrl + "</span>";
-                        imageBuilder += HtmlHelper.Anchor("docx", exportDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-docx-url' target='_blank'");
+                        string exportDocXUrl = grpUrl + GetExportUrl(r.ReportPart.Id, r.Id, "docx", additionalQuery);
+                        imageBuilder += "<span id=\"docx" + r.ReportPart.Id + "\" class=\"hidden hidden-export-docx-url\" data-url=\"" + exportDocXUrl+ "\">" + exportDocXUrl + "</span>";
+                        //imageBuilder += HtmlHelper.Anchor("docx", exportDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-docx-url' target='_blank'");
+                        imageBuilder += "<a class=\"export-docx-url\" runat=\"server\" onclick=\"onClicked('docx" + r.ReportPart.Id + "')\">docx</a>";
+                        imageBuilder += "</span>";
+
+
+                        imageBuilder += "<span class=\"button white small export\">";
+                        string exportPptXUrl = grpUrl + GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery);
+                        imageBuilder += "<span id=\"pptx" + r.ReportPart.Id + "\" class=\"hidden hidden-export-pptx-url\" data-url=\"" + exportPptXUrl + "\">" + exportPptXUrl + "</span>";
+                        //imageBuilder += HtmlHelper.Anchor("pptx", exportPptXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-pptx-url' target='_blank'");
+                        imageBuilder += "<a class=\"export-pptx-url\" runat=\"server\" onclick=\"onClicked('pptx" + r.ReportPart.Id + "')\">pptx</a>";
+                        imageBuilder += "</span>";
+                        string exportXlsUrl = grpUrl + GetExportUrl(r.ReportPart.Id, r.Id, "xls", additionalQuery);
+                        imageBuilder += "<span class=\"button white small export\">";
+                        imageBuilder += "<span id=\"xls" + r.ReportPart.Id + "\" class=\"hidden hidden-export-xls-url\" data-url=\"" + exportXlsUrl + "\">" + exportXlsUrl + "</span>";
+                        //imageBuilder += HtmlHelper.Anchor("xls", exportXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-xls-url' target='_blank'");
+                        imageBuilder += "<a class=\"export-xls-url\" runat=\"server\" onclick=\"onClicked('xls" + r.ReportPart.Id + "')\">xls</a>";
                         imageBuilder += "</span>";
                         imageBuilder += "<span class=\"button white small export\">";
-                        string exportPptXUrl = GetExportUrl(r.ReportPart.Id, r.Id, "pptx", additionalQuery);
-                        imageBuilder += "<span class=\"hidden hidden-export-pptx-url\">" + exportPptXUrl + "</span>";
-                        imageBuilder += HtmlHelper.Anchor("pptx", exportPptXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-pptx-url' target='_blank'");
-                        imageBuilder += "</span>";
-                        string exportXlsUrl = GetExportUrl(r.ReportPart.Id, r.Id, "xls", additionalQuery);
-                        imageBuilder += "<span class=\"button white small export\">";
-                        imageBuilder += "<span class=\"hidden hidden-export-xls-url\">" + exportXlsUrl + "</span>";
-                        imageBuilder += HtmlHelper.Anchor("xls", exportXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-xls-url' target='_blank'");
-                        imageBuilder += "</span>";
-                        imageBuilder += "<span class=\"button white small export\">";
-                        imageBuilder += HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportXlsUrl + "&PLOT=" + PlotType.Verbose, "class='export-xls-verbose-url' target='_blank'");
+                        imageBuilder += "<span id=\"xlsverbose" + r.ReportPart.Id + "\" class=\"hidden hidden-export-xls-url\" data-url=\"" + exportXlsUrl + "\">" + exportXlsUrl + "&PLOT=" + PlotType.Verbose + "</span>";
+                        //imageBuilder += HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportXlsUrl + "&PLOT=" + PlotType.Verbose, "class='export-xls-verbose-url' target='_blank'");
+                        imageBuilder += "<a class=\"export-xls-verbose-url\" runat=\"server\" onclick=\"onClicked('xlsverbose" + r.ReportPart.Id + "')\">xls verbose</a>";
                         imageBuilder += "</span>";
                         imageBuilder += "</div>";
                     }
@@ -787,7 +814,7 @@ namespace HW.Grp
                         /// Generate image filepath + filename
                         /// </summary>
                         var saveImage = imagePath + "\\" + r.ReportPart.Id.ToString() + ".png";
-                        var imageSource = "img/Sponsor" + sponsorID + "/" + r.ReportPart.Id.ToString() + ".png";
+                        var imageSource = "img/Sponsor" + sponsorID + sponsorAdminID + "/" + r.ReportPart.Id.ToString() + ".png";
                         var imageUrl = soapResponse.Where(url => url.Id == r.ReportPart.Id).Select(url => url.Url).ToList()[0]; //+ "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue));
 
                         /// <summary>
@@ -801,7 +828,7 @@ namespace HW.Grp
                         imageBuilder += "<img id=\"ImageID" + r.ReportPart.Id + "\" class=\"report-part-graph\" src=" + imageSource + " alt=\"\"/>";
                         imageBuilder += "<div class=\"action\">";
                         imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.change", "Change this graph to:") + "</span>";
-                        imageBuilder += "<select onchange=\"onChanged(" + r.ReportPart.Id + ", " + sponsorID + ")\" runat=\"server\" id=\"selectID" + r.ReportPart.Id + "\"  class=\"plot-types small\">";
+                        imageBuilder += "<select onchange=\"onChanged(" + r.ReportPart.Id + ", " + sponsorID + "," + sponsorAdminID + ")\" runat=\"server\" id=\"selectID" + r.ReportPart.Id + "\"  class=\"plot-types small\">";
                         var xxx = lid == 1 ? new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Linje", SupportsMultipleSeries = true } :
                                            new PlotTypeLanguage { PlotType = new PlotType { Id = 1 }, ShortName = "Line", SupportsMultipleSeries = true };
                         foreach (var p in new PlotTypeLanguage[] { xxx })
@@ -814,23 +841,31 @@ namespace HW.Grp
                         };
                         imageBuilder += "</select>";
                         imageBuilder += "<span class=\"small\">" + R.Str(lid, "graphs.export", "Export this graph to:") + "</span>";
+
                         imageBuilder += "<span class=\"button white small export\">";
-                        string exportAllDocXUrl = GetExportAllUrl2("docx", additionalQuery);
-                        imageBuilder += "<span class=\"hidden hidden-export-docx-url\">" + exportAllDocXUrl + "</span>";
-                        imageBuilder += HtmlHelper.Anchor("docx", exportAllDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-docx-url' target='_blank'");
+                        string exportDocXUrl = grpUrl + GetExportAllUrl2("docx", additionalQuery);
+                        imageBuilder += "<span class=\"hidden hidden-export-docx-url\" data-url=\"" + exportDocXUrl + "\">" + exportDocXUrl + "</span>";
+                        //imageBuilder += HtmlHelper.Anchor("docx", exportAllDocXUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-docx-url' target='_blank'");
+                        imageBuilder += "<a class=\"export-docx-url\" runat=\"server\" onclick=\"onClicked('docx" + r.ReportPart.Id + "')\">docx</a>";
+                        imageBuilder += "</span>";
+
+
+                        imageBuilder += "<span class=\"button white small export\">";
+                        string exportPptxUrl = grpUrl + GetExportAllUrl2("pptx", additionalQuery);
+                        imageBuilder += "<span class=\"hidden hidden-export-pptx-url\" data-url=\"" + exportPptxUrl + "\">" + exportPptxUrl + "</span>";
+                        //imageBuilder += HtmlHelper.Anchor("pptx", exportAllPptxUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-pptx-url' target='_blank'");
+                        imageBuilder += "<a class=\"export-pptx-url\" runat=\"server\" onclick=\"onClicked('pptx" + r.ReportPart.Id + "')\">docx</a>";
+                        imageBuilder += "</span>";
+                        string exportXlsUrl = grpUrl + GetExportAllUrl2("xls", additionalQuery);
+                        imageBuilder += "<span class=\"button white small export\">";
+                        imageBuilder += "<span class=\"hidden hidden-export-xls-url\" data-url=\"" + exportXlsUrl + "\">" + exportXlsUrl + "</span>";
+                        //imageBuilder += HtmlHelper.Anchor("xls", exportAllXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-xls-url' target='_blank'");
+                        imageBuilder += "<a class=\"export-xls-url\" runat=\"server\" onclick=\"onClicked('xls" + r.ReportPart.Id + "')\">docx</a>";
                         imageBuilder += "</span>";
                         imageBuilder += "<span class=\"button white small export\">";
-                        string exportAllPptxUrl = GetExportAllUrl2("pptx", additionalQuery);
-                        imageBuilder += "<span class=\"hidden hidden-export-pptx-url\">" + exportAllPptxUrl + "</span>";
-                        imageBuilder += HtmlHelper.Anchor("pptx", exportAllPptxUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-pptx-url' target='_blank'");
-                        imageBuilder += "</span>";
-                        string exportAllXlsUrl = GetExportAllUrl2("xls", additionalQuery);
-                        imageBuilder += "<span class=\"button white small export\">";
-                        imageBuilder += "<span class=\"hidden hidden-export-xls-url\">" + exportAllXlsUrl + "</span>";
-                        imageBuilder += HtmlHelper.Anchor("xls", exportAllXlsUrl + "&Plot=" + GetSponsorDefaultPlotType(sponsor.DefaultPlotType, forSingleSeries, ConvertHelper.ToInt32(Grouping.SelectedValue)), "class='export-xls-url' target='_blank'");
-                        imageBuilder += "</span>";
-                        imageBuilder += "<span class=\"button white small export\">";
-                        imageBuilder += HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'");
+                        imageBuilder += "<span id=\"xlsverbose" + r.ReportPart.Id + "\" class=\"hidden hidden-export-xls-url\" data-url=\"" + exportXlsUrl + "\">" + exportXlsUrl + "&PLOT=" + PlotType.Verbose + "</span>";
+                        //imageBuilder += HtmlHelper.Anchor(R.Str(lid, "xls.verbose", "xls verbose"), exportAllXlsUrl + "&PLOT=" + PlotType.Verbose, "class='exportall-xls-verbose-url' target='_blank'");
+                        imageBuilder += "<a class=\"export-xls-verbose-url\" runat=\"server\" onclick=\"onClicked('xlsverbose" + r.ReportPart.Id + "')\">xls verbose</a>";
                         imageBuilder += "</span>";
                         imageBuilder += "</div>";
                     }
@@ -874,13 +909,13 @@ namespace HW.Grp
 		}
 
         [WebMethod]
-        public static string GetImage(int id, int value, string url, int sponsorID){
+        public static string GetImage(int id, int value, string url, int sponsorID, int sponsorAdminID){
 
             //Session["Token"].ToString() +
-            var imagePath = System.Web.Hosting.HostingEnvironment.MapPath("~\\img\\Sponsor" + sponsorID);
+            var imagePath = System.Web.Hosting.HostingEnvironment.MapPath("~\\img\\Sponsor" + sponsorID + sponsorAdminID);
             var saveImage = imagePath + "\\" +  id + ".png";
             var newUrl = url + "&Plot=" + value;
-            var imageSource = "img/Sponsor"+ sponsorID + "/" + id + ".png";
+            var imageSource = "img/Sponsor"+ sponsorID + sponsorAdminID + "/" + id + ".png";
 
             
 
@@ -895,5 +930,66 @@ namespace HW.Grp
 
             return imageSource;
         }
-	}
+        
+
+        //////////////[WebMethod]
+        //////////////public static void ExportAll(string data)
+        //////////////{
+        //////////////    //System.Web.UI.Page resp = new Page();
+            
+        //////////////    var grpWSUrl = ConfigurationManager.AppSettings["grpWSUrl"].ToString();
+
+        //////////////    var grpWS = new HW.Grp.WebService.Soap();
+
+        //////////////    var responseWS = grpWS.ExportAll("2276524B-D796-4C0F-90D3-FFC84055261D", 7, 2012, 2012, 1, 12, 2, "SPRU2643", 0, 514, 83, "0", 0, "docx", false, "http://localhost:5677/", 20);
+        //////////////    var objectData = new MemoryStream(Convert.FromBase64String(responseWS.Base64StreamData));
+        //////////////    var content = responseWS.Content;
+
+        //////////////    byte[] bytes = objectData.ToArray();
+        //////////////    objectData.Close();
+
+
+        //////////////    //resp.Response.Clear();
+        //////////////    //resp.Response.ContentType = "application/force-download";
+        //////////////    //resp.Response.AddHeader("content-disposition", content);
+        //////////////    //resp.Response.BinaryWrite(bytes);
+        //////////////    //resp.Response.End();
+
+        //////////////    HttpContext context = HttpContext.Current;
+        //////////////    context.Response.ContentType = "application/force-download";
+        //////////////    context.Response.AddHeader("content-disposition", content);
+        //////////////    //context.Response.BinaryWrite(bytes);
+        //////////////    context.Response.Write("pakyou, pakyou, pakyou");
+        //////////////    context.Response.End();
+
+
+        //////////////    //HtmlHelper.Write(objectData, response);
+            
+        //////////////}
+
+        //////////////public void ExportingAll()
+        //////////////{
+        //////////////    var grpWSUrl = ConfigurationManager.AppSettings["grpWSUrl"].ToString();
+
+        //////////////    var grpWS = new HW.Grp.WebService.Soap();
+
+        //////////////    var responseWS = grpWS.ExportAll("2276524B-D796-4C0F-90D3-FFC84055261D", 7, 2012, 2012, 1, 12, 2, "SPRU2643", 0, 514, 83, "0", 0, "docx", false, "http://localhost:5677/", 20);
+        //////////////    var objectData = new MemoryStream(Convert.FromBase64String(responseWS.Base64StreamData));
+        //////////////    var content = responseWS.Content;
+
+        //////////////    byte[] bytes = objectData.ToArray();
+        //////////////    objectData.Close();
+
+
+        //////////////    Response.Clear();
+        //////////////    Response.ContentType = "application/force-download";
+        //////////////    Response.AddHeader("content-disposition", content);
+        //////////////    Response.BinaryWrite(bytes);
+        //////////////    Response.End();
+
+
+        //////////////    //HtmlHelper.Write(objectData, response);
+
+        //////////////}
+    }
 }
