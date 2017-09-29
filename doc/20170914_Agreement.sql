@@ -27,7 +27,7 @@ create table AgreementContent(
 	Name varchar(255)
 );
 
-create table AgreemeentContentLang(
+create table AgreementContentLang(
 	AgreementContentLangID integer not null primary key identity,
 	AgreementText text,
 	Name varchar(255),
