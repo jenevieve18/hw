@@ -232,10 +232,13 @@ namespace HW.Grp
                             /// Update Manager logout process to call GRP-WS (ManagerLogout Webmethod) for expiration of token.
                             /// </summary>
                             var logoutResponse = service.ManagerLogOut(Session["Token"].ToString());
-                            var secondLogoutResponse = service2.ManagerLogOut(Session["SecondToken"].ToString());
+                            if(Session["SecondToken"] != null)
+                            {
+                                var secondLogoutResponse = service2.ManagerLogOut(Session["SecondToken"].ToString());
+                                Session.Remove("SecondToken");
+                            }
                         }
                         Session.Remove("Token");
-                        Session.Remove("SecondToken");
                         Session.Remove("SponsorID");
                         Session.Remove("SponsorAdminID");
                         Session.Remove("Sponsor");
@@ -273,10 +276,13 @@ namespace HW.Grp
                             /// Update Manager logout process to call GRP-WS (ManagerLogout Webmethod) for expiration of token.
                             /// </summary>
                             var logoutResponse = service.ManagerLogOut(Session["Token"].ToString());
-                            var secondLogoutResponse = service2.ManagerLogOut(Session["SecondToken"].ToString());
+                            if(Session["SecondToken"] != null)
+                            {
+                                var secondLogoutResponse = service2.ManagerLogOut(Session["SecondToken"].ToString());
+                                Session.Remove("SecondToken");
+                            }
                         }
                         Session.Remove("Token");
-                        Session.Remove("SecondToken");
                         Session.Remove("SponsorAdminID");
                         Session.Remove("Sponsor");
                         Session.Remove("Anonymized");
