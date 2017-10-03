@@ -12,9 +12,11 @@ using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
 using HW.Core.Helpers;
 using HW.Grp.WebService;
+using grpWS2 = HW.Grp.WebService2;
 using System.IO;
 using HW.Core.Util.Saml;
 using System.Configuration;
+using System.Net;
 
 namespace HW.Grp
 {
@@ -68,6 +70,7 @@ namespace HW.Grp
         {
             lid = 2;
             var service = new Soap();
+            var service2 = new grpWS2.Soap();
 
             // tests.Text = "<i class='icon-circle-arrow-right'></i>&nbsp;" + R.Str(lid, "login.signinIDP", "Sign in using IdP") + "";
             //var userSession = new UserSession { HostAddress = Request.UserHostAddress, Agent = Request.UserAgent, Lang = ConvertHelper.ToInt32(Request.QueryString["lid"]) };
@@ -82,7 +85,7 @@ namespace HW.Grp
 
             //Index();
 
-           
+
             if (Session["IPAddress"] == null && Session["SponsorID"] == null)
             {
                 ipAddress = Request.UserHostAddress;
@@ -149,6 +152,38 @@ namespace HW.Grp
                                     Session["SeeUsers"] = serviceResponse.SeeUsers ? 1 : 0;
                                     Session["ReadOnly"] = serviceResponse.ReadOnly ? 1 : 0;
 
+                                    /// <summary>
+                                    /// Regular User or Using UN/PW
+                                    /// </summary>
+
+                                    if (HttpContext.Current.Session["Token"] != null)
+                                    {
+                                        try
+                                        {
+                                            // Download data to check if the URL is up and running or not.
+                                            var client = new WebClient();
+                                            // Get URL from the web.config
+                                            var getURL = ConfigurationManager.AppSettings["grpSecondURL"];
+                                            // Try to download the data
+                                            var download = client.DownloadData(getURL);
+                                            // Check if there has download or not.
+                                            if (download != null)
+                                            {
+                                                
+                                                var secondServiceResponse = service2.ManagerLogin(username, password, 20);
+                                                if (secondServiceResponse.Token != null)
+                                                {
+                                                    Session["SecondToken"] = secondServiceResponse.Token;
+                                                }
+                                            }
+                                        }
+                                        catch (Exception)
+                                        {
+
+                                            // throw;
+                                        }
+                                    }
+
                                     if (Session["SponsorID"] != null)
                                     {
                                         //imagePath = "D:\\Projects\\HealthWatch\\HW\\src\\HW.Grp\\img\\Sponsor" + Session["SponsorID"].ToString();
@@ -197,8 +232,10 @@ namespace HW.Grp
                             /// Update Manager logout process to call GRP-WS (ManagerLogout Webmethod) for expiration of token.
                             /// </summary>
                             var logoutResponse = service.ManagerLogOut(Session["Token"].ToString());
+                            var secondLogoutResponse = service2.ManagerLogOut(Session["SecondToken"].ToString());
                         }
                         Session.Remove("Token");
+                        Session.Remove("SecondToken");
                         Session.Remove("SponsorID");
                         Session.Remove("SponsorAdminID");
                         Session.Remove("Sponsor");
@@ -236,8 +273,10 @@ namespace HW.Grp
                             /// Update Manager logout process to call GRP-WS (ManagerLogout Webmethod) for expiration of token.
                             /// </summary>
                             var logoutResponse = service.ManagerLogOut(Session["Token"].ToString());
+                            var secondLogoutResponse = service2.ManagerLogOut(Session["SecondToken"].ToString());
                         }
                         Session.Remove("Token");
+                        Session.Remove("SecondToken");
                         Session.Remove("SponsorAdminID");
                         Session.Remove("Sponsor");
                         Session.Remove("Anonymized");
@@ -288,6 +327,35 @@ namespace HW.Grp
                                 Session["Anonymized"] = serviceResponse.Anonymized ? 1 : 0;
                                 Session["SeeUsers"] = serviceResponse.SeeUsers ? 1 : 0;
                                 Session["ReadOnly"] = serviceResponse.ReadOnly ? 1 : 0;
+
+                                /// <summary>
+                                /// For SAML Second Login
+                                /// </summary>
+
+                                try
+                                {
+                                    // Download data to check if the URL is up and running or not.
+                                    var client = new WebClient();
+                                    // Get URL from the web.config
+                                    var getURL = ConfigurationManager.AppSettings["grpSecondURL"];
+                                    // Try to download the data
+                                    var download = client.DownloadData(getURL);
+                                    // Check if there has download or not.
+                                    if (download != null)
+                                    {
+
+                                        var secondServiceResponse = service2.ConsumeSignedResponse(Convert.ToInt32(sponsorID), SAMLResponose, 20);
+                                        if (secondServiceResponse.Token != null)
+                                        {
+                                            Session["SecondToken"] = secondServiceResponse.Token;
+                                        }
+                                    }
+                                }
+                                catch (Exception)
+                                {
+
+                                    // throw;
+                                }
 
                                 if (Session["SponsorID"] != null)
                                 {
