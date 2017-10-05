@@ -1494,6 +1494,10 @@ namespace HW.Grp.WebService {
         
         private string scriptField;
         
+        private bool hasContentField;
+        
+        private bool isTextField;
+        
         /// <remarks/>
         public string File {
             get {
@@ -1581,6 +1585,26 @@ namespace HW.Grp.WebService {
             }
             set {
                 this.scriptField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool HasContent {
+            get {
+                return this.hasContentField;
+            }
+            set {
+                this.hasContentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool IsText {
+            get {
+                return this.isTextField;
+            }
+            set {
+                this.isTextField = value;
             }
         }
     }

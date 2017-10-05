@@ -182,7 +182,7 @@ namespace HW.Grp
             if (evl != null)
             {
                 replacementHead = evl.ReplacementHead;
-                if (evl.File != null)
+                if (evl.HasContent && evl.File != null)
                 {
                     Response.Redirect("exercise/" + evl.File, true);
                 }
@@ -239,8 +239,8 @@ namespace HW.Grp
 
         Control GetExerciseTypeControl(WebService2.ExerciseItem evl)
         {
-            //if (evl.Variant.Type.IsText())
-            //{
+            if (evl.IsText)
+            {
                 return new LiteralControl(
                     string.Format(
                         @"
@@ -262,27 +262,27 @@ namespace HW.Grp
                         evl.Script
                     )
                 );
-//            }
-//            else
-//            {
-//                return new LiteralControl(
-//                    string.Format(
-//                        @"
-//<script type=""text/javascript"">
-//    AC_FL_RunContent( 'codebase','https://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0','width','550','height','400','src','exercise/{0}','quality','high','pluginspage','https://www.macromedia.com/go/getflashplayer','movie','exercise/{0}');
-//</script>
-//<noscript>
-//    <object classid=""clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"" codebase=""https://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0"" width=""550"" height=""400"">
-//        <param name=""movie"" value=""exercise/{1}"" />
-//        <param name=""quality"" value=""high"" />
-//        <embed src=""exercise/{1}"" quality=""high"" pluginspage=""https://www.macromedia.com/go/getflashplayer"" type=""application/x-shockwave-flash"" width=""550"" height=""400""></embed>
-//    </object>
-//</noscript>",
-//                        evl.File.Replace(".swf", ""),
-//                        evl.File
-//                    )
-//                );
-//            }
+            }
+            else
+            {
+                return new LiteralControl(
+                    string.Format(
+                        @"
+<script type=""text/javascript"">
+    AC_FL_RunContent( 'codebase','https://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0','width','550','height','400','src','exercise/{0}','quality','high','pluginspage','https://www.macromedia.com/go/getflashplayer','movie','exercise/{0}');
+</script>
+<noscript>
+    <object classid=""clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"" codebase=""https://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0"" width=""550"" height=""400"">
+        <param name=""movie"" value=""exercise/{1}"" />
+        <param name=""quality"" value=""high"" />
+        <embed src=""exercise/{1}"" quality=""high"" pluginspage=""https://www.macromedia.com/go/getflashplayer"" type=""application/x-shockwave-flash"" width=""550"" height=""400""></embed>
+    </object>
+</noscript>",
+                        evl.File.Replace(".swf", ""),
+                        evl.File
+                    )
+                );
+            }
         }
 
 
