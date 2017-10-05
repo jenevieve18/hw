@@ -13,7 +13,7 @@
 // 
 #pragma warning disable 1591
 
-namespace HW.Grp.WebService {
+namespace HW.Grp.WebService2 {
     using System;
     using System.Web.Services;
     using System.Diagnostics;
@@ -84,7 +84,7 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         public Soap() {
-            this.Url = global::HW.Grp.Properties.Settings.Default.HW_Grp_WebService_Soap;
+            this.Url = global::HW.Grp.Properties.Settings.Default.HW_Grp_WebService2_Soap;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;
