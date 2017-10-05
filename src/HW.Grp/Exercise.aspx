@@ -150,7 +150,7 @@
                                                 ConfigurationManager.AppSettings["healthWatchURL"],
                                                 sponsorID,
                                                 sponsorAdminID,
-                                                l.Id
+                                                l.ExerciseVariantId
                                             );
                                     %>
                                     <a class="sidearrow" href="<%= t %>">Text</a>

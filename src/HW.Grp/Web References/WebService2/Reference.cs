@@ -1629,6 +1629,8 @@ namespace HW.Grp.WebService2 {
         
         private string teaserField;
         
+        private int exerciseVariantIdField;
+        
         /// <remarks/>
         public int Id {
             get {
@@ -1686,6 +1688,16 @@ namespace HW.Grp.WebService2 {
             }
             set {
                 this.teaserField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int ExerciseVariantId {
+            get {
+                return this.exerciseVariantIdField;
+            }
+            set {
+                this.exerciseVariantIdField = value;
             }
         }
     }
