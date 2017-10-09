@@ -126,6 +126,7 @@ namespace HW.Grp
 			//SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Exercises, DateTime.Now);
 
 			sortQueryString = "&SORT=" + sort;
+            
 			
 			//var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
 			//if (userSession != null) {
@@ -154,13 +155,14 @@ namespace HW.Grp
             //    categories = exerciseRepository.FindCategories(areaID, categoryID, lid - 1);
             //}
             //exercises = exerciseRepository.FindByAreaAndCategory(areaID, categoryID, lid - 1, sort);
-
-            if (!IsPostBack)
+            var token = Session["SecondToken"] != null ? Session["SecondToken"] : Session["Token"];
+            if (!IsPostBack) 
             {
-                areass = service.GetExerciseAreas(Session["Token"].ToString(), areaID, lid, 20);
-                categoriess = service.GetExerciseCategories(Session["Token"].ToString(), areaID, categoryID, lid, 20);
+                
+                areass = service.GetExerciseAreas(token.ToString(), areaID, lid, 20);
+                categoriess = service.GetExerciseCategories(token.ToString(), areaID, categoryID, lid, 20);
             }
-            exercisess = service.GetExercises(Session["Token"].ToString(), areaID, categoryID, lid, sort, 20);
+            exercisess = service.GetExercises(token.ToString(), areaID, categoryID, lid, sort, 20);
         }
 	}
 }

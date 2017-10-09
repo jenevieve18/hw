@@ -73,7 +73,8 @@ namespace HW.Grp
                     //er.SaveStats(exerciseVariantLangId, userId, userProfileId);  INSERT EXERCISE STATS
                 }
                 //Show(er.ReadExerciseVariant(exerciseVariantLangId));
-                var exercises = service2.GetExercise(Session["Token"].ToString(), exerciseVariantLangId, 20);
+                var token = Session["SecondToken"] != null ? Session["SecondToken"] : Session["Token"];
+                var exercises = service2.GetExercise(token.ToString(), exerciseVariantLangId, 20);
                 Show(exercises);
             }
 		}
@@ -208,7 +209,9 @@ namespace HW.Grp
         public void SetSponsor(int sponsorId)
         {
             var service = new WebService2.Soap();
-            var result = service.GetSuperSponsorData(Session["Token"].ToString(), sponsorId, 20);
+
+            var token = Session["SecondToken"] != null ? Session["SecondToken"] : Session["Token"];
+            var result = service.GetSuperSponsorData(token.ToString(), sponsorId, 20);
             if (result != null)
             {
                 if (result.HasSuperSponsor)
