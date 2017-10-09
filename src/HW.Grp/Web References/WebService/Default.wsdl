@@ -138,6 +138,7 @@
           <s:element minOccurs="1" maxOccurs="1" name="SponsorId" type="s:int" />
           <s:element minOccurs="1" maxOccurs="1" name="RealmType" type="s:int" />
           <s:element minOccurs="0" maxOccurs="1" name="RealmIdentifier" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdpUrl" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="GetUsersInDepartment">
@@ -584,6 +585,226 @@
           <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="ExportAll">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="groupBy" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromYear" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="toYear" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromMonth" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="toMonth" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="projectRoundUnitID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="grouping" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorAdminID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="plot" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="answerKey" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="path" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timeout" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExportAllResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExportAllResult" type="tns:Exporter" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Exporter">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Base64StreamData" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ContentType" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Export">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="groupBy" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromYear" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="toYear" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromMonth" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="toMonth" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="projectRoundUnitID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="grouping" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorAdminID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="reportPartID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="plot" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="answerKey" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="path" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timeout" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExportResult" type="tns:Exporter" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetExerciseCategories">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="areaID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="categoryID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="langID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetExerciseCategoriesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetExerciseCategoriesResult" type="tns:ArrayOfExerciseCategoryLanguage" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfExerciseCategoryLanguage">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ExerciseCategoryLanguage" nillable="true" type="tns:ExerciseCategoryLanguage" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ExerciseCategoryLanguage">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="CategoryName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Category" type="tns:ExerciseCategory" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ExerciseCategory">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetExerciseAreas">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="areaID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetExerciseAreasResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetExerciseAreasResult" type="tns:ArrayOfExerciseArea" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfExerciseArea">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ExerciseArea" nillable="true" type="tns:ExerciseArea" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ExerciseArea">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="AreaName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetExercises">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="areaID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="categoryID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sort" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetExercisesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetExercisesResult" type="tns:ArrayOfExercise" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfExercise">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Exercise" nillable="true" type="tns:Exercise" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Exercise">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AreaCategoryName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Image" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Teaser" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExerciseVariantId" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetExercise">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="exerciseVariantLanguageID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetExerciseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetExerciseResult" type="tns:ExerciseItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ExerciseItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="File" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Size" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExerciseWindowX" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExerciseWindowY" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExerciseName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PrintOnBottom" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReplacementHead" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Script" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="HasContent" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsText" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetSuperSponsorData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSuperSponsorDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSuperSponsorDataResult" type="tns:SponsorSuperSponsor" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="SponsorSuperSponsor">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="SponsorID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SuperSponsorID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="HasSuperSponsor" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Header" type="s:string" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="SponsorAdministrator" nillable="true" type="tns:SponsorAdministrator" />
       <s:element name="DepartmentTree" nillable="true" type="tns:DepartmentTree" />
       <s:element name="Realm" nillable="true" type="tns:Realm" />
@@ -599,6 +820,12 @@
       <s:element name="ArrayOfPlotTypeLanguage" nillable="true" type="tns:ArrayOfPlotTypeLanguage" />
       <s:element name="boolean" type="s:boolean" />
       <s:element name="ArrayOfListURL" nillable="true" type="tns:ArrayOfListURL" />
+      <s:element name="Exporter" nillable="true" type="tns:Exporter" />
+      <s:element name="ArrayOfExerciseCategoryLanguage" nillable="true" type="tns:ArrayOfExerciseCategoryLanguage" />
+      <s:element name="ArrayOfExerciseArea" nillable="true" type="tns:ArrayOfExerciseArea" />
+      <s:element name="ArrayOfExercise" nillable="true" type="tns:ArrayOfExercise" />
+      <s:element name="ExerciseItem" nillable="true" type="tns:ExerciseItem" />
+      <s:element name="SponsorSuperSponsor" nillable="true" type="tns:SponsorSuperSponsor" />
     </s:schema>
     <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
       <s:simpleType name="guid">
@@ -715,6 +942,48 @@
   </wsdl:message>
   <wsdl:message name="GetReportImageUrlSoapOut">
     <wsdl:part name="parameters" element="tns:GetReportImageUrlResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExportAllSoapIn">
+    <wsdl:part name="parameters" element="tns:ExportAll" />
+  </wsdl:message>
+  <wsdl:message name="ExportAllSoapOut">
+    <wsdl:part name="parameters" element="tns:ExportAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExportSoapIn">
+    <wsdl:part name="parameters" element="tns:Export" />
+  </wsdl:message>
+  <wsdl:message name="ExportSoapOut">
+    <wsdl:part name="parameters" element="tns:ExportResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetExerciseCategoriesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetExerciseCategories" />
+  </wsdl:message>
+  <wsdl:message name="GetExerciseCategoriesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetExerciseCategoriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetExerciseAreasSoapIn">
+    <wsdl:part name="parameters" element="tns:GetExerciseAreas" />
+  </wsdl:message>
+  <wsdl:message name="GetExerciseAreasSoapOut">
+    <wsdl:part name="parameters" element="tns:GetExerciseAreasResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetExercisesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetExercises" />
+  </wsdl:message>
+  <wsdl:message name="GetExercisesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetExercisesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetExerciseSoapIn">
+    <wsdl:part name="parameters" element="tns:GetExercise" />
+  </wsdl:message>
+  <wsdl:message name="GetExerciseSoapOut">
+    <wsdl:part name="parameters" element="tns:GetExerciseResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSuperSponsorDataSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSuperSponsorData" />
+  </wsdl:message>
+  <wsdl:message name="GetSuperSponsorDataSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSuperSponsorDataResponse" />
   </wsdl:message>
   <wsdl:message name="ManagerLoginHttpPostIn">
     <wsdl:part name="username" type="s:string" />
@@ -870,6 +1139,97 @@
   <wsdl:message name="GetReportImageUrlHttpPostOut">
     <wsdl:part name="Body" element="tns:ArrayOfListURL" />
   </wsdl:message>
+  <wsdl:message name="ExportAllHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="groupBy" type="s:string" />
+    <wsdl:part name="fromYear" type="s:string" />
+    <wsdl:part name="toYear" type="s:string" />
+    <wsdl:part name="fromMonth" type="s:string" />
+    <wsdl:part name="toMonth" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="projectRoundUnitID" type="s:string" />
+    <wsdl:part name="grouping" type="s:string" />
+    <wsdl:part name="sponsorAdminID" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="groupID" type="s:string" />
+    <wsdl:part name="plot" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="answerKey" type="s:string" />
+    <wsdl:part name="path" type="s:string" />
+    <wsdl:part name="timeout" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExportAllHttpPostOut">
+    <wsdl:part name="Body" element="tns:Exporter" />
+  </wsdl:message>
+  <wsdl:message name="ExportHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="groupBy" type="s:string" />
+    <wsdl:part name="fromYear" type="s:string" />
+    <wsdl:part name="toYear" type="s:string" />
+    <wsdl:part name="fromMonth" type="s:string" />
+    <wsdl:part name="toMonth" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="projectRoundUnitID" type="s:string" />
+    <wsdl:part name="grouping" type="s:string" />
+    <wsdl:part name="sponsorAdminID" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="groupID" type="s:string" />
+    <wsdl:part name="reportPartID" type="s:string" />
+    <wsdl:part name="plot" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="answerKey" type="s:string" />
+    <wsdl:part name="path" type="s:string" />
+    <wsdl:part name="timeout" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExportHttpPostOut">
+    <wsdl:part name="Body" element="tns:Exporter" />
+  </wsdl:message>
+  <wsdl:message name="GetExerciseCategoriesHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="areaID" type="s:string" />
+    <wsdl:part name="categoryID" type="s:string" />
+    <wsdl:part name="langID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetExerciseCategoriesHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfExerciseCategoryLanguage" />
+  </wsdl:message>
+  <wsdl:message name="GetExerciseAreasHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="areaID" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetExerciseAreasHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfExerciseArea" />
+  </wsdl:message>
+  <wsdl:message name="GetExercisesHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="areaID" type="s:string" />
+    <wsdl:part name="categoryID" type="s:string" />
+    <wsdl:part name="languageID" type="s:string" />
+    <wsdl:part name="sort" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetExercisesHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfExercise" />
+  </wsdl:message>
+  <wsdl:message name="GetExerciseHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="exerciseVariantLanguageID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetExerciseHttpPostOut">
+    <wsdl:part name="Body" element="tns:ExerciseItem" />
+  </wsdl:message>
+  <wsdl:message name="GetSuperSponsorDataHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSuperSponsorDataHttpPostOut">
+    <wsdl:part name="Body" element="tns:SponsorSuperSponsor" />
+  </wsdl:message>
   <wsdl:portType name="SoapSoap">
     <wsdl:operation name="ManagerLogin">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Validates a username and password combination and, if there is a match, returns a Sponsor Admin object including sponsor data with token, variable lifetime (max 20 minutes).</wsdl:documentation>
@@ -959,6 +1319,39 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate report image url and return array of urls.</wsdl:documentation>
       <wsdl:input message="tns:GetReportImageUrlSoapIn" />
       <wsdl:output message="tns:GetReportImageUrlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExportAll">
+      <wsdl:input message="tns:ExportAllSoapIn" />
+      <wsdl:output message="tns:ExportAllSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Export">
+      <wsdl:input message="tns:ExportSoapIn" />
+      <wsdl:output message="tns:ExportSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExerciseCategories">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets an array of exercise categories.  It will return a list of category based on areaID and langID.</wsdl:documentation>
+      <wsdl:input message="tns:GetExerciseCategoriesSoapIn" />
+      <wsdl:output message="tns:GetExerciseCategoriesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExerciseAreas">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
+      <wsdl:input message="tns:GetExerciseAreasSoapIn" />
+      <wsdl:output message="tns:GetExerciseAreasSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExercises">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
+      <wsdl:input message="tns:GetExercisesSoapIn" />
+      <wsdl:output message="tns:GetExercisesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExercise">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
+      <wsdl:input message="tns:GetExerciseSoapIn" />
+      <wsdl:output message="tns:GetExerciseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSuperSponsorData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get super sponsor data for exercise show page.</wsdl:documentation>
+      <wsdl:input message="tns:GetSuperSponsorDataSoapIn" />
+      <wsdl:output message="tns:GetSuperSponsorDataSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="SoapHttpPost">
@@ -1050,6 +1443,39 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate report image url and return array of urls.</wsdl:documentation>
       <wsdl:input message="tns:GetReportImageUrlHttpPostIn" />
       <wsdl:output message="tns:GetReportImageUrlHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExportAll">
+      <wsdl:input message="tns:ExportAllHttpPostIn" />
+      <wsdl:output message="tns:ExportAllHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Export">
+      <wsdl:input message="tns:ExportHttpPostIn" />
+      <wsdl:output message="tns:ExportHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExerciseCategories">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets an array of exercise categories.  It will return a list of category based on areaID and langID.</wsdl:documentation>
+      <wsdl:input message="tns:GetExerciseCategoriesHttpPostIn" />
+      <wsdl:output message="tns:GetExerciseCategoriesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExerciseAreas">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
+      <wsdl:input message="tns:GetExerciseAreasHttpPostIn" />
+      <wsdl:output message="tns:GetExerciseAreasHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExercises">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
+      <wsdl:input message="tns:GetExercisesHttpPostIn" />
+      <wsdl:output message="tns:GetExercisesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExercise">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Expire token. Returns true if successful.</wsdl:documentation>
+      <wsdl:input message="tns:GetExerciseHttpPostIn" />
+      <wsdl:output message="tns:GetExerciseHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSuperSponsorData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get super sponsor data for exercise show page.</wsdl:documentation>
+      <wsdl:input message="tns:GetSuperSponsorDataHttpPostIn" />
+      <wsdl:output message="tns:GetSuperSponsorDataHttpPostOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SoapSoap" type="tns:SoapSoap">
@@ -1209,6 +1635,69 @@
     </wsdl:operation>
     <wsdl:operation name="GetReportImageUrl">
       <soap:operation soapAction="http://tempuri.org/GetReportImageUrl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExportAll">
+      <soap:operation soapAction="http://tempuri.org/ExportAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Export">
+      <soap:operation soapAction="http://tempuri.org/Export" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExerciseCategories">
+      <soap:operation soapAction="http://tempuri.org/GetExerciseCategories" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExerciseAreas">
+      <soap:operation soapAction="http://tempuri.org/GetExerciseAreas" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExercises">
+      <soap:operation soapAction="http://tempuri.org/GetExercises" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExercise">
+      <soap:operation soapAction="http://tempuri.org/GetExercise" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSuperSponsorData">
+      <soap:operation soapAction="http://tempuri.org/GetSuperSponsorData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1381,6 +1870,69 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ExportAll">
+      <soap12:operation soapAction="http://tempuri.org/ExportAll" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Export">
+      <soap12:operation soapAction="http://tempuri.org/Export" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExerciseCategories">
+      <soap12:operation soapAction="http://tempuri.org/GetExerciseCategories" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExerciseAreas">
+      <soap12:operation soapAction="http://tempuri.org/GetExerciseAreas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExercises">
+      <soap12:operation soapAction="http://tempuri.org/GetExercises" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExercise">
+      <soap12:operation soapAction="http://tempuri.org/GetExercise" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSuperSponsorData">
+      <soap12:operation soapAction="http://tempuri.org/GetSuperSponsorData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="SoapHttpPost" type="tns:SoapHttpPost">
     <http:binding verb="POST" />
@@ -1539,6 +2091,69 @@
     </wsdl:operation>
     <wsdl:operation name="GetReportImageUrl">
       <http:operation location="/GetReportImageUrl" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExportAll">
+      <http:operation location="/ExportAll" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Export">
+      <http:operation location="/Export" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExerciseCategories">
+      <http:operation location="/GetExerciseCategories" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExerciseAreas">
+      <http:operation location="/GetExerciseAreas" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExercises">
+      <http:operation location="/GetExercises" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExercise">
+      <http:operation location="/GetExercise" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSuperSponsorData">
+      <http:operation location="/GetSuperSponsorData" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

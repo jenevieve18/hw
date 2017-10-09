@@ -96,6 +96,7 @@ namespace HW.Grp
                     Session["IPAddress"] = ipAddressResponse.RealmIdentifier;
                     Session["SponsorID"] = ipAddressResponse.SponsorId;
                     Session["RealmType"] = ipAddressResponse.RealmType;
+                    Session["IdpUrl"] = ipAddressResponse.IdpUrl;
                 }
 
                 else
@@ -295,7 +296,7 @@ namespace HW.Grp
                     else if (Request.Form["SAMLResponse"] == null)
                     {
                         // create saml request to IDP
-                        var samlEndPoint = ConfigurationManager.AppSettings["SAMLEndpoint"].ToString();
+                        var samlEndPoint = Session["IdpUrl"].ToString();
 
                         var request = new AuthRequest(
                             ConfigurationManager.AppSettings["SAMLIssuer"].ToString(),
@@ -308,11 +309,11 @@ namespace HW.Grp
                     else if (Request.Form["SAMLResponse"] != null)
                     {
                         string firstUrl = "default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
-                        var SAMLResponose = Request.Form["SAMLResponse"];
+                        var SAMLResponse = Request.Form["SAMLResponse"];
                         var sponsorID = Session["SponsorId"].ToString();
                         // Send response to GRP-WS for authentication.
                         // If token not null then proceed to org/specific page.
-                        var serviceResponse = service.ConsumeSignedResponse(Convert.ToInt32(sponsorID), SAMLResponose, 20);
+                        var serviceResponse = service.ConsumeSignedResponse(Convert.ToInt32(sponsorID), SAMLResponse, 20);
                         if (serviceResponse.Token != null)
                         {
                             firstUrl = "default.aspx?Logout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
@@ -366,7 +367,7 @@ namespace HW.Grp
                                 if (Session["SponsorID"] != null)
                                 {
                                     //imagePath = "D:\\Projects\\HealthWatch\\HW\\src\\HW.Grp\\img\\Sponsor" + Session["SponsorID"].ToString();
-                                    imagePath = Server.MapPath("~\\img\\Sponsor" + Session["SponsorID"].ToString());
+                                    imagePath = Server.MapPath("~\\img\\Sponsor" + Session["SponsorID"].ToString() + Session["SponsorAdminID"].ToString());
                                     /// <summary>
                                     /// Check if Sponsor image directory exist
                                     /// if true then delete

@@ -64,7 +64,8 @@ $(document).ready(function () {
         img.attr('src', imageUrl + '&PLOT=' + plotType);
 
         var exportDocXUrl = partContent.find('.hidden-export-docx-url').text();
-        partContent.find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + plotType);
+        //partContent.find('.export-docx-url').attr('href', exportDocXUrl + '&PLOT=' + plotType);
+        partContent.find('.hidden-export-docx-url').text() + "&PLOT=" + plotType;
 
         var exportXlsXUrl = partContent.find('.hidden-export-xls-url').text();
         partContent.find('.export-xls-url').attr('href', exportXlsXUrl + '&PLOT=' + plotType);
@@ -77,7 +78,8 @@ $(document).ready(function () {
         var plotType = $(this).val();
 
         var exportAllDocXUrl = $('.hidden-exportall-docx-url').text();
-        $('.exportall-docx-url').attr('href', exportAllDocXUrl + '&PLOT=' + plotType);
+        //$('.exportall-docx-url').attr('href', exportAllDocXUrl + '&PLOT=' + plotType);
+        $('.hidden-exportall-docx-url').text() + "&PLOT=" + plotType;
 
         var exportAllXlsUrl = $('.hidden-exportall-xls-url').text();
         $('.exportall-xls-url').attr('href', exportAllXlsUrl + '&PLOT=' + plotType);

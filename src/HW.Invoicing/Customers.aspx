@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <style>
     .badge-success {
-        background-color: #47a447;
+        color: #47a447;
         border-color: #398439;
     }
 </style>
@@ -46,9 +46,9 @@
                             <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="">&bull;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge-success">&bull;</span>
                                 <% } %>
                                 <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>                                
                             </td>
@@ -65,9 +65,9 @@
                             <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="">&bull;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge-success">&bull;</span>
                                 <% } %>
                                 <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                             </td>
@@ -97,9 +97,9 @@
                         <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="">&bull;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge-success">&bull;</span>
                                 <% } %>
                             <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                         </td>
@@ -144,9 +144,9 @@
                             <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="">&bull;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge-success">&bull;</span>
                                 <% } %>
                                 <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>
                             </td>
@@ -163,9 +163,9 @@
                             <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="">&bull;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge-success">&bull;</span>
                                 <% } %>
                                 <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                             </td>
@@ -196,9 +196,9 @@
                             <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="">&bull;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge-success">&bull;</span>
                                 <% } %>
                                 <strike><%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %></strike>
                             </td>
@@ -215,9 +215,9 @@
                             <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="">&bull;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge-success">&bull;</span>
                                 <% } %>
                                 <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                             </td>
@@ -247,9 +247,9 @@
                         <td>
                                 <% var openTimebooks = s.CustomerFindOpenTimebooks(c.Id); %>
                                 <% if (openTimebooks.Count > 0) { %>
-                                    <span class="badge">&nbsp;</span>
+                                    <span class="">&bull;</span>
                                 <% } else { %>
-                                    <span class="badge badge-success">&nbsp;</span>
+                                    <span class="badge-success">&bull;</span>
                                 <% } %>
                             <%= HtmlHelper.Anchor(c.Name, "customershow.aspx?Id=" + c.Id) %>
                         </td>
