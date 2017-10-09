@@ -399,9 +399,10 @@
     <Content Include="Web References\WebService2\ExerciseCategoryLanguage.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
-    <Content Include="Web References\WebService2\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
+	<Content Include="Web References\WebService2\Reference.map">
+		<Generator>MSDiscoCodeGenerator</Generator>
+		<LastGenOutput>Reference.cs</LastGenOutput>
+	</Content>
     <Content Include="Web References\WebService2\DepartmentTree.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
@@ -1191,10 +1192,11 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://localhost:1730/default.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\WebService2\</RelPath>
-      <UpdateFromURL>http://localhost:1730/default.asmx</UpdateFromURL>
+	<WebReferenceUrl Include="http://localhost:1730/default.asmx">
+		<UrlBehavior>Dynamic</UrlBehavior>
+		<RelPath>Web References\WebService2\</RelPath>
+		<UpdateFromURL>http://localhost:1730/default.asmx</UpdateFromURL>
+	</WebReferenceUrl>
     <WebReferenceUrl Include="http://localhost:1729/default.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\WebService2\</RelPath>

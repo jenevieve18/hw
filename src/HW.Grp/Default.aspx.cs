@@ -351,7 +351,7 @@ namespace HW.Grp
                                     if (download != null)
                                     {
 
-                                        var secondServiceResponse = service2.ConsumeSignedResponse(Convert.ToInt32(sponsorID), SAMLResponose, 20);
+                                        var secondServiceResponse = service2.ConsumeSignedResponse(Convert.ToInt32(sponsorID), SAMLResponse, 20);
                                         if (secondServiceResponse.Token != null)
                                         {
                                             Session["SecondToken"] = secondServiceResponse.Token;
