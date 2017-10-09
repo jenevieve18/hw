@@ -211,17 +211,23 @@ namespace HW.Grp
             var service = new WebService2.Soap();
 
             var token = Session["SecondToken"] != null ? Session["SecondToken"] : Session["Token"];
-            var result = service.GetSuperSponsorData(token.ToString(), sponsorId, 20);
-            if (result != null)
+            try
             {
-                if (result.HasSuperSponsor)
+                var result = service.GetSuperSponsorData(token.ToString(), sponsorId, 20);
+                if (result != null)
                 {
-                    logos += "<img src='img/partner/" + result.SuperSponsorID + ".gif'/>";
+                    if (result.HasSuperSponsor)
+                    {
+                        logos += "<img src='img/partner/" + result.SuperSponsorID + ".gif'/>";
+                    }
+                    if (result.HasSuperSponsor && result.Header != "")
+                    {
+                        headerText += " - " + result.Header;
+                    }
                 }
-                if (result.HasSuperSponsor && result.Header != "")
-                {
-                    headerText += " - " + result.Header;
-                }
+            }
+            catch (Exception easdasdx) {
+
             }
         }
 
