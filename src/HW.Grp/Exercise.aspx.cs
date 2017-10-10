@@ -122,7 +122,7 @@ namespace HW.Grp
 
             var service = new WebService.Soap();
             var service2 = new WebService2.Soap();
-            var token = Session["SecondToken"] != null ? Session["SecondToken"] : Session["Token"];
+            
             int check = 0;
             try
             {
@@ -142,12 +142,14 @@ namespace HW.Grp
             {
                 if (check == 0)
                 {
+                    var token = Session["SecondToken"];
                     areass = service2.GetExerciseAreas(token.ToString(), areaID, lid, 20);
                     categoriess = service2.GetExerciseCategories(token.ToString(), areaID, categoryID, lid, 20);
                     exercisess = service2.GetExercises(token.ToString(), areaID, categoryID, lid, sort, 20);
                 }
                 else
                 {
+                    var token = Session["Token"];
                     areass = service.GetExerciseAreas(token.ToString(), areaID, lid, 20);
                     categoriess = service.GetExerciseCategories(token.ToString(), areaID, categoryID, lid, 20);
                     exercisess = service.GetExercises(token.ToString(), areaID, categoryID, lid, sort, 20);

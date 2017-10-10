@@ -161,21 +161,10 @@ namespace HW.Grp
                                     {
                                         try
                                         {
-                                            // Download data to check if the URL is up and running or not.
-                                            var client = new WebClient();
-                                            // Get URL from the web.config
-                                            var getURL = ConfigurationManager.AppSettings["grpSecondURL"];
-                                            // Try to download the data
-                                            var download = client.DownloadData(getURL);
-                                            // Check if there has download or not.
-                                            if (download != null)
+                                            var secondServiceResponse = service2.ManagerLogin(username, password, 20);
+                                            if (secondServiceResponse.Token != null)
                                             {
-                                                
-                                                var secondServiceResponse = service2.ManagerLogin(username, password, 20);
-                                                if (secondServiceResponse.Token != null)
-                                                {
-                                                    Session["SecondToken"] = secondServiceResponse.Token;
-                                                }
+                                                Session["SecondToken"] = secondServiceResponse.Token;
                                             }
                                         }
                                         catch (Exception)
