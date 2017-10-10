@@ -97,12 +97,19 @@ namespace HW.Grp
 			
 			sponsorID = ConvertHelper.ToInt32(Session["SponsorID"]);
 			sponsorAdminID = ConvertHelper.ToInt32(Session["SponsorAdminID"], -1);
-			
-			//HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Exercises), "default.aspx", true);
 
-			//SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Exercises, DateTime.Now);
+            var service = new HW.Grp.WebService.Soap();
+            var userSession = service.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+            if (userSession != null)
+            {
+                lid = userSession.Lang;
+            }
 
-			sortQueryString = "&SORT=" + sort;
+            //HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Exercises), "default.aspx", true);
+
+            //SaveAdminSession(Convert.ToInt32(Session["SponsorAdminSessionID"]), ManagerFunction.Exercises, DateTime.Now);
+
+            sortQueryString = "&SORT=" + sort;
 
 
             SetExercises(

@@ -80,6 +80,12 @@ namespace HW.Grp.WebService {
         
         private System.Threading.SendOrPostCallback GetSuperSponsorDataOperationCompleted;
         
+        private System.Threading.SendOrPostCallback ReadUserSessionOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SaveSessionIfOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback FindBySponsorAdminOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -192,6 +198,15 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         public event GetSuperSponsorDataCompletedEventHandler GetSuperSponsorDataCompleted;
+        
+        /// <remarks/>
+        public event ReadUserSessionCompletedEventHandler ReadUserSessionCompleted;
+        
+        /// <remarks/>
+        public event SaveSessionIfCompletedEventHandler SaveSessionIfCompleted;
+        
+        /// <remarks/>
+        public event FindBySponsorAdminCompletedEventHandler FindBySponsorAdminCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ManagerLogin", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -1216,6 +1231,98 @@ namespace HW.Grp.WebService {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ReadUserSession", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public UserSession ReadUserSession(string hostAddress, string agent) {
+            object[] results = this.Invoke("ReadUserSession", new object[] {
+                        hostAddress,
+                        agent});
+            return ((UserSession)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ReadUserSessionAsync(string hostAddress, string agent) {
+            this.ReadUserSessionAsync(hostAddress, agent, null);
+        }
+        
+        /// <remarks/>
+        public void ReadUserSessionAsync(string hostAddress, string agent, object userState) {
+            if ((this.ReadUserSessionOperationCompleted == null)) {
+                this.ReadUserSessionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnReadUserSessionOperationCompleted);
+            }
+            this.InvokeAsync("ReadUserSession", new object[] {
+                        hostAddress,
+                        agent}, this.ReadUserSessionOperationCompleted, userState);
+        }
+        
+        private void OnReadUserSessionOperationCompleted(object arg) {
+            if ((this.ReadUserSessionCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ReadUserSessionCompleted(this, new ReadUserSessionCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/SaveSessionIf", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void SaveSessionIf(bool condition, UserSession s) {
+            this.Invoke("SaveSessionIf", new object[] {
+                        condition,
+                        s});
+        }
+        
+        /// <remarks/>
+        public void SaveSessionIfAsync(bool condition, UserSession s) {
+            this.SaveSessionIfAsync(condition, s, null);
+        }
+        
+        /// <remarks/>
+        public void SaveSessionIfAsync(bool condition, UserSession s, object userState) {
+            if ((this.SaveSessionIfOperationCompleted == null)) {
+                this.SaveSessionIfOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSaveSessionIfOperationCompleted);
+            }
+            this.InvokeAsync("SaveSessionIf", new object[] {
+                        condition,
+                        s}, this.SaveSessionIfOperationCompleted, userState);
+        }
+        
+        private void OnSaveSessionIfOperationCompleted(object arg) {
+            if ((this.SaveSessionIfCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SaveSessionIfCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FindBySponsorAdmin", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public ManagerFunctionLang[] FindBySponsorAdmin(int sponsorAdminID, int langID) {
+            object[] results = this.Invoke("FindBySponsorAdmin", new object[] {
+                        sponsorAdminID,
+                        langID});
+            return ((ManagerFunctionLang[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void FindBySponsorAdminAsync(int sponsorAdminID, int langID) {
+            this.FindBySponsorAdminAsync(sponsorAdminID, langID, null);
+        }
+        
+        /// <remarks/>
+        public void FindBySponsorAdminAsync(int sponsorAdminID, int langID, object userState) {
+            if ((this.FindBySponsorAdminOperationCompleted == null)) {
+                this.FindBySponsorAdminOperationCompleted = new System.Threading.SendOrPostCallback(this.OnFindBySponsorAdminOperationCompleted);
+            }
+            this.InvokeAsync("FindBySponsorAdmin", new object[] {
+                        sponsorAdminID,
+                        langID}, this.FindBySponsorAdminOperationCompleted, userState);
+        }
+        
+        private void OnFindBySponsorAdminOperationCompleted(object arg) {
+            if ((this.FindBySponsorAdminCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.FindBySponsorAdminCompleted(this, new FindBySponsorAdminCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -1373,6 +1480,7 @@ namespace HW.Grp.WebService {
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(UserSession))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Language))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PlotType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PlotTypeLanguage))]
@@ -1407,6 +1515,51 @@ namespace HW.Grp.WebService {
             }
             set {
                 this.errorsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class ManagerFunctionLang {
+        
+        private string functionField;
+        
+        private string uRLField;
+        
+        private string explField;
+        
+        /// <remarks/>
+        public string Function {
+            get {
+                return this.functionField;
+            }
+            set {
+                this.functionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string URL {
+            get {
+                return this.uRLField;
+            }
+            set {
+                this.uRLField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Expl {
+            get {
+                return this.explField;
+            }
+            set {
+                this.explField = value;
             }
         }
     }
@@ -3136,6 +3289,51 @@ namespace HW.Grp.WebService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class UserSession : BaseModel {
+        
+        private string hostAddressField;
+        
+        private string agentField;
+        
+        private int langField;
+        
+        /// <remarks/>
+        public string HostAddress {
+            get {
+                return this.hostAddressField;
+            }
+            set {
+                this.hostAddressField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Agent {
+            get {
+                return this.agentField;
+            }
+            set {
+                this.agentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Lang {
+            get {
+                return this.langField;
+            }
+            set {
+                this.langField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
     public partial class Language : BaseModel {
         
         private string nameField;
@@ -4018,6 +4216,62 @@ namespace HW.Grp.WebService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((SponsorSuperSponsor)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void ReadUserSessionCompletedEventHandler(object sender, ReadUserSessionCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ReadUserSessionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ReadUserSessionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public UserSession Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((UserSession)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void SaveSessionIfCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void FindBySponsorAdminCompletedEventHandler(object sender, FindBySponsorAdminCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class FindBySponsorAdminCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal FindBySponsorAdminCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public ManagerFunctionLang[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((ManagerFunctionLang[])(this.results[0]));
             }
         }
     }

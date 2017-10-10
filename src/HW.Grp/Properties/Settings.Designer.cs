@@ -36,7 +36,7 @@ namespace HW.Grp.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:1729/default.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://dev-grphybridws.healthwatch.se//default.asmx")]
         public string HW_Grp_WebService2_Soap {
             get {
                 return ((string)(this["HW_Grp_WebService2_Soap"]));

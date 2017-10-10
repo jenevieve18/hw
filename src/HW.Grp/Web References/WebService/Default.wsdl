@@ -805,6 +805,70 @@
           <s:element minOccurs="0" maxOccurs="1" name="Header" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="ReadUserSession">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="hostAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="agent" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadUserSessionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadUserSessionResult" type="tns:UserSession" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UserSession">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseModel">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="HostAddress" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Agent" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Lang" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="SaveSessionIf">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="condition" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="s" type="tns:UserSession" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveSessionIfResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="FindBySponsorAdmin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorAdminID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="langID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindBySponsorAdminResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FindBySponsorAdminResult" type="tns:ArrayOfManagerFunctionLang" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfManagerFunctionLang">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ManagerFunctionLang" nillable="true" type="tns:ManagerFunctionLang" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ManagerFunctionLang">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Function" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="URL" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Expl" type="s:string" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="SponsorAdministrator" nillable="true" type="tns:SponsorAdministrator" />
       <s:element name="DepartmentTree" nillable="true" type="tns:DepartmentTree" />
       <s:element name="Realm" nillable="true" type="tns:Realm" />
@@ -826,6 +890,8 @@
       <s:element name="ArrayOfExercise" nillable="true" type="tns:ArrayOfExercise" />
       <s:element name="ExerciseItem" nillable="true" type="tns:ExerciseItem" />
       <s:element name="SponsorSuperSponsor" nillable="true" type="tns:SponsorSuperSponsor" />
+      <s:element name="UserSession" nillable="true" type="tns:UserSession" />
+      <s:element name="ArrayOfManagerFunctionLang" nillable="true" type="tns:ArrayOfManagerFunctionLang" />
     </s:schema>
     <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
       <s:simpleType name="guid">
@@ -984,6 +1050,24 @@
   </wsdl:message>
   <wsdl:message name="GetSuperSponsorDataSoapOut">
     <wsdl:part name="parameters" element="tns:GetSuperSponsorDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadUserSessionSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadUserSession" />
+  </wsdl:message>
+  <wsdl:message name="ReadUserSessionSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadUserSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveSessionIfSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveSessionIf" />
+  </wsdl:message>
+  <wsdl:message name="SaveSessionIfSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveSessionIfResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorAdminSoapIn">
+    <wsdl:part name="parameters" element="tns:FindBySponsorAdmin" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorAdminSoapOut">
+    <wsdl:part name="parameters" element="tns:FindBySponsorAdminResponse" />
   </wsdl:message>
   <wsdl:message name="ManagerLoginHttpPostIn">
     <wsdl:part name="username" type="s:string" />
@@ -1230,6 +1314,20 @@
   <wsdl:message name="GetSuperSponsorDataHttpPostOut">
     <wsdl:part name="Body" element="tns:SponsorSuperSponsor" />
   </wsdl:message>
+  <wsdl:message name="ReadUserSessionHttpPostIn">
+    <wsdl:part name="hostAddress" type="s:string" />
+    <wsdl:part name="agent" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ReadUserSessionHttpPostOut">
+    <wsdl:part name="Body" element="tns:UserSession" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorAdminHttpPostIn">
+    <wsdl:part name="sponsorAdminID" type="s:string" />
+    <wsdl:part name="langID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorAdminHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfManagerFunctionLang" />
+  </wsdl:message>
   <wsdl:portType name="SoapSoap">
     <wsdl:operation name="ManagerLogin">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Validates a username and password combination and, if there is a match, returns a Sponsor Admin object including sponsor data with token, variable lifetime (max 20 minutes).</wsdl:documentation>
@@ -1352,6 +1450,18 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get super sponsor data for exercise show page.</wsdl:documentation>
       <wsdl:input message="tns:GetSuperSponsorDataSoapIn" />
       <wsdl:output message="tns:GetSuperSponsorDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadUserSession">
+      <wsdl:input message="tns:ReadUserSessionSoapIn" />
+      <wsdl:output message="tns:ReadUserSessionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveSessionIf">
+      <wsdl:input message="tns:SaveSessionIfSoapIn" />
+      <wsdl:output message="tns:SaveSessionIfSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorAdmin">
+      <wsdl:input message="tns:FindBySponsorAdminSoapIn" />
+      <wsdl:output message="tns:FindBySponsorAdminSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="SoapHttpPost">
@@ -1476,6 +1586,14 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get super sponsor data for exercise show page.</wsdl:documentation>
       <wsdl:input message="tns:GetSuperSponsorDataHttpPostIn" />
       <wsdl:output message="tns:GetSuperSponsorDataHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadUserSession">
+      <wsdl:input message="tns:ReadUserSessionHttpPostIn" />
+      <wsdl:output message="tns:ReadUserSessionHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorAdmin">
+      <wsdl:input message="tns:FindBySponsorAdminHttpPostIn" />
+      <wsdl:output message="tns:FindBySponsorAdminHttpPostOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SoapSoap" type="tns:SoapSoap">
@@ -1698,6 +1816,33 @@
     </wsdl:operation>
     <wsdl:operation name="GetSuperSponsorData">
       <soap:operation soapAction="http://tempuri.org/GetSuperSponsorData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadUserSession">
+      <soap:operation soapAction="http://tempuri.org/ReadUserSession" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveSessionIf">
+      <soap:operation soapAction="http://tempuri.org/SaveSessionIf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorAdmin">
+      <soap:operation soapAction="http://tempuri.org/FindBySponsorAdmin" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1933,6 +2078,33 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ReadUserSession">
+      <soap12:operation soapAction="http://tempuri.org/ReadUserSession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveSessionIf">
+      <soap12:operation soapAction="http://tempuri.org/SaveSessionIf" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorAdmin">
+      <soap12:operation soapAction="http://tempuri.org/FindBySponsorAdmin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="SoapHttpPost" type="tns:SoapHttpPost">
     <http:binding verb="POST" />
@@ -2154,6 +2326,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetSuperSponsorData">
       <http:operation location="/GetSuperSponsorData" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadUserSession">
+      <http:operation location="/ReadUserSession" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorAdmin">
+      <http:operation location="/FindBySponsorAdmin" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

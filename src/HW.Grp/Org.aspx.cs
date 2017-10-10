@@ -57,10 +57,12 @@ namespace HW.Grp
 
             /*commented w/out DB connectionString*/
             //HtmlHelper.RedirectIf(!new SqlSponsorAdminRepository().SponsorAdminHasAccess(sponsorAdminID, ManagerFunction.Organization), "default.aspx", true);
-            //var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
-            //if (userSession != null) {
-            //	lid = userSession.Lang;
-            //}
+            var service = new HW.Grp.WebService.Soap();
+            var userSession = service.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+            if (userSession != null)
+            {
+                lid = userSession.Lang;
+            }
 
             ReminderHelper.SetLanguageID(lid);
 			LanguageFactory.SetCurrentCulture(lid);

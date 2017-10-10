@@ -11,7 +11,7 @@ using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
 using HW.Core.Helpers;
-using HW.Grp.WebService;
+using grpWS = HW.Grp.WebService;
 using grpWS2 = HW.Grp.WebService2;
 using System.IO;
 using HW.Core.Util.Saml;
@@ -22,7 +22,7 @@ namespace HW.Grp
 {
     public partial class Default : System.Web.UI.Page
     {
-
+        SqlUserRepository userRepository = new SqlUserRepository();
         /*
 		SqlManagerFunctionRepository functionRepo = new SqlManagerFunctionRepository();
 		SqlUserRepository userRepository = new SqlUserRepository();
@@ -68,20 +68,24 @@ namespace HW.Grp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            lid = 2;
-            var service = new Soap();
+            //lid = 2;
+            var service = new grpWS.Soap();
             var service2 = new grpWS2.Soap();
 
             // tests.Text = "<i class='icon-circle-arrow-right'></i>&nbsp;" + R.Str(lid, "login.signinIDP", "Sign in using IdP") + "";
-            //var userSession = new UserSession { HostAddress = Request.UserHostAddress, Agent = Request.UserAgent, Lang = ConvertHelper.ToInt32(Request.QueryString["lid"]) };
-            //userRepository.SaveSessionIf(Request.QueryString["lid"] != null, userSession);
-            //if (Request.QueryString["r"] != null) {
-            //	Response.Redirect(HttpUtility.UrlDecode(Request.QueryString["r"]));
-            //}
-            //userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
-            //if (userSession != null) {
-            //	lid = userSession.Lang;
-            //}
+            var userSession = new grpWS.UserSession { HostAddress = Request.UserHostAddress, Agent = Request.UserAgent, Lang = ConvertHelper.ToInt32(Request.QueryString["lid"]) };
+            service.SaveSessionIf(Request.QueryString["lid"] != null, userSession);
+            
+            if (Request.QueryString["r"] != null)
+            {
+                Response.Redirect(HttpUtility.UrlDecode(Request.QueryString["r"]));
+            }
+
+            userSession = service.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+            if (userSession != null)
+            {
+                lid = userSession.Lang;
+            }
 
             //Index();
 
