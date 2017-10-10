@@ -12,6 +12,7 @@ using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
 using HW.Core.Services;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace HW.Grp
 {
@@ -26,6 +27,8 @@ namespace HW.Grp
 		protected int sponsorId;
 		protected int sponsorAdminId;
 
+        int check = 0;
+
         SqlSponsorRepository sr = new SqlSponsorRepository();
 		SqlExerciseRepository er = new SqlExerciseRepository();
 		
@@ -33,6 +36,17 @@ namespace HW.Grp
 		{
             var service = new WebService.Soap();
             var service2 = new WebService2.Soap();
+            
+            try
+            {
+                var client = new WebClient();
+                var getService2URL = service2.Url;
+                var download = client.DownloadData(getService2URL);
+            }
+            catch (Exception esd)
+            {
+                check = 1;
+            }
 
             langId = ConvertHelper.ToInt32(Session["LID"], ConvertHelper.ToInt32(Request.QueryString["LID"], 2));
 			sponsorId = ConvertHelper.ToInt32(Request.QueryString["SID"]);
@@ -73,9 +87,14 @@ namespace HW.Grp
                     //er.SaveStats(exerciseVariantLangId, userId, userProfileId);  INSERT EXERCISE STATS
                 }
                 //Show(er.ReadExerciseVariant(exerciseVariantLangId));
-                var token = Session["SecondToken"] != null ? Session["SecondToken"] : Session["Token"];
-                var exercises = service2.GetExercise(token.ToString(), exerciseVariantLangId, 20);
-                Show(exercises);
+                dynamic exercises = null;
+                if(check == 0)
+                    exercises = service2.GetExercise(Session["SecondToken"].ToString(), exerciseVariantLangId, 20);
+                else
+                    exercises = service.GetExercise(Session["Token"].ToString(), exerciseVariantLangId, 20);
+
+                var exercised = exercises;
+                Show(exercised);
             }
 		}
 
@@ -178,7 +197,7 @@ namespace HW.Grp
         //			}
         //		}
 
-        public void Show(WebService2.ExerciseItem evl)
+        public void Show(dynamic evl)
         {
             if (evl != null)
             {
@@ -208,12 +227,16 @@ namespace HW.Grp
 
         public void SetSponsor(int sponsorId)
         {
-            var service = new WebService2.Soap();
-
-            var token = Session["SecondToken"] != null ? Session["SecondToken"] : Session["Token"];
+            var service = new WebService.Soap();
+            var service2 = new WebService2.Soap();
             try
             {
-                var result = service.GetSuperSponsorData(token.ToString(), sponsorId, 20);
+                dynamic result = null;
+                if(check == 0)
+                    result = service2.GetSuperSponsorData(Session["SecondToken"].ToString(), sponsorId, 20);
+                else
+                    result = service.GetSuperSponsorData(Session["Token"].ToString(), sponsorId, 20);
+
                 if (result != null)
                 {
                     if (result.HasSuperSponsor)
@@ -246,7 +269,7 @@ namespace HW.Grp
         //    }
         //}
 
-        Control GetExerciseTypeControl(WebService2.ExerciseItem evl)
+        Control GetExerciseTypeControl(dynamic evl)
         {
             if (evl.IsText)
             {
