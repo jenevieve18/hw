@@ -37,14 +37,14 @@
                                     <li><%= HtmlHelper.Anchor(R.Str(lid, "show.all", "Show all"), string.Format("exercise.aspx?EAID=0{0}#filter", sortQueryString))%></li>
                                 <% } %>
                                 <% int i = 0; %>
-                                <% foreach (var a in areass) { %>
+                                <% foreach (var a in areaData) { %>
                                     <%--<% if (!HasSelectedArea || (HasSelectedArea && a.Area.Id != SelectedArea.Area.Id)) { %>
                                         <li<%= (i++ < areas.Count - 1) ? "" : " class='last'" %> id="EAID=<%= a.Area.Id %>">
                                             <%= HtmlHelper.Anchor(a.AreaName, string.Format("exercise.aspx?EAID={0}{1}#filter", a.Area.Id, sortQueryString)) %>
                                         </li>
                                     <% } %>--%>
                                 <% if (!HasSelectedArea || (HasSelectedArea && a.Id != SelectedArea.Id)) { %>
-                                        <li<%= (i++ < areass.Length - 1) ? "" : " class='last'" %> id="EAID=<%= a.Id %>">
+                                        <li<%= (i++ < areaData.Length - 1) ? "" : " class='last'" %> id="EAID=<%= a.Id %>">
                                             <%= HtmlHelper.Anchor(a.AreaName, string.Format("exercise.aspx?EAID={0}{1}#filter", a.Id, sortQueryString)) %>
                                         </li>
                                     <% } %>
@@ -72,10 +72,10 @@
                                     <li><%= HtmlHelper.Anchor(R.Str(lid, "show.all", "Show all"), string.Format("exercise.aspx?ECID=0{0}{1}#filter", sortQueryString, (exerciseAreaID != 0 ? "&EAID=" + exerciseAreaID : "")))%></li>
                                 <% } %>
                                 <% i = 0; %>
-                                <% foreach (var c in categoriess) { %>
-                                    <% if (!HasSelectedCategory || (HasSelectedCategory && c.Category.Id != SelectedCategory.Category.Id)) { %>
-                                        <li<%= (i++ < categoriess.Length - 1) ? "" : " class='last'" %> id="ECID<%= c.Category.Id %>">
-                                            <%= HtmlHelper.Anchor(c.CategoryName, string.Format("exercise.aspx?ECID={0}{1}{2}#filter", c.Category.Id, sortQueryString, (exerciseAreaID != 0 ? "&EAID=" + exerciseAreaID : "")))%>
+                                <% foreach (var c in categoryData) { %>
+                                    <% if (!HasSelectedCategory || (HasSelectedCategory && c.Id != SelectedCategory.Id)) { %>
+                                        <li<%= (i++ < categoryData.Length - 1) ? "" : " class='last'" %> id="ECID<%= c.Id %>">
+                                            <%= HtmlHelper.Anchor(c.CategoryName, string.Format("exercise.aspx?ECID={0}{1}{2}#filter", c.Id, sortQueryString, (exerciseAreaID != 0 ? "&EAID=" + exerciseAreaID : "")))%>
                                         </li>
                                     <% } %>
                                 <% } %>
@@ -97,7 +97,7 @@
                 </div>
             </div>
         </div>
-        <% if (exercisess.Length > 0) { %>
+        <% if (exerciseData.Length > 0) { %>
             <div class="results">
                 <div class="largelegend">
                     <%-- LanguageFactory.GetLegend(LID) --%>
@@ -133,7 +133,7 @@
                             </div>
                         </div>
                     <% } %>--%>
-                    <% foreach (var l in exercisess) { %>
+                    <% foreach (var l in exerciseData) { %>
                         <div class="item">
                             <div class="overview"></div>
                             <div class="detail">
