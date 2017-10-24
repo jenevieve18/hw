@@ -301,8 +301,6 @@ namespace HW.Core.Util.Saml
                 using (XmlWriter xw = XmlWriter.Create(sw, xws))
                 {
 
-
-
                     xw.WriteStartElement("samlp", "AuthnRequest", "urn:oasis:names:tc:SAML:2.0:protocol");
 
                     //xw.WriteElementString("saml", "urn:oasis:names:tc:SAML:2.0:assertion");

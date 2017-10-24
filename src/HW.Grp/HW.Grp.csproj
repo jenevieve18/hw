@@ -390,7 +390,9 @@
     <Content Include="assets\ui\jquery.ui.widget.js" />
     <Content Include="assets\ui\text_expand.js" />
     <Content Include="sql.aspx" />
-    <Content Include="hwcert.pfx" />
+    <Content Include="hwcert.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1021,7 +1023,6 @@
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="assets\exercises\js\" />
-    <Folder Include="bin\" />
     <Folder Include="~etc\assets\exercises\js\" />
     <Folder Include="~etc\assets\~etc\bootstrap\js\" />
   </ItemGroup>
