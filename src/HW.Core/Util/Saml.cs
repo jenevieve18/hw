@@ -340,21 +340,29 @@ namespace HW.Core.Util.Saml
 
                 var filename = ConfigurationManager.AppSettings["AuthRequestCertificateFileName"];
                 var password = ConfigurationManager.AppSettings["AuthRequestCertificatePassword"];
-                var cert = new X509Certificate2(System.Web.HttpContext.Current.Server.MapPath(filename), password);
-
-                var xmlValue = SignXmlFile(sw.ToString(), _id, cert);
-
-
-                if (format == AuthRequestFormat.Base64)
+                try
                 {
-                    var memoryStream = new MemoryStream();
-                    var writer = new StreamWriter(new DeflateStream(memoryStream, CompressionMode.Compress, true), new UTF8Encoding(false));
+                    var cert = new X509Certificate2(System.Web.HttpContext.Current.Server.MapPath(filename), password);
 
-                    writer.Write(xmlValue);
-                    writer.Close();
-                    string result = Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length, Base64FormattingOptions.None);
-                    return result;
+                    var xmlValue = SignXmlFile(sw.ToString(), _id, cert);
+
+
+                    if (format == AuthRequestFormat.Base64)
+                    {
+                        var memoryStream = new MemoryStream();
+                        var writer = new StreamWriter(new DeflateStream(memoryStream, CompressionMode.Compress, true), new UTF8Encoding(false));
+
+                        writer.Write(xmlValue);
+                        writer.Close();
+                        string result = Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length, Base64FormattingOptions.None);
+                        return result;
+                    }
                 }
+                catch(Exception exx)
+                {
+                    throw new Exception("Error in checking certificate : " + exx.Message.ToString());
+                }
+                
 
                 return null;
             }

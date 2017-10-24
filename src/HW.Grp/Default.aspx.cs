@@ -75,7 +75,7 @@ namespace HW.Grp
             // tests.Text = "<i class='icon-circle-arrow-right'></i>&nbsp;" + R.Str(lid, "login.signinIDP", "Sign in using IdP") + "";
             var userSession = new grpWS.UserSession { HostAddress = Request.UserHostAddress, Agent = Request.UserAgent, Lang = ConvertHelper.ToInt32(Request.QueryString["lid"]) };
             service.SaveSessionIf(Request.QueryString["lid"] != null, userSession);
-            
+
             if (Request.QueryString["r"] != null)
             {
                 Response.Redirect(HttpUtility.UrlDecode(Request.QueryString["r"]));
