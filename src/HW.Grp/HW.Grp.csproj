@@ -389,6 +389,7 @@
     <Content Include="assets\ui\jquery.ui.theme.css" />
     <Content Include="assets\ui\jquery.ui.widget.js" />
     <Content Include="assets\ui\text_expand.js" />
+    <Content Include="bin\hwcert.pfx" />
     <Content Include="sql.aspx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
