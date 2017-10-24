@@ -15,6 +15,11 @@ using System.IO.Compression;
 using System.Text;
 using System.Security.Cryptography;
 
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.OpenSsl;
+using Org.BouncyCastle.Crypto;
+using System.Configuration;
+
 namespace HW.Core.Util.Saml
 {
     /// <summary>
@@ -196,6 +201,15 @@ namespace HW.Core.Util.Saml
             return node == null ? null : node.InnerText;
         }
 
+        public string GetAttributeValue(String value)
+        {
+            XmlNode node = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Assertion/saml:AttributeStatement/saml:Attribute[@Name='" + value + "']/saml:AttributeValue", _xmlNameSpaceManager);
+
+            if (node == null)
+                node = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Assertion/saml:AttributeStatement/saml:Attribute[@Name='" + value + "']/saml:AttributeValue", _xmlNameSpaceManager);
+            return node == null ? null : node.InnerText;
+        }
+
 
         public string GetFirstName()
         {
@@ -258,21 +272,23 @@ namespace HW.Core.Util.Saml
 
         private string _issuer;
         private string _assertionConsumerServiceUrl;
+        public string _endpoint;
 
         public enum AuthRequestFormat
         {
             Base64 = 1
         }
 
-        public AuthRequest(string issuer, string assertionConsumerServiceUrl)
+        public AuthRequest(string issuer, string assertionConsumerServiceUrl, string endPoint)
         {
             RSAPKCS1SHA256SignatureDescription.Init(); //init the SHA256 crypto provider (for needed for .NET 4.0 and lower)
 
-            _id = "_" + System.Guid.NewGuid().ToString();
+            _id = "pfx" + System.Guid.NewGuid().ToString();
             _issue_instant = DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
 
             _issuer = issuer;
             _assertionConsumerServiceUrl = assertionConsumerServiceUrl;
+            _endpoint = endPoint;
         }
 
         public string GetRequest(AuthRequestFormat format)
@@ -284,47 +300,138 @@ namespace HW.Core.Util.Saml
 
                 using (XmlWriter xw = XmlWriter.Create(sw, xws))
                 {
+
+
+
                     xw.WriteStartElement("samlp", "AuthnRequest", "urn:oasis:names:tc:SAML:2.0:protocol");
+
+                    //xw.WriteElementString("saml", "urn:oasis:names:tc:SAML:2.0:assertion");
+                    xw.WriteAttributeString("xmlns", "saml", null, "urn:oasis:names:tc:SAML:2.0:assertion");
                     xw.WriteAttributeString("ID", _id);
                     xw.WriteAttributeString("Version", "2.0");
+                    xw.WriteAttributeString("ProviderName", "SP test");
                     xw.WriteAttributeString("IssueInstant", _issue_instant);
+                    xw.WriteAttributeString("Destination", _endpoint);
                     xw.WriteAttributeString("ProtocolBinding", "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST");
                     xw.WriteAttributeString("AssertionConsumerServiceURL", _assertionConsumerServiceUrl);
 
                     xw.WriteStartElement("saml", "Issuer", "urn:oasis:names:tc:SAML:2.0:assertion");
+                    //xw.WriteString("http://" + HttpContext.Current.Request.Url.Host + "/metadata.aspx");
                     xw.WriteString(_issuer);
                     xw.WriteEndElement();
 
                     xw.WriteStartElement("samlp", "NameIDPolicy", "urn:oasis:names:tc:SAML:2.0:protocol");
-                    xw.WriteAttributeString("Format", "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified");
+                    xw.WriteAttributeString("Format", "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress");
                     xw.WriteAttributeString("AllowCreate", "true");
                     xw.WriteEndElement();
 
-                    /*xw.WriteStartElement("samlp", "RequestedAuthnContext", "urn:oasis:names:tc:SAML:2.0:protocol");
-					xw.WriteAttributeString("Comparison", "exact");
-					xw.WriteStartElement("saml", "AuthnContextClassRef", "urn:oasis:names:tc:SAML:2.0:assertion");
-					xw.WriteString("urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport");
-					xw.WriteEndElement();
-					xw.WriteEndElement();*/
+                    xw.WriteStartElement("samlp", "RequestedAuthnContext", "urn:oasis:names:tc:SAML:2.0:protocol");
+                    xw.WriteAttributeString("Comparison", "exact");
+                    xw.WriteStartElement("saml", "AuthnContextClassRef", null);
+                    //, "urn:oasis:names:tc:SAML:2.0:assertion"
+                    xw.WriteString("urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport");
+                    xw.WriteEndElement();
+                    xw.WriteEndElement();
 
                     xw.WriteEndElement();
                 }
 
+
+
+                var filename = ConfigurationManager.AppSettings["AuthRequestCertificateFileName"];
+                var password = ConfigurationManager.AppSettings["AuthRequestCertificatePassword"];
+                var cert = new X509Certificate2(System.Web.HttpContext.Current.Server.MapPath(filename), password);
+
+                var xmlValue = SignXmlFile(sw.ToString(), _id, cert);
+
+
                 if (format == AuthRequestFormat.Base64)
                 {
-                    //byte[] toEncodeAsBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(sw.ToString());
-                    //return System.Convert.ToBase64String(toEncodeAsBytes);
-
-                    //https://stackoverflow.com/questions/25120025/acs75005-the-request-is-not-a-valid-saml2-protocol-message-is-showing-always%3C/a%3E
                     var memoryStream = new MemoryStream();
                     var writer = new StreamWriter(new DeflateStream(memoryStream, CompressionMode.Compress, true), new UTF8Encoding(false));
-                    writer.Write(sw.ToString());
+
+                    writer.Write(xmlValue);
                     writer.Close();
                     string result = Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length, Base64FormattingOptions.None);
                     return result;
                 }
 
                 return null;
+            }
+        }
+
+
+
+        public string SignXmlFile(string xmlAuthnRequest, string pfxRef, X509Certificate2 certificate)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xmlAuthnRequest);
+            SignedXml signedXml = new SignedXml(doc);
+            signedXml.SignedInfo.CanonicalizationMethod = "http://www.w3.org/2001/10/xml-exc-c14n#";
+
+            try
+            {
+                signedXml.SigningKey = certificate.PrivateKey;
+            }
+            catch (Exception errr)
+            {
+
+                throw new Exception("Error in this part : " + errr.Message.ToString());
+            }
+
+
+            KeyInfo keyInfo = new KeyInfo();
+
+            KeyInfoX509Data keyInfoData = new KeyInfoX509Data(certificate);
+            keyInfo.AddClause(keyInfoData);
+            signedXml.KeyInfo = keyInfo;
+
+
+            // Add an enveloped transformation to the reference.
+            XmlDsigEnvelopedSignatureTransform env = new XmlDsigEnvelopedSignatureTransform();
+            XmlDsigExcC14NTransform c14n = new XmlDsigExcC14NTransform();
+
+            //Create a reference to be signed.
+            Reference reference = new Reference();
+            reference.Uri = "#" + pfxRef;
+
+            reference.AddTransform(env);
+            reference.AddTransform(c14n);
+
+            // Add the reference to the SignedXml object.
+            signedXml.AddReference(reference);
+
+            // Compute the signature.
+            signedXml.ComputeSignature();
+            bool checkSignature = signedXml.CheckSignature(certificate, true);
+
+            // Get the XML representation of the signature and save 
+            // it to an XmlElement object.
+            XmlElement xmlDigitalSignature = signedXml.GetXml();
+            AssignNameSpacePrefixToElementTree(xmlDigitalSignature, "ds");
+
+
+            // Append the element to the XML document.
+            //doc.DocumentElement.AppendChild(doc.ImportNode(xmlDigitalSignature, true));
+            var temp = doc.FirstChild.FirstChild;
+            doc.DocumentElement.InsertAfter(doc.ImportNode(xmlDigitalSignature, true), temp);
+
+            //if (doc.FirstChild is XmlDeclaration)
+            //{
+            //    doc.RemoveChild(doc.FirstChild);
+            //}
+
+            return doc.OuterXml;
+        }
+
+        private static void AssignNameSpacePrefixToElementTree(XmlElement element, string prefix)
+        {
+            element.Prefix = prefix;
+
+            foreach (var child in element.ChildNodes)
+            {
+                if (child is XmlElement)
+                    AssignNameSpacePrefixToElementTree(child as XmlElement, prefix);
             }
         }
 

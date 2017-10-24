@@ -101,6 +101,7 @@ namespace HW.Grp
                     Session["SponsorID"] = ipAddressResponse.SponsorId;
                     Session["RealmType"] = ipAddressResponse.RealmType;
                     Session["IdpUrl"] = ipAddressResponse.IdpUrl;
+                    Session["UserKeyAttributeValue"] = ipAddressResponse.UserKeyAttributeValue;
                 }
 
                 else
@@ -293,7 +294,8 @@ namespace HW.Grp
 
                         var request = new AuthRequest(
                             ConfigurationManager.AppSettings["SAMLIssuer"].ToString(),
-                            ConfigurationManager.AppSettings["SAMLAssertionURL"].ToString()
+                            ConfigurationManager.AppSettings["SAMLAssertionURL"].ToString(),
+                            samlEndPoint
                             );
 
                         string url = request.GetRedirectUrl(samlEndPoint);
@@ -304,9 +306,10 @@ namespace HW.Grp
                         string firstUrl = "default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
                         var SAMLResponse = Request.Form["SAMLResponse"];
                         var sponsorID = Session["SponsorId"].ToString();
+                        string userKey = Session["UserKeyAttributeValue"].ToString();
                         // Send response to GRP-WS for authentication.
                         // If token not null then proceed to org/specific page.
-                        var serviceResponse = service.ConsumeSignedResponse(Convert.ToInt32(sponsorID), SAMLResponse, 20);
+                        var serviceResponse = service.ConsumeSignedResponse(Convert.ToInt32(sponsorID), userKey , SAMLResponse, 20);
                         if (serviceResponse.Token != null)
                         {
                             firstUrl = "default.aspx?Logout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
@@ -335,7 +338,7 @@ namespace HW.Grp
 
                                 try
                                 {
-                                    var secondServiceResponse = service2.ConsumeSignedResponse(Convert.ToInt32(sponsorID), SAMLResponse, 20);
+                                    var secondServiceResponse = service2.ConsumeSignedResponse(Convert.ToInt32(sponsorID), userKey, SAMLResponse, 20);
                                     if (secondServiceResponse.Token != null)
                                     {
                                         Session["SecondToken"] = secondServiceResponse.Token;

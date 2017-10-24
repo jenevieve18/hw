@@ -711,26 +711,28 @@ namespace HW.Grp.WebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ConsumeSignedResponse", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public SponsorAdministrator ConsumeSignedResponse(int sponsorID, string samlParameter, int expirationMinutes) {
+        public SponsorAdministrator ConsumeSignedResponse(int sponsorID, string attributeKey, string samlParameter, int expirationMinutes) {
             object[] results = this.Invoke("ConsumeSignedResponse", new object[] {
                         sponsorID,
+                        attributeKey,
                         samlParameter,
                         expirationMinutes});
             return ((SponsorAdministrator)(results[0]));
         }
         
         /// <remarks/>
-        public void ConsumeSignedResponseAsync(int sponsorID, string samlParameter, int expirationMinutes) {
-            this.ConsumeSignedResponseAsync(sponsorID, samlParameter, expirationMinutes, null);
+        public void ConsumeSignedResponseAsync(int sponsorID, string attributeKey, string samlParameter, int expirationMinutes) {
+            this.ConsumeSignedResponseAsync(sponsorID, attributeKey, samlParameter, expirationMinutes, null);
         }
         
         /// <remarks/>
-        public void ConsumeSignedResponseAsync(int sponsorID, string samlParameter, int expirationMinutes, object userState) {
+        public void ConsumeSignedResponseAsync(int sponsorID, string attributeKey, string samlParameter, int expirationMinutes, object userState) {
             if ((this.ConsumeSignedResponseOperationCompleted == null)) {
                 this.ConsumeSignedResponseOperationCompleted = new System.Threading.SendOrPostCallback(this.OnConsumeSignedResponseOperationCompleted);
             }
             this.InvokeAsync("ConsumeSignedResponse", new object[] {
                         sponsorID,
+                        attributeKey,
                         samlParameter,
                         expirationMinutes}, this.ConsumeSignedResponseOperationCompleted, userState);
         }
@@ -2996,6 +2998,8 @@ namespace HW.Grp.WebService {
         
         private string idpUrlField;
         
+        private string userKeyAttributeValueField;
+        
         /// <remarks/>
         public int SponsorId {
             get {
@@ -3033,6 +3037,16 @@ namespace HW.Grp.WebService {
             }
             set {
                 this.idpUrlField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string UserKeyAttributeValue {
+            get {
+                return this.userKeyAttributeValueField;
+            }
+            set {
+                this.userKeyAttributeValueField = value;
             }
         }
     }
