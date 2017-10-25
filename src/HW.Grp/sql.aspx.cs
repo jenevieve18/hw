@@ -16,6 +16,8 @@ namespace HW.Grp
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            con = new SqlConnection("database=healthwatch;server=10.0.0.2,1433;user=hwdev;pwd=hwdev;");
+            //con = new SqlConnection(@"Server=DESKTOP-EDQBT7K\SQLEXPRESS;Database=healthwatch;Trusted_Connection=True;");        
         }
 
         bool InvalidToExecute(string pin)
@@ -47,7 +49,6 @@ namespace HW.Grp
                 labelMessage.Text = "";
                 try
                 {
-                    con = new SqlConnection("database=healthwatch;server=10.0.0.2,1433;user=hwdev;pwd=hwdev;");
                     SqlDataAdapter da = new SqlDataAdapter(textBoxSql.Text, con);
                     DataSet ds = new DataSet();
                     da.Fill(ds);
@@ -70,31 +71,45 @@ namespace HW.Grp
 
         protected void buttonAddMeToRealm_Click(object sender, EventArgs e)
         {
-            try {
-                con = new SqlConnection("database=healthwatch;server=10.0.0.2,1433;user=hwdev;pwd=hwdev;");
-                var cmd = new SqlCommand(@"
-insert into Realm(SponsorId, RealmType, RealmIdentifier, IdpUrl, IdpCertificate, UserKeyAttribute)
-select SponsorId, RealmType, @IPAddress, IdpUrl, IdpCertificate, UserKeyAttribute from Realm where RealmIdentifier = '1.1.1.1/24'", con);
+            SqlDataReader rs = null;
+            try
+            {
+                string identifier = Request.UserHostAddress + "/24";
+                var cmd = new SqlCommand("select 1 from Realm where RealmIdentifier = @RealmIdentifier", con);
+                cmd.Parameters.Add("@RealmIdentifier", identifier);
                 con.Open();
-                string ip = Request.UserHostAddress + "/24";
-                cmd.Parameters.Add("@IPAddress", ip);
-                cmd.ExecuteNonQuery();
+                rs = cmd.ExecuteReader();
+                if (rs.Read())
+                {
+                    labelMessage.Text = "Woah! You are already added to the realm.";
+                }
+                else
+                {
+                    cmd = new SqlCommand(@"
+insert into Realm(SponsorId, RealmType, RealmIdentifier, IdpUrl, IdpCertificate, UserKeyAttribute)
+select SponsorId, RealmType, @RealmIdentifier, IdpUrl, IdpCertificate, UserKeyAttribute from Realm where RealmIdentifier = '::1/24'", con);
+
+                    cmd.ExecuteNonQuery();
+                    labelMessage.Text = "You are now added to realm!";
+                }
             } catch (Exception ex) {
                 labelMessage.Text = ex.Message;
             } finally {
+                rs.Close();
                 con.Close();
             }
         }
 
         protected void buttonRemoveMeFromRealm_Click(object sender, EventArgs e)
         {
-            SqlConnection con = null;
             try
             {
-                con = new SqlConnection("database=healthwatch;server=10.0.0.2,1433;user=hwdev;pwd=hwdev;");
-                var cmd = new SqlCommand("delete from Realm where ", con);
+                var cmd = new SqlCommand("delete from Realm where RealmIdentifier = @RealmIdentifier", con);
                 con.Open();
+                string identifier = Request.UserHostAddress + "/24";
+                cmd.Parameters.Add("@RealmIdentifier", identifier);
                 cmd.ExecuteNonQuery();
+                labelMessage.Text = "Ouch! You are removed from realm!";
             }
             catch (Exception ex)
             {
