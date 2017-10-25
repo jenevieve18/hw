@@ -51,7 +51,8 @@ GO
 
 ALTER TABLE Realm 
 ADD IdpUrl VARCHAR(255), 
-IdpCertificate TEXT;
+IdpCertificate TEXT,
+UserKeyAttribute VARCHAR(50);
 GO
 
 ALTER TABLE SponsorInvite 
