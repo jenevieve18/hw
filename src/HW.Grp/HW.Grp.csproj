@@ -389,6 +389,7 @@
     <Content Include="assets\ui\jquery.ui.theme.css" />
     <Content Include="assets\ui\jquery.ui.widget.js" />
     <Content Include="assets\ui\text_expand.js" />
+    <Content Include="metadata.aspx" />
     <Content Include="sql.aspx" />
     <Content Include="hwcert.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -885,6 +886,13 @@
     </Compile>
     <Compile Include="Messages.aspx.designer.cs">
       <DependentUpon>Messages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="metadata.aspx.cs">
+      <DependentUpon>metadata.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="metadata.aspx.designer.cs">
+      <DependentUpon>metadata.aspx</DependentUpon>
     </Compile>
     <Compile Include="Org.aspx.cs">
       <DependentUpon>Org.aspx</DependentUpon>
