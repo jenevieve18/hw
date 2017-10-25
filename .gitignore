@@ -307,7 +307,7 @@ src/HW.Grp/exercises/.vscode/settings.json
 x64/
 x86/
 bld/
-[Bb]in/
+# [Bb]in/
 [Oo]bj/
 [Ll]og/
 
@@ -488,7 +488,7 @@ ClientBin/
 *.dbmdl
 *.dbproj.schemaview
 *.jfm
-*.pfx
+# *.pfx
 *.publishsettings
 orleans.codegen.cs
 

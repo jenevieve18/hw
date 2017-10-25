@@ -282,6 +282,9 @@
   <data name="login.signin" xml:space="preserve">
     <value>Sign in</value>
   </data>
+  <data name="login.signinIDP" xml:space="preserve">
+    <value>Log in</value>
+  </data>
   <data name="logout" xml:space="preserve">
     <value>Log out</value>
   </data>

@@ -389,13 +389,24 @@
     <Content Include="assets\ui\jquery.ui.theme.css" />
     <Content Include="assets\ui\jquery.ui.widget.js" />
     <Content Include="assets\ui\text_expand.js" />
+    <Content Include="metadata.aspx" />
     <Content Include="sql.aspx" />
+    <Content Include="hwcert.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Content Include="Stats.aspx" />
+    <None Include="Web References\WebService2\default.wsdl" />
+    <Content Include="Web References\WebService2\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
     <None Include="Web References\WebService\Default.disco" />
+    <None Include="Web References\WebService2\default.disco" />
     <Content Include="~etc\assets\css\default.css" />
     <Content Include="~etc\assets\exercises\css\exercises.css" />
     <Content Include="~etc\assets\exercises\css\styles.css" />
@@ -876,6 +887,13 @@
     <Compile Include="Messages.aspx.designer.cs">
       <DependentUpon>Messages.aspx</DependentUpon>
     </Compile>
+    <Compile Include="metadata.aspx.cs">
+      <DependentUpon>metadata.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="metadata.aspx.designer.cs">
+      <DependentUpon>metadata.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Org.aspx.cs">
       <DependentUpon>Org.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -995,6 +1013,11 @@
     <Compile Include="SuperStats.aspx.designer.cs">
       <DependentUpon>SuperStats.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Web References\WebService2\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
     <Compile Include="Web References\WebService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1034,6 +1057,18 @@
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <Content Include="Web References\WebService\Exporter.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebService\Exercise.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebService\ExerciseArea.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebService\ExerciseCategoryLanguage.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebService\ExerciseItem.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <None Include="Web References\WebService\Reference.map">
@@ -1082,6 +1117,9 @@
     <Content Include="Web References\WebService\SponsorProjectRoundUnit1.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
+    <Content Include="Web References\WebService\SponsorSuperSponsor.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
     <None Include="~etc\assets\css\main.css" />
     <None Include="~etc\assets\~etc\plasm\javascript\demo1.js" />
     <None Include="packages.config" />
@@ -1105,6 +1143,22 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WebReferenceUrl Include="http://localhost:1729/default.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\WebService2\</RelPath>
+      <UpdateFromURL>http://localhost:1729/default.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>HW_Grp_WebService2_Soap</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost:1730/default.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\WebService2\</RelPath>
+      <UpdateFromURL>http://localhost:1730/default.asmx</UpdateFromURL>
+    </WebReferenceUrl>
     <WebReferenceUrl Include="http://localhost:5677/Default.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\WebService\</RelPath>

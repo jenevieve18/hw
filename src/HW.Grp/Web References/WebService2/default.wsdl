@@ -2357,13 +2357,13 @@
   </wsdl:binding>
   <wsdl:service name="Soap">
     <wsdl:port name="SoapSoap" binding="tns:SoapSoap">
-      <soap:address location="http://localhost:5677/Default.asmx" />
+      <soap:address location="http://localhost:1729/default.asmx" />
     </wsdl:port>
     <wsdl:port name="SoapSoap12" binding="tns:SoapSoap12">
-      <soap12:address location="http://localhost:5677/Default.asmx" />
+      <soap12:address location="http://localhost:1729/default.asmx" />
     </wsdl:port>
     <wsdl:port name="SoapHttpPost" binding="tns:SoapHttpPost">
-      <http:address location="http://localhost:5677/Default.asmx" />
+      <http:address location="http://localhost:1729/default.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -32,5 +32,15 @@ namespace HW.Grp.Properties {
                 return ((string)(this["HW_Grp_WebService_Soap"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:1729/default.asmx")]
+        public string HW_Grp_WebService2_Soap {
+            get {
+                return ((string)(this["HW_Grp_WebService2_Soap"]));
+            }
+        }
     }
 }

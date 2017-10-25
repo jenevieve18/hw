@@ -11,16 +11,18 @@ using HW.Core.Models;
 using HW.Core.Repositories;
 using HW.Core.Repositories.Sql;
 using HW.Core.Helpers;
-using HW.Grp.WebService;
+using grpWS = HW.Grp.WebService;
+using grpWS2 = HW.Grp.WebService2;
 using System.IO;
 using HW.Core.Util.Saml;
 using System.Configuration;
+using System.Net;
 
 namespace HW.Grp
 {
     public partial class Default : System.Web.UI.Page
     {
-
+        SqlUserRepository userRepository = new SqlUserRepository();
         /*
 		SqlManagerFunctionRepository functionRepo = new SqlManagerFunctionRepository();
 		SqlUserRepository userRepository = new SqlUserRepository();
@@ -66,23 +68,28 @@ namespace HW.Grp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            lid = 2;
-            var service = new Soap();
+            //lid = 2;
+            var service = new grpWS.Soap();
+            var service2 = new grpWS2.Soap();
 
             // tests.Text = "<i class='icon-circle-arrow-right'></i>&nbsp;" + R.Str(lid, "login.signinIDP", "Sign in using IdP") + "";
-            //var userSession = new UserSession { HostAddress = Request.UserHostAddress, Agent = Request.UserAgent, Lang = ConvertHelper.ToInt32(Request.QueryString["lid"]) };
-            //userRepository.SaveSessionIf(Request.QueryString["lid"] != null, userSession);
-            //if (Request.QueryString["r"] != null) {
-            //	Response.Redirect(HttpUtility.UrlDecode(Request.QueryString["r"]));
-            //}
-            //userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
-            //if (userSession != null) {
-            //	lid = userSession.Lang;
-            //}
+            var userSession = new grpWS.UserSession { HostAddress = Request.UserHostAddress, Agent = Request.UserAgent, Lang = ConvertHelper.ToInt32(Request.QueryString["lid"]) };
+            service.SaveSessionIf(Request.QueryString["lid"] != null, userSession);
+
+            if (Request.QueryString["r"] != null)
+            {
+                Response.Redirect(HttpUtility.UrlDecode(Request.QueryString["r"]));
+            }
+
+            userSession = service.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+            if (userSession != null)
+            {
+                lid = userSession.Lang;
+            }
 
             //Index();
 
-           
+
             if (Session["IPAddress"] == null && Session["SponsorID"] == null)
             {
                 ipAddress = Request.UserHostAddress;
@@ -94,6 +101,7 @@ namespace HW.Grp
                     Session["SponsorID"] = ipAddressResponse.SponsorId;
                     Session["RealmType"] = ipAddressResponse.RealmType;
                     Session["IdpUrl"] = ipAddressResponse.IdpUrl;
+                    Session["UserKeyAttributeValue"] = ipAddressResponse.UserKeyAttributeValue;
                 }
 
                 else
@@ -150,6 +158,27 @@ namespace HW.Grp
                                     Session["SeeUsers"] = serviceResponse.SeeUsers ? 1 : 0;
                                     Session["ReadOnly"] = serviceResponse.ReadOnly ? 1 : 0;
 
+                                    /// <summary>
+                                    /// Regular User or Using UN/PW
+                                    /// </summary>
+
+                                    if (HttpContext.Current.Session["Token"] != null)
+                                    {
+                                        try
+                                        {
+                                            var secondServiceResponse = service2.ManagerLogin(username, password, 20);
+                                            if (secondServiceResponse.Token != null)
+                                            {
+                                                Session["SecondToken"] = secondServiceResponse.Token;
+                                            }
+                                        }
+                                        catch (Exception)
+                                        {
+
+                                            // throw;
+                                        }
+                                    }
+
                                     if (Session["SponsorID"] != null)
                                     {
                                         //imagePath = "D:\\Projects\\HealthWatch\\HW\\src\\HW.Grp\\img\\Sponsor" + Session["SponsorID"].ToString();
@@ -198,6 +227,11 @@ namespace HW.Grp
                             /// Update Manager logout process to call GRP-WS (ManagerLogout Webmethod) for expiration of token.
                             /// </summary>
                             var logoutResponse = service.ManagerLogOut(Session["Token"].ToString());
+                            if(Session["SecondToken"] != null)
+                            {
+                                var secondLogoutResponse = service2.ManagerLogOut(Session["SecondToken"].ToString());
+                                Session.Remove("SecondToken");
+                            }
                         }
                         Session.Remove("Token");
                         Session.Remove("SponsorID");
@@ -237,6 +271,11 @@ namespace HW.Grp
                             /// Update Manager logout process to call GRP-WS (ManagerLogout Webmethod) for expiration of token.
                             /// </summary>
                             var logoutResponse = service.ManagerLogOut(Session["Token"].ToString());
+                            if(Session["SecondToken"] != null)
+                            {
+                                var secondLogoutResponse = service2.ManagerLogOut(Session["SecondToken"].ToString());
+                                Session.Remove("SecondToken");
+                            }
                         }
                         Session.Remove("Token");
                         Session.Remove("SponsorAdminID");
@@ -255,7 +294,8 @@ namespace HW.Grp
 
                         var request = new AuthRequest(
                             ConfigurationManager.AppSettings["SAMLIssuer"].ToString(),
-                            ConfigurationManager.AppSettings["SAMLAssertionURL"].ToString()
+                            ConfigurationManager.AppSettings["SAMLAssertionURL"].ToString(),
+                            samlEndPoint
                             );
 
                         string url = request.GetRedirectUrl(samlEndPoint);
@@ -266,9 +306,10 @@ namespace HW.Grp
                         string firstUrl = "default.aspx?Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
                         var SAMLResponse = Request.Form["SAMLResponse"];
                         var sponsorID = Session["SponsorId"].ToString();
+                        string userKey = Session["UserKeyAttributeValue"].ToString();
                         // Send response to GRP-WS for authentication.
                         // If token not null then proceed to org/specific page.
-                        var serviceResponse = service.ConsumeSignedResponse(Convert.ToInt32(sponsorID), SAMLResponse, 20);
+                        var serviceResponse = service.ConsumeSignedResponse(Convert.ToInt32(sponsorID), userKey , SAMLResponse, 20);
                         if (serviceResponse.Token != null)
                         {
                             firstUrl = "default.aspx?Logout=1&Rnd=" + (new Random(unchecked((int)DateTime.Now.Ticks))).Next();
@@ -289,6 +330,25 @@ namespace HW.Grp
                                 Session["Anonymized"] = serviceResponse.Anonymized ? 1 : 0;
                                 Session["SeeUsers"] = serviceResponse.SeeUsers ? 1 : 0;
                                 Session["ReadOnly"] = serviceResponse.ReadOnly ? 1 : 0;
+
+                                /// <summary>
+                                /// For SAML Second Login
+                                /// </summary>
+                                /// 
+
+                                try
+                                {
+                                    var secondServiceResponse = service2.ConsumeSignedResponse(Convert.ToInt32(sponsorID), userKey, SAMLResponse, 20);
+                                    if (secondServiceResponse.Token != null)
+                                    {
+                                        Session["SecondToken"] = secondServiceResponse.Token;
+                                    }
+                                }
+                                catch (Exception)
+                                {
+
+                                    // throw;
+                                }
 
                                 if (Session["SponsorID"] != null)
                                 {

@@ -12,7 +12,8 @@ namespace HW.Grp
     public partial class Layout : System.Web.UI.MasterPage
     {
         protected Sponsor sponsor;
-        protected IList<ManagerFunctionLang> functions;
+        //protected IList<ManagerFunctionLang> functions;
+        protected HW.Grp.WebService.ManagerFunctionLang[] functions;
         //		protected int lid;
         protected int sponsorAdminID;
         protected string sponsorName;
@@ -34,59 +35,62 @@ namespace HW.Grp
             super = Request.Url.AbsolutePath.Contains("super");
 
             //			lid = ConvertHelper.ToInt32(Session["lid"], 2);
-            //var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
-            //if (userSession != null)
-            //{
-            //    lid = userSession.Lang;
-            //}
-            // functions = managerFunctionRepository.FindBySponsorAdmin(sponsorAdminID, lid);
-
-            functions = new List<ManagerFunctionLang>();
+            var service = new HW.Grp.WebService.Soap();
+            var userSession = service.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+            if (userSession != null)
             {
-
-                var f = new ManagerFunctionLang
-                {
-                    Function = "Organization",
-                    URL = "org.aspx",
-                    Expl = "administer units and users",
-                };
-
-                functions.Add(f);
-
-
-                var f1 = new ManagerFunctionLang
-                {
-                    Function = "Statistics",
-                    URL = "stats.aspx",
-                    Expl = "view results and compare groups",
-                };
-                functions.Add(f1);
-
-                var f2 = new ManagerFunctionLang
-                {
-                    Function = "Messages",
-                    URL = "messages.aspx",
-                    Expl = "administer messages, invitations and reminders",
-                };
-                functions.Add(f2);
-
-                var f3 = new ManagerFunctionLang
-                {
-                    Function = "Managers",
-                    URL = "managers.aspx",
-                    Expl = "administer unit managers",
-                };
-                functions.Add(f3);
-
-
-                var f4 = new ManagerFunctionLang
-                {
-                    Function = "Exercise",
-                    URL = "exercise.aspx",
-                    Expl = "manager exercises",
-                };
-                functions.Add(f4);
+                lid = userSession.Lang;
             }
+
+            functions = service.FindBySponsorAdmin(sponsorAdminID, lid);
+            //functions = managerFunctionRepository.FindBySponsorAdmin(sponsorAdminID, lid);
+
+            //functions = new List<ManagerFunctionLang>();
+            //{
+
+            //    var f = new ManagerFunctionLang
+            //    {
+            //        Function = "Organization",
+            //        URL = "org.aspx",
+            //        Expl = "administer units and users",
+            //    };
+
+            //    functions.Add(f);
+
+
+            //    var f1 = new ManagerFunctionLang
+            //    {
+            //        Function = "Statistics",
+            //        URL = "stats.aspx",
+            //        Expl = "view results and compare groups",
+            //    };
+            //    functions.Add(f1);
+
+            //    var f2 = new ManagerFunctionLang
+            //    {
+            //        Function = "Messages",
+            //        URL = "messages.aspx",
+            //        Expl = "administer messages, invitations and reminders",
+            //    };
+            //    functions.Add(f2);
+
+            //    var f3 = new ManagerFunctionLang
+            //    {
+            //        Function = "Managers",
+            //        URL = "managers.aspx",
+            //        Expl = "administer unit managers",
+            //    };
+            //    functions.Add(f3);
+
+
+            //    var f4 = new ManagerFunctionLang
+            //    {
+            //        Function = "Exercise",
+            //        URL = "exercise.aspx",
+            //        Expl = "manager exercises",
+            //    };
+            //    functions.Add(f4);
+            //}
         }
     }
 }

@@ -37,7 +37,16 @@
             </h2>
             </center>
         </header>
-        <%--<p style="font-size: 14px">
+
+        <% if (errorMessage != "") { %>
+            <div class="alert alert-error">
+                <%= errorMessage %>
+            </div>
+        <% } %>
+
+     
+      <%if(Session["IPAddress"].ToString() == "Not RealmIdentifier"){ %>
+        <p style="font-size: 14px">
             <small>
                 <% if (lid != 1) { %>
                     <%= HtmlHelper.Anchor(R.Str(1, "i18n"), string.Format("default.aspx?lid=1&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
@@ -49,17 +58,7 @@
                     <%= HtmlHelper.Anchor(R.Str(4, "i18n"), string.Format("default.aspx?lid=4&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
                 <% } %>
             </small>
-        </p>--%>
-
-        <% if (errorMessage != "") { %>
-            <div class="alert alert-error">
-                <%= errorMessage %>
-            </div>
-        <% } %>
-
-     
-      <%if(Session["IPAddress"].ToString() == "Not RealmIdentifier"){ %>
-
+        </p>
            <%= FormHelper.Input("ANV", "", string.Format("class='input-block-level' placeholder='{0}'", R.Str(lid, "user.name", "Email or Username")))%>
            <%= FormHelper.Password("LOS", "", string.Format("class='input-block-level' placeholder='{0}'", R.Str(lid, "user.password", "Password")))%>
        
@@ -71,9 +70,22 @@
 
 
         <%else {%>
+        <p style="font-size: 14px; margin: 0 0 10px 55px !important">
+            <small>
+                <% if (lid != 1) { %>
+                    <%= HtmlHelper.Anchor(R.Str(1, "i18n"), string.Format("default.aspx?lid=1&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
+                <% } %>
+                <% if (lid != 2) { %>
+                    <%= HtmlHelper.Anchor(R.Str(2, "i18n"), string.Format("default.aspx?lid=2&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
+                <% } %>
+                <% if (lid != 4) { %>
+                    <%= HtmlHelper.Anchor(R.Str(4, "i18n"), string.Format("default.aspx?lid=4&r={0}", HttpUtility.UrlEncode(Request.Url.PathAndQuery)), "class='i18n'")%>
+                <% } %>
+            </small>
+        </p>
            <center>
                 <button class="btn btn-large btn-info" runat="server" onserverclick="RedirectPage">
-                    <i class="icon-circle-arrow-right"></i><%= R.Str(lid, "login.signinIDP", "Sign in using IdP") %>
+                    <i class="icon-circle-arrow-right"></i><%= R.Str(lid, "login.signinIDP", "Log in") %>
                </button>&nbsp;&nbsp;
            </center>
 

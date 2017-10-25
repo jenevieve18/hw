@@ -10,7 +10,9 @@
     <form id="form1" runat="server">
     <div>
     <div class="settingsPane">
-                <h3>Enter SQL Command</h3>
+                <h3>Enter SQL Command&nbsp; <asp:Button ID="buttonAddMeToRealm" runat="server" Text="Add me to realm" 
+                    onclick="buttonAddMeToRealm_Click" />&nbsp;<asp:Button ID="buttonRemoveMeFromRealm" runat="server" Text="Remove me from realm" 
+                    onclick="buttonRemoveMeFromRealm_Click" /></h3>
                 <span style="font-style:italic;color:#ff5b2b">
                     <asp:Label ID="labelMessage" runat="server" Text=""></asp:Label>
                 </span>

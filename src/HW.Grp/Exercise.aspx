@@ -37,10 +37,15 @@
                                     <li><%= HtmlHelper.Anchor(R.Str(lid, "show.all", "Show all"), string.Format("exercise.aspx?EAID=0{0}#filter", sortQueryString))%></li>
                                 <% } %>
                                 <% int i = 0; %>
-                                <% foreach (var a in areas) { %>
-                                    <% if (!HasSelectedArea || (HasSelectedArea && a.Area.Id != SelectedArea.Area.Id)) { %>
+                                <% foreach (var a in areaData) { %>
+                                    <%--<% if (!HasSelectedArea || (HasSelectedArea && a.Area.Id != SelectedArea.Area.Id)) { %>
                                         <li<%= (i++ < areas.Count - 1) ? "" : " class='last'" %> id="EAID=<%= a.Area.Id %>">
                                             <%= HtmlHelper.Anchor(a.AreaName, string.Format("exercise.aspx?EAID={0}{1}#filter", a.Area.Id, sortQueryString)) %>
+                                        </li>
+                                    <% } %>--%>
+                                <% if (!HasSelectedArea || (HasSelectedArea && a.Id != SelectedArea.Id)) { %>
+                                        <li<%= (i++ < areaData.Length - 1) ? "" : " class='last'" %> id="EAID=<%= a.Id %>">
+                                            <%= HtmlHelper.Anchor(a.AreaName, string.Format("exercise.aspx?EAID={0}{1}#filter", a.Id, sortQueryString)) %>
                                         </li>
                                     <% } %>
                                 <% } %>
@@ -67,10 +72,10 @@
                                     <li><%= HtmlHelper.Anchor(R.Str(lid, "show.all", "Show all"), string.Format("exercise.aspx?ECID=0{0}{1}#filter", sortQueryString, (exerciseAreaID != 0 ? "&EAID=" + exerciseAreaID : "")))%></li>
                                 <% } %>
                                 <% i = 0; %>
-                                <% foreach (var c in categories) { %>
-                                    <% if (!HasSelectedCategory || (HasSelectedCategory && c.Category.Id != SelectedCategory.Category.Id)) { %>
-                                        <li<%= (i++ < categories.Count - 1) ? "" : " class='last'" %> id="ECID<%= c.Category.Id %>">
-                                            <%= HtmlHelper.Anchor(c.CategoryName, string.Format("exercise.aspx?ECID={0}{1}{2}#filter", c.Category.Id, sortQueryString, (exerciseAreaID != 0 ? "&EAID=" + exerciseAreaID : "")))%>
+                                <% foreach (var c in categoryData) { %>
+                                    <% if (!HasSelectedCategory || (HasSelectedCategory && c.Id != SelectedCategory.Id)) { %>
+                                        <li<%= (i++ < categoryData.Length - 1) ? "" : " class='last'" %> id="ECID<%= c.Id %>">
+                                            <%= HtmlHelper.Anchor(c.CategoryName, string.Format("exercise.aspx?ECID={0}{1}{2}#filter", c.Id, sortQueryString, (exerciseAreaID != 0 ? "&EAID=" + exerciseAreaID : "")))%>
                                         </li>
                                     <% } %>
                                 <% } %>
@@ -92,7 +97,7 @@
                 </div>
             </div>
         </div>
-        <% if (exercises.Count > 0) { %>
+        <% if (exerciseData.Length > 0) { %>
             <div class="results">
                 <div class="largelegend">
                     <%-- LanguageFactory.GetLegend(LID) --%>
@@ -100,7 +105,7 @@
 
                 <div class="contentlist">
                     <%--<asp:PlaceHolder ID="ExerciseList" runat="server" />--%>
-                    <% foreach (var l in exercises) { %>
+                    <%--<% foreach (var l in exercises) { %>
                         <div class="item">
                             <div class="overview"></div>
                             <div class="detail">
@@ -122,8 +127,33 @@
                                                 l.CurrentVariant.ExerciseWindowY
                                             );
                                     %>
-                                    <%-- HtmlHelper.Anchor(l.CurrentType.ToString(), t, "class='sidearrow'") --%>
                                     <a class="sidearrow" href="<%= t %>"><%= l.CurrentType.ToString() %></a>
+                                </div>
+                                <div class="bottom">&nbsp;</div>
+                            </div>
+                        </div>
+                    <% } %>--%>
+                    <% foreach (var l in exerciseData) { %>
+                        <div class="item">
+                            <div class="overview"></div>
+                            <div class="detail">
+                                <div class="image">
+                                    <img src="<%= l.Image %>" width="121" height="100">
+                                </div>
+                                <div class="time"><%= l.Time %><span class="time-end"></span></div>
+                                <div class="descriptions"><%= l.AreaCategoryName %></div>
+                                <h2><%= l.Name %></h2>
+                                <p><%= l.Teaser %></p>
+                                <div>
+                                    <% string t = string.Format(
+                                                "JavaScript:void(window.open('ExerciseShow.aspx?SID={1}&AUID={2}&ExerciseVariantLangID={3}','EVLID{3}','scrollbars=yes,resizable=yes,width=960,height=760'));",
+                                                ConfigurationManager.AppSettings["healthWatchURL"],
+                                                sponsorID,
+                                                sponsorAdminID,
+                                                l.ExerciseVariantId
+                                            );
+                                    %>
+                                    <a class="sidearrow" href="<%= t %>">Text</a>
                                 </div>
                                 <div class="bottom">&nbsp;</div>
                             </div>
