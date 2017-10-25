@@ -30,7 +30,7 @@ namespace HW.Grp.Tests.Views
 		[Test]
 		public void TestSaveAdminSession()
 		{
-			v.SaveAdminSession(1, 1, DateTime.Now);
+			//v.SaveAdminSession(1, 1, DateTime.Now);
 		}
 		
 		[Test]
