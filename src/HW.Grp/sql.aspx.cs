@@ -12,6 +12,8 @@ namespace HW.Grp
 {
     public partial class sql : System.Web.UI.Page
     {
+        SqlConnection con = null;
+
         protected void Page_Load(object sender, EventArgs e)
         {
         }
@@ -45,8 +47,7 @@ namespace HW.Grp
                 labelMessage.Text = "";
                 try
                 {
-                    //SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["healthWatchSqlConnection"]);
-                    SqlConnection con = new SqlConnection("database=healthwatch;server=10.0.0.2,1433;user=hwdev;pwd=hwdev;");
+                    con = new SqlConnection("database=healthwatch;server=10.0.0.2,1433;user=hwdev;pwd=hwdev;");
                     SqlDataAdapter da = new SqlDataAdapter(textBoxSql.Text, con);
                     DataSet ds = new DataSet();
                     da.Fill(ds);
@@ -60,6 +61,48 @@ namespace HW.Grp
                 {
                     labelMessage.Text = ex.Message;
                 }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
+
+        protected void buttonAddMeToRealm_Click(object sender, EventArgs e)
+        {
+            try {
+                con = new SqlConnection("database=healthwatch;server=10.0.0.2,1433;user=hwdev;pwd=hwdev;");
+                var cmd = new SqlCommand(@"
+insert into Realm(SponsorId, RealmType, RealmIdentifier, IdpUrl, IdpCertificate, UserKeyAttribute)
+select SponsorId, RealmType, @IPAddress, IdpUrl, IdpCertificate, UserKeyAttribute from Realm where RealmIdentifier = '1.1.1.1/24'", con);
+                con.Open();
+                string ip = Request.UserHostAddress + "/24";
+                cmd.Parameters.Add("@IPAddress", ip);
+                cmd.ExecuteNonQuery();
+            } catch (Exception ex) {
+                labelMessage.Text = ex.Message;
+            } finally {
+                con.Close();
+            }
+        }
+
+        protected void buttonRemoveMeFromRealm_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = new SqlConnection("database=healthwatch;server=10.0.0.2,1433;user=hwdev;pwd=hwdev;");
+                var cmd = new SqlCommand("delete from Realm where ", con);
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                labelMessage.Text = ex.Message;
+            }
+            finally
+            {
+                con.Close();
             }
         }
     }
