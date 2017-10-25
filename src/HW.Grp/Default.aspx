@@ -85,7 +85,7 @@
         </p>
            <center>
                 <button class="btn btn-large btn-info" runat="server" onserverclick="RedirectPage">
-                    <i class="icon-circle-arrow-right"></i><%= R.Str(lid, "login.signinIDP", "Sign in using IdP") %>
+                    <i class="icon-circle-arrow-right"></i><%= R.Str(lid, "login.signinIDP", "Log in") %>
                </button>&nbsp;&nbsp;
            </center>
 
