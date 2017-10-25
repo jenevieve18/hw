@@ -363,14 +363,15 @@ namespace HW.Grp
             var soapService = new HW.Grp.WebService.Soap();
             sponsor = soapService.GetSponsor(token, sponsorID, 20);
 
-            /// This function is moved to Grp WS
-            //var userSession = userRepository.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
-            //if (userSession != null)
-            //{
-            //    lid = userSession.Lang;
-            //}
+            var userSession = new HW.Grp.WebService.UserSession { HostAddress = Request.UserHostAddress, Agent = Request.UserAgent, Lang = ConvertHelper.ToInt32(Request.QueryString["lid"]) };
+            service.SaveSessionIf(Request.QueryString["lid"] != null, userSession);
+            userSession = service.ReadUserSession(Request.UserHostAddress, Request.UserAgent);
+            if (userSession != null)
+            {
+                lid = userSession.Lang;
+            }
 
-            lid = 2;
+            //lid = 2;
 
             var soapResult = soapService.FindByLanguage(token, lid, 20);
             var types =  new List<PlotTypeLanguage>();
