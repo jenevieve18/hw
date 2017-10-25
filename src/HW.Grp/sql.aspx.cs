@@ -45,7 +45,8 @@ namespace HW.Grp
                 labelMessage.Text = "";
                 try
                 {
-                    SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["healthWatchSqlConnection"]);
+                    //SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["healthWatchSqlConnection"]);
+                    SqlConnection con = new SqlConnection("database=healthwatch;server=10.0.0.2,1433;user=hwdev;pwd=hwdev;");
                     SqlDataAdapter da = new SqlDataAdapter(textBoxSql.Text, con);
                     DataSet ds = new DataSet();
                     da.Fill(ds);
