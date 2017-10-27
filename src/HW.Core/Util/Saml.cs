@@ -323,13 +323,13 @@ namespace HW.Core.Util.Saml
                     xw.WriteAttributeString("AllowCreate", "true");
                     xw.WriteEndElement();
 
-                    xw.WriteStartElement("samlp", "RequestedAuthnContext", "urn:oasis:names:tc:SAML:2.0:protocol");
-                    xw.WriteAttributeString("Comparison", "exact");
-                    xw.WriteStartElement("saml", "AuthnContextClassRef", null);
-                    //, "urn:oasis:names:tc:SAML:2.0:assertion"
-                    xw.WriteString("urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport");
-                    xw.WriteEndElement();
-                    xw.WriteEndElement();
+                    //xw.WriteStartElement("samlp", "RequestedAuthnContext", "urn:oasis:names:tc:SAML:2.0:protocol");
+                    //xw.WriteAttributeString("Comparison", "exact");
+                    //xw.WriteStartElement("saml", "AuthnContextClassRef", null);
+                    ////, "urn:oasis:names:tc:SAML:2.0:assertion"
+                    //xw.WriteString("urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport");
+                    //xw.WriteEndElement();
+                    //xw.WriteEndElement();
 
                     xw.WriteEndElement();
                 }
