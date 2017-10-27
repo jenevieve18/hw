@@ -342,7 +342,13 @@ namespace HW.Core.Util.Saml
                 {
                     var cert = new X509Certificate2(System.Web.HttpContext.Current.Server.MapPath(filename), password);
 
-                    var xmlValue = SignXmlFile(sw.ToString(), _id, cert);
+                    //var xmlValue = SignXmlFile(sw.ToString(), _id, cert);
+                    var xmlValue = sw.ToString();
+                    var signAuthRequest = ConfigurationManager.AppSettings["SignAuthRequests"];
+                    if (signAuthRequest.ToLower() == "true")
+                    {
+                        xmlValue = SignXmlFile(sw.ToString(), _id, cert);
+                    }
 
 
                     if (format == AuthRequestFormat.Base64)
@@ -358,7 +364,8 @@ namespace HW.Core.Util.Saml
                 }
                 catch(Exception exx)
                 {
-                    throw new Exception("Error in checking certificate : " + exx.Message.ToString());
+                    //throw new Exception("Error in checking certificate : " + exx.Message.ToString());
+                    throw new Exception(exx.Message.ToString());
                 }
                 
 
@@ -382,7 +389,8 @@ namespace HW.Core.Util.Saml
             catch (Exception errr)
             {
 
-                throw new Exception("Error in this part : " + errr.Message.ToString());
+                //throw new Exception("Error in this part : " + errr.Message.ToString());
+                throw new Exception(errr.Message.ToString());
             }
 
 
