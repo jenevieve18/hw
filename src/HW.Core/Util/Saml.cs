@@ -319,7 +319,7 @@ namespace HW.Core.Util.Saml
                     xw.WriteEndElement();
 
                     xw.WriteStartElement("samlp", "NameIDPolicy", "urn:oasis:names:tc:SAML:2.0:protocol");
-                    xw.WriteAttributeString("Format", "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress");
+                    xw.WriteAttributeString("Format", "urn:oasis:names:tc:SAML:1.1:nameid-format:persistent");
                     xw.WriteAttributeString("AllowCreate", "true");
                     xw.WriteEndElement();
 
