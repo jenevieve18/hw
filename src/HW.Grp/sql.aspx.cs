@@ -71,16 +71,21 @@ namespace HW.Grp
 
         protected void buttonAddMeToRealm_Click(object sender, EventArgs e)
         {
-            SqlDataReader rs = null;
             try
             {
                 string identifier = Request.UserHostAddress + "/24";
                 var cmd = new SqlCommand("select 1 from Realm where RealmIdentifier = @RealmIdentifier", con);
                 cmd.Parameters.Add("@RealmIdentifier", identifier);
                 con.Open();
-                rs = cmd.ExecuteReader();
-                if (rs.Read())
+                bool isAMemberOfRealm = false;
+                using (var rs = cmd.ExecuteReader())
                 {
+                    if (rs.Read())
+                    {
+                        isAMemberOfRealm = true;
+                    }
+                }
+                if (isAMemberOfRealm) {
                     labelMessage.Text = "Woah! You are already added to the realm.";
                 }
                 else
@@ -88,14 +93,13 @@ namespace HW.Grp
                     cmd = new SqlCommand(@"
 insert into Realm(SponsorId, RealmType, RealmIdentifier, IdpUrl, IdpCertificate, UserKeyAttribute)
 select SponsorId, RealmType, @RealmIdentifier, IdpUrl, IdpCertificate, UserKeyAttribute from Realm where RealmIdentifier = '::1/24'", con);
-
+                    cmd.Parameters.Add("@RealmIdentifier", identifier);
                     cmd.ExecuteNonQuery();
                     labelMessage.Text = "You are now added to realm!";
                 }
             } catch (Exception ex) {
                 labelMessage.Text = ex.Message;
             } finally {
-                rs.Close();
                 con.Close();
             }
         }
