@@ -915,5 +915,5 @@ AND u.Email NOT LIKE '%DELETED'",
 			}
 			return 0;
 		}
-	}
+    }
 }

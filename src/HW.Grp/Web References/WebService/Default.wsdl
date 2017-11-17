@@ -76,6 +76,7 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="departmentID" type="s:int" />
             <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
           </s:sequence>
         </s:complexType>
@@ -94,6 +95,10 @@
           <s:element minOccurs="1" maxOccurs="1" name="TotalCount" type="s:int" />
           <s:element minOccurs="0" maxOccurs="1" name="TotalCountReceiveInvitation" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Departments" type="tns:ArrayOfDepartment" />
+          <s:element minOccurs="0" maxOccurs="1" name="SortString" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ParentDepartmentID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DepartmentName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DepartmentShortName" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="ArrayOfDepartment">
@@ -117,6 +122,59 @@
           <s:element minOccurs="0" maxOccurs="1" name="ReceiveInvitation" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="DepartmentShort" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="DepthX" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="hasChild" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ParentUnit" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DepartmentTree" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SortString" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAllDepartmentTree">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllDepartmentTreeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllDepartmentTreeResult" type="tns:DepartmentTree" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveDepartment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="departmentName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="departmentShortName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="parentDepartmentID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="versionNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveDepartmentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaveDepartmentResult" type="tns:GenericResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GenericResponseOfBoolean">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Response">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Object" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Response">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="GetCheckReturnIpAddress">
@@ -142,6 +200,23 @@
           <s:element minOccurs="0" maxOccurs="1" name="UserKeyAttributeValue" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="GetParentDepartmentID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="deptID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetParentDepartmentIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetParentDepartmentIDResult" type="tns:DepartmentTree" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="GetUsersInDepartment">
         <s:complexType>
           <s:sequence>
@@ -176,6 +251,7 @@
               <s:element minOccurs="1" maxOccurs="1" name="StoppedReason" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="Internal" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="PersonNumber" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="SponsorID" type="s:int" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -443,11 +519,27 @@
         <s:sequence>
           <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
           <s:element minOccurs="0" maxOccurs="1" name="BackgroundQuestion" type="tns:BackgroundQuestion" />
+          <s:element minOccurs="0" maxOccurs="1" name="SponsorBQ" type="tns:SponsorBQ" />
+          <s:element minOccurs="0" maxOccurs="1" name="BA" type="tns:BA" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="BackgroundQuestion">
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="1" name="Internal" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SponsorBQ">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="BQID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Internal" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Type" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="BA">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="BQID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Internal" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="hiddenBqJoin" type="s:int" />
         </s:sequence>
       </s:complexType>
       <s:element name="GetSponsor">
@@ -520,6 +612,40 @@
           </s:extension>
         </s:complexContent>
       </s:complexType>
+      <s:element name="ImportUnitsParentDepartment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ImportUnitsParentDepartmentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ImportUnitsParentDepartmentResult" type="tns:ArrayOfDepartment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveUserProfileBQ">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="BQID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveUserProfileBQResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SaveUserProfileBQResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="ConsumeSignedResponse">
         <s:complexType>
           <s:sequence>
@@ -871,8 +997,162 @@
           <s:element minOccurs="0" maxOccurs="1" name="Expl" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="ReadSponsorDepartmentCount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorAdminId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadSponsorDepartmentCountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadSponsorDepartmentCountResult" type="tns:SponsorDepartmentCount" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="SponsorDepartmentCount">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="MaxExpandedDepartments" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalDepartmentCount" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="deparmentID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="versionNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddUserResult" type="tns:GenericResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveSponsorInviteBQ">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="versionNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveSponsorInviteBQResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaveSponsorInviteBQResult" type="tns:GenericResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectBA">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="bQID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectBAResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SelectBAResult" type="tns:ArrayOfSponsorBackgroundQuestion" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindBySponsorBQ">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sponsorID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindBySponsorBQResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FindBySponsorBQResult" type="tns:ArrayOfSponsorBackgroundQuestion" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LeftOuterSponsorInviteBQ">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="bqType" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LeftOuterSponsorInviteBQResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LeftOuterSponsorInviteBQResult" type="tns:ArrayOfSponsorBackgroundQuestion" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateDepartment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="departmentId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="departmentName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="departmentShort" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="parentDepartmentID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="versionNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateDepartmentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateDepartmentResult" type="tns:GenericResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepartment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="departmentId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="expirationMinutes" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="versionNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepartmentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDepartmentResult" type="tns:GenericResponseOfDepartment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GenericResponseOfDepartment">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Response">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Object" type="tns:Department" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
       <s:element name="SponsorAdministrator" nillable="true" type="tns:SponsorAdministrator" />
       <s:element name="DepartmentTree" nillable="true" type="tns:DepartmentTree" />
+      <s:element name="GenericResponseOfBoolean" nillable="true" type="tns:GenericResponseOfBoolean" />
       <s:element name="Realm" nillable="true" type="tns:Realm" />
       <s:element name="ArrayOfUser" nillable="true" type="tns:ArrayOfUser" />
       <s:element name="User" nillable="true" type="tns:User" />
@@ -884,6 +1164,7 @@
       <s:element name="ArrayOfSponsorBackgroundQuestion" nillable="true" type="tns:ArrayOfSponsorBackgroundQuestion" />
       <s:element name="Sponsor" nillable="true" type="tns:Sponsor" />
       <s:element name="ArrayOfPlotTypeLanguage" nillable="true" type="tns:ArrayOfPlotTypeLanguage" />
+      <s:element name="ArrayOfDepartment" nillable="true" type="tns:ArrayOfDepartment" />
       <s:element name="boolean" type="s:boolean" />
       <s:element name="ArrayOfListURL" nillable="true" type="tns:ArrayOfListURL" />
       <s:element name="Exporter" nillable="true" type="tns:Exporter" />
@@ -894,6 +1175,8 @@
       <s:element name="SponsorSuperSponsor" nillable="true" type="tns:SponsorSuperSponsor" />
       <s:element name="UserSession" nillable="true" type="tns:UserSession" />
       <s:element name="ArrayOfManagerFunctionLang" nillable="true" type="tns:ArrayOfManagerFunctionLang" />
+      <s:element name="SponsorDepartmentCount" nillable="true" type="tns:SponsorDepartmentCount" />
+      <s:element name="GenericResponseOfDepartment" nillable="true" type="tns:GenericResponseOfDepartment" />
     </s:schema>
     <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
       <s:simpleType name="guid">
@@ -921,11 +1204,29 @@
   <wsdl:message name="GetDepartmentTreeSoapOut">
     <wsdl:part name="parameters" element="tns:GetDepartmentTreeResponse" />
   </wsdl:message>
+  <wsdl:message name="GetAllDepartmentTreeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllDepartmentTree" />
+  </wsdl:message>
+  <wsdl:message name="GetAllDepartmentTreeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllDepartmentTreeResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveDepartmentSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveDepartment" />
+  </wsdl:message>
+  <wsdl:message name="SaveDepartmentSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveDepartmentResponse" />
+  </wsdl:message>
   <wsdl:message name="GetCheckReturnIpAddressSoapIn">
     <wsdl:part name="parameters" element="tns:GetCheckReturnIpAddress" />
   </wsdl:message>
   <wsdl:message name="GetCheckReturnIpAddressSoapOut">
     <wsdl:part name="parameters" element="tns:GetCheckReturnIpAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetParentDepartmentIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetParentDepartmentID" />
+  </wsdl:message>
+  <wsdl:message name="GetParentDepartmentIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetParentDepartmentIDResponse" />
   </wsdl:message>
   <wsdl:message name="GetUsersInDepartmentSoapIn">
     <wsdl:part name="parameters" element="tns:GetUsersInDepartment" />
@@ -992,6 +1293,18 @@
   </wsdl:message>
   <wsdl:message name="FindByLanguageSoapOut">
     <wsdl:part name="parameters" element="tns:FindByLanguageResponse" />
+  </wsdl:message>
+  <wsdl:message name="ImportUnitsParentDepartmentSoapIn">
+    <wsdl:part name="parameters" element="tns:ImportUnitsParentDepartment" />
+  </wsdl:message>
+  <wsdl:message name="ImportUnitsParentDepartmentSoapOut">
+    <wsdl:part name="parameters" element="tns:ImportUnitsParentDepartmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveUserProfileBQSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveUserProfileBQ" />
+  </wsdl:message>
+  <wsdl:message name="SaveUserProfileBQSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveUserProfileBQResponse" />
   </wsdl:message>
   <wsdl:message name="ConsumeSignedResponseSoapIn">
     <wsdl:part name="parameters" element="tns:ConsumeSignedResponse" />
@@ -1071,6 +1384,54 @@
   <wsdl:message name="FindBySponsorAdminSoapOut">
     <wsdl:part name="parameters" element="tns:FindBySponsorAdminResponse" />
   </wsdl:message>
+  <wsdl:message name="ReadSponsorDepartmentCountSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadSponsorDepartmentCount" />
+  </wsdl:message>
+  <wsdl:message name="ReadSponsorDepartmentCountSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadSponsorDepartmentCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddUserSoapIn">
+    <wsdl:part name="parameters" element="tns:AddUser" />
+  </wsdl:message>
+  <wsdl:message name="AddUserSoapOut">
+    <wsdl:part name="parameters" element="tns:AddUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveSponsorInviteBQSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveSponsorInviteBQ" />
+  </wsdl:message>
+  <wsdl:message name="SaveSponsorInviteBQSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveSponsorInviteBQResponse" />
+  </wsdl:message>
+  <wsdl:message name="SelectBASoapIn">
+    <wsdl:part name="parameters" element="tns:SelectBA" />
+  </wsdl:message>
+  <wsdl:message name="SelectBASoapOut">
+    <wsdl:part name="parameters" element="tns:SelectBAResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorBQSoapIn">
+    <wsdl:part name="parameters" element="tns:FindBySponsorBQ" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorBQSoapOut">
+    <wsdl:part name="parameters" element="tns:FindBySponsorBQResponse" />
+  </wsdl:message>
+  <wsdl:message name="LeftOuterSponsorInviteBQSoapIn">
+    <wsdl:part name="parameters" element="tns:LeftOuterSponsorInviteBQ" />
+  </wsdl:message>
+  <wsdl:message name="LeftOuterSponsorInviteBQSoapOut">
+    <wsdl:part name="parameters" element="tns:LeftOuterSponsorInviteBQResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateDepartmentSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateDepartment" />
+  </wsdl:message>
+  <wsdl:message name="UpdateDepartmentSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateDepartmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartmentSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDepartment" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartmentSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDepartmentResponse" />
+  </wsdl:message>
   <wsdl:message name="ManagerLoginHttpPostIn">
     <wsdl:part name="username" type="s:string" />
     <wsdl:part name="password" type="s:string" />
@@ -1089,16 +1450,45 @@
   </wsdl:message>
   <wsdl:message name="GetDepartmentTreeHttpPostIn">
     <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="departmentID" type="s:string" />
     <wsdl:part name="expirationMinutes" type="s:string" />
   </wsdl:message>
   <wsdl:message name="GetDepartmentTreeHttpPostOut">
     <wsdl:part name="Body" element="tns:DepartmentTree" />
+  </wsdl:message>
+  <wsdl:message name="GetAllDepartmentTreeHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllDepartmentTreeHttpPostOut">
+    <wsdl:part name="Body" element="tns:DepartmentTree" />
+  </wsdl:message>
+  <wsdl:message name="SaveDepartmentHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="departmentName" type="s:string" />
+    <wsdl:part name="departmentShortName" type="s:string" />
+    <wsdl:part name="parentDepartmentID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+    <wsdl:part name="versionNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SaveDepartmentHttpPostOut">
+    <wsdl:part name="Body" element="tns:GenericResponseOfBoolean" />
   </wsdl:message>
   <wsdl:message name="GetCheckReturnIpAddressHttpPostIn">
     <wsdl:part name="ip" type="s:string" />
   </wsdl:message>
   <wsdl:message name="GetCheckReturnIpAddressHttpPostOut">
     <wsdl:part name="Body" element="tns:Realm" />
+  </wsdl:message>
+  <wsdl:message name="GetParentDepartmentIDHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="deptID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetParentDepartmentIDHttpPostOut">
+    <wsdl:part name="Body" element="tns:DepartmentTree" />
   </wsdl:message>
   <wsdl:message name="GetUsersInDepartmentHttpPostIn">
     <wsdl:part name="token" type="s:string" />
@@ -1193,6 +1583,24 @@
   </wsdl:message>
   <wsdl:message name="FindByLanguageHttpPostOut">
     <wsdl:part name="Body" element="tns:ArrayOfPlotTypeLanguage" />
+  </wsdl:message>
+  <wsdl:message name="ImportUnitsParentDepartmentHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ImportUnitsParentDepartmentHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfDepartment" />
+  </wsdl:message>
+  <wsdl:message name="SaveUserProfileBQHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="BQID" type="s:string" />
+    <wsdl:part name="UID" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SaveUserProfileBQHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
   </wsdl:message>
   <wsdl:message name="ConsumeSignedResponseHttpPostIn">
     <wsdl:part name="sponsorID" type="s:string" />
@@ -1331,6 +1739,80 @@
   <wsdl:message name="FindBySponsorAdminHttpPostOut">
     <wsdl:part name="Body" element="tns:ArrayOfManagerFunctionLang" />
   </wsdl:message>
+  <wsdl:message name="ReadSponsorDepartmentCountHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorId" type="s:string" />
+    <wsdl:part name="sponsorAdminId" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ReadSponsorDepartmentCountHttpPostOut">
+    <wsdl:part name="Body" element="tns:SponsorDepartmentCount" />
+  </wsdl:message>
+  <wsdl:message name="AddUserHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="deparmentID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+    <wsdl:part name="versionNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddUserHttpPostOut">
+    <wsdl:part name="Body" element="tns:GenericResponseOfBoolean" />
+  </wsdl:message>
+  <wsdl:message name="SaveSponsorInviteBQHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+    <wsdl:part name="versionNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SaveSponsorInviteBQHttpPostOut">
+    <wsdl:part name="Body" element="tns:GenericResponseOfBoolean" />
+  </wsdl:message>
+  <wsdl:message name="SelectBAHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="bQID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SelectBAHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfSponsorBackgroundQuestion" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorBQHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="sponsorID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FindBySponsorBQHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfSponsorBackgroundQuestion" />
+  </wsdl:message>
+  <wsdl:message name="LeftOuterSponsorInviteBQHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="bqType" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="LeftOuterSponsorInviteBQHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfSponsorBackgroundQuestion" />
+  </wsdl:message>
+  <wsdl:message name="UpdateDepartmentHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="departmentId" type="s:string" />
+    <wsdl:part name="departmentName" type="s:string" />
+    <wsdl:part name="departmentShort" type="s:string" />
+    <wsdl:part name="parentDepartmentID" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+    <wsdl:part name="versionNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateDepartmentHttpPostOut">
+    <wsdl:part name="Body" element="tns:GenericResponseOfBoolean" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartmentHttpPostIn">
+    <wsdl:part name="token" type="s:string" />
+    <wsdl:part name="departmentId" type="s:string" />
+    <wsdl:part name="expirationMinutes" type="s:string" />
+    <wsdl:part name="versionNumber" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartmentHttpPostOut">
+    <wsdl:part name="Body" element="tns:GenericResponseOfDepartment" />
+  </wsdl:message>
   <wsdl:portType name="SoapSoap">
     <wsdl:operation name="ManagerLogin">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Validates a username and password combination and, if there is a match, returns a Sponsor Admin object including sponsor data with token, variable lifetime (max 20 minutes).</wsdl:documentation>
@@ -1346,10 +1828,23 @@
       <wsdl:input message="tns:GetDepartmentTreeSoapIn" />
       <wsdl:output message="tns:GetDepartmentTreeSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="GetAllDepartmentTree">
+      <wsdl:input message="tns:GetAllDepartmentTreeSoapIn" />
+      <wsdl:output message="tns:GetAllDepartmentTreeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveDepartment">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This funtion will add unit to the organization</wsdl:documentation>
+      <wsdl:input message="tns:SaveDepartmentSoapIn" />
+      <wsdl:output message="tns:SaveDepartmentSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetCheckReturnIpAddress">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">GetReturnIpAddress check if that Ip address is realm identifier/If the sponsorId,RealmIdentifier,RealmType has valuew means part of realm </wsdl:documentation>
       <wsdl:input message="tns:GetCheckReturnIpAddressSoapIn" />
       <wsdl:output message="tns:GetCheckReturnIpAddressSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetParentDepartmentID">
+      <wsdl:input message="tns:GetParentDepartmentIDSoapIn" />
+      <wsdl:output message="tns:GetParentDepartmentIDSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="GetUsersInDepartment">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate a list of users under a specific department</wsdl:documentation>
@@ -1405,6 +1900,14 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the PlotTypeLanguage details using the language ID</wsdl:documentation>
       <wsdl:input message="tns:FindByLanguageSoapIn" />
       <wsdl:output message="tns:FindByLanguageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportUnitsParentDepartment">
+      <wsdl:input message="tns:ImportUnitsParentDepartmentSoapIn" />
+      <wsdl:output message="tns:ImportUnitsParentDepartmentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveUserProfileBQ">
+      <wsdl:input message="tns:SaveUserProfileBQSoapIn" />
+      <wsdl:output message="tns:SaveUserProfileBQSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="ConsumeSignedResponse">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will validate the SAML and check the value if it is a valid sponsor.</wsdl:documentation>
@@ -1466,6 +1969,41 @@
       <wsdl:input message="tns:FindBySponsorAdminSoapIn" />
       <wsdl:output message="tns:FindBySponsorAdminSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="ReadSponsorDepartmentCount">
+      <wsdl:input message="tns:ReadSponsorDepartmentCountSoapIn" />
+      <wsdl:output message="tns:ReadSponsorDepartmentCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <wsdl:input message="tns:AddUserSoapIn" />
+      <wsdl:output message="tns:AddUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveSponsorInviteBQ">
+      <wsdl:input message="tns:SaveSponsorInviteBQSoapIn" />
+      <wsdl:output message="tns:SaveSponsorInviteBQSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectBA">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the background questions.</wsdl:documentation>
+      <wsdl:input message="tns:SelectBASoapIn" />
+      <wsdl:output message="tns:SelectBASoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorBQ">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the sponsor by BQ.</wsdl:documentation>
+      <wsdl:input message="tns:FindBySponsorBQSoapIn" />
+      <wsdl:output message="tns:FindBySponsorBQSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LeftOuterSponsorInviteBQ">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the background questions.</wsdl:documentation>
+      <wsdl:input message="tns:LeftOuterSponsorInviteBQSoapIn" />
+      <wsdl:output message="tns:LeftOuterSponsorInviteBQSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDepartment">
+      <wsdl:input message="tns:UpdateDepartmentSoapIn" />
+      <wsdl:output message="tns:UpdateDepartmentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartment">
+      <wsdl:input message="tns:GetDepartmentSoapIn" />
+      <wsdl:output message="tns:GetDepartmentSoapOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="SoapHttpPost">
     <wsdl:operation name="ManagerLogin">
@@ -1482,10 +2020,23 @@
       <wsdl:input message="tns:GetDepartmentTreeHttpPostIn" />
       <wsdl:output message="tns:GetDepartmentTreeHttpPostOut" />
     </wsdl:operation>
+    <wsdl:operation name="GetAllDepartmentTree">
+      <wsdl:input message="tns:GetAllDepartmentTreeHttpPostIn" />
+      <wsdl:output message="tns:GetAllDepartmentTreeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveDepartment">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This funtion will add unit to the organization</wsdl:documentation>
+      <wsdl:input message="tns:SaveDepartmentHttpPostIn" />
+      <wsdl:output message="tns:SaveDepartmentHttpPostOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetCheckReturnIpAddress">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">GetReturnIpAddress check if that Ip address is realm identifier/If the sponsorId,RealmIdentifier,RealmType has valuew means part of realm </wsdl:documentation>
       <wsdl:input message="tns:GetCheckReturnIpAddressHttpPostIn" />
       <wsdl:output message="tns:GetCheckReturnIpAddressHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetParentDepartmentID">
+      <wsdl:input message="tns:GetParentDepartmentIDHttpPostIn" />
+      <wsdl:output message="tns:GetParentDepartmentIDHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="GetUsersInDepartment">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate a list of users under a specific department</wsdl:documentation>
@@ -1541,6 +2092,14 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the PlotTypeLanguage details using the language ID</wsdl:documentation>
       <wsdl:input message="tns:FindByLanguageHttpPostIn" />
       <wsdl:output message="tns:FindByLanguageHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportUnitsParentDepartment">
+      <wsdl:input message="tns:ImportUnitsParentDepartmentHttpPostIn" />
+      <wsdl:output message="tns:ImportUnitsParentDepartmentHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveUserProfileBQ">
+      <wsdl:input message="tns:SaveUserProfileBQHttpPostIn" />
+      <wsdl:output message="tns:SaveUserProfileBQHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="ConsumeSignedResponse">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will validate the SAML and check the value if it is a valid sponsor.</wsdl:documentation>
@@ -1598,6 +2157,41 @@
       <wsdl:input message="tns:FindBySponsorAdminHttpPostIn" />
       <wsdl:output message="tns:FindBySponsorAdminHttpPostOut" />
     </wsdl:operation>
+    <wsdl:operation name="ReadSponsorDepartmentCount">
+      <wsdl:input message="tns:ReadSponsorDepartmentCountHttpPostIn" />
+      <wsdl:output message="tns:ReadSponsorDepartmentCountHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <wsdl:input message="tns:AddUserHttpPostIn" />
+      <wsdl:output message="tns:AddUserHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveSponsorInviteBQ">
+      <wsdl:input message="tns:SaveSponsorInviteBQHttpPostIn" />
+      <wsdl:output message="tns:SaveSponsorInviteBQHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectBA">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the background questions.</wsdl:documentation>
+      <wsdl:input message="tns:SelectBAHttpPostIn" />
+      <wsdl:output message="tns:SelectBAHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorBQ">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the sponsor by BQ.</wsdl:documentation>
+      <wsdl:input message="tns:FindBySponsorBQHttpPostIn" />
+      <wsdl:output message="tns:FindBySponsorBQHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LeftOuterSponsorInviteBQ">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function will get the background questions.</wsdl:documentation>
+      <wsdl:input message="tns:LeftOuterSponsorInviteBQHttpPostIn" />
+      <wsdl:output message="tns:LeftOuterSponsorInviteBQHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDepartment">
+      <wsdl:input message="tns:UpdateDepartmentHttpPostIn" />
+      <wsdl:output message="tns:UpdateDepartmentHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartment">
+      <wsdl:input message="tns:GetDepartmentHttpPostIn" />
+      <wsdl:output message="tns:GetDepartmentHttpPostOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SoapSoap" type="tns:SoapSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -1628,8 +2222,35 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetAllDepartmentTree">
+      <soap:operation soapAction="http://tempuri.org/GetAllDepartmentTree" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveDepartment">
+      <soap:operation soapAction="http://tempuri.org/SaveDepartment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetCheckReturnIpAddress">
       <soap:operation soapAction="http://tempuri.org/GetCheckReturnIpAddress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetParentDepartmentID">
+      <soap:operation soapAction="http://tempuri.org/GetParentDepartmentID" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1729,6 +2350,24 @@
     </wsdl:operation>
     <wsdl:operation name="FindByLanguage">
       <soap:operation soapAction="http://tempuri.org/FindByLanguage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportUnitsParentDepartment">
+      <soap:operation soapAction="http://tempuri.org/ImportUnitsParentDepartment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveUserProfileBQ">
+      <soap:operation soapAction="http://tempuri.org/SaveUserProfileBQ" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1853,6 +2492,78 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ReadSponsorDepartmentCount">
+      <soap:operation soapAction="http://tempuri.org/ReadSponsorDepartmentCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <soap:operation soapAction="http://tempuri.org/AddUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveSponsorInviteBQ">
+      <soap:operation soapAction="http://tempuri.org/SaveSponsorInviteBQ" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectBA">
+      <soap:operation soapAction="http://tempuri.org/SelectBA" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorBQ">
+      <soap:operation soapAction="http://tempuri.org/FindBySponsorBQ" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LeftOuterSponsorInviteBQ">
+      <soap:operation soapAction="http://tempuri.org/LeftOuterSponsorInviteBQ" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDepartment">
+      <soap:operation soapAction="http://tempuri.org/UpdateDepartment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartment">
+      <soap:operation soapAction="http://tempuri.org/GetDepartment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="SoapSoap12" type="tns:SoapSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -1883,8 +2594,35 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetAllDepartmentTree">
+      <soap12:operation soapAction="http://tempuri.org/GetAllDepartmentTree" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveDepartment">
+      <soap12:operation soapAction="http://tempuri.org/SaveDepartment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetCheckReturnIpAddress">
       <soap12:operation soapAction="http://tempuri.org/GetCheckReturnIpAddress" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetParentDepartmentID">
+      <soap12:operation soapAction="http://tempuri.org/GetParentDepartmentID" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1984,6 +2722,24 @@
     </wsdl:operation>
     <wsdl:operation name="FindByLanguage">
       <soap12:operation soapAction="http://tempuri.org/FindByLanguage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportUnitsParentDepartment">
+      <soap12:operation soapAction="http://tempuri.org/ImportUnitsParentDepartment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveUserProfileBQ">
+      <soap12:operation soapAction="http://tempuri.org/SaveUserProfileBQ" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -2108,6 +2864,78 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ReadSponsorDepartmentCount">
+      <soap12:operation soapAction="http://tempuri.org/ReadSponsorDepartmentCount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <soap12:operation soapAction="http://tempuri.org/AddUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveSponsorInviteBQ">
+      <soap12:operation soapAction="http://tempuri.org/SaveSponsorInviteBQ" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectBA">
+      <soap12:operation soapAction="http://tempuri.org/SelectBA" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorBQ">
+      <soap12:operation soapAction="http://tempuri.org/FindBySponsorBQ" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LeftOuterSponsorInviteBQ">
+      <soap12:operation soapAction="http://tempuri.org/LeftOuterSponsorInviteBQ" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDepartment">
+      <soap12:operation soapAction="http://tempuri.org/UpdateDepartment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartment">
+      <soap12:operation soapAction="http://tempuri.org/GetDepartment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="SoapHttpPost" type="tns:SoapHttpPost">
     <http:binding verb="POST" />
@@ -2138,8 +2966,35 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetAllDepartmentTree">
+      <http:operation location="/GetAllDepartmentTree" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveDepartment">
+      <http:operation location="/SaveDepartment" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetCheckReturnIpAddress">
       <http:operation location="/GetCheckReturnIpAddress" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetParentDepartmentID">
+      <http:operation location="/GetParentDepartmentID" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
@@ -2239,6 +3094,24 @@
     </wsdl:operation>
     <wsdl:operation name="FindByLanguage">
       <http:operation location="/FindByLanguage" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportUnitsParentDepartment">
+      <http:operation location="/ImportUnitsParentDepartment" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveUserProfileBQ">
+      <http:operation location="/SaveUserProfileBQ" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
@@ -2347,6 +3220,78 @@
     </wsdl:operation>
     <wsdl:operation name="FindBySponsorAdmin">
       <http:operation location="/FindBySponsorAdmin" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadSponsorDepartmentCount">
+      <http:operation location="/ReadSponsorDepartmentCount" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <http:operation location="/AddUser" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveSponsorInviteBQ">
+      <http:operation location="/SaveSponsorInviteBQ" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectBA">
+      <http:operation location="/SelectBA" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindBySponsorBQ">
+      <http:operation location="/FindBySponsorBQ" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LeftOuterSponsorInviteBQ">
+      <http:operation location="/LeftOuterSponsorInviteBQ" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDepartment">
+      <http:operation location="/UpdateDepartment" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartment">
+      <http:operation location="/GetDepartment" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

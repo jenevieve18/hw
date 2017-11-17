@@ -26,20 +26,20 @@ namespace HW.Grp.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:5677/Default.asmx")]
-        public string HW_Grp_WebService_Soap {
+        [global::System.Configuration.DefaultSettingValueAttribute("https://http://localhost:5677/Default.asmx")]
+        public string HW_Grp_WebService2_Soap {
             get {
-                return ((string)(this["HW_Grp_WebService_Soap"]));
+                return ((string)(this["HW_Grp_WebService2_Soap"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:1729/default.asmx")]
-        public string HW_Grp_WebService2_Soap {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:5677/Default.asmx")]
+        public string HW_Grp_WebService_Soap {
             get {
-                return ((string)(this["HW_Grp_WebService2_Soap"]));
+                return ((string)(this["HW_Grp_WebService_Soap"]));
             }
         }
     }

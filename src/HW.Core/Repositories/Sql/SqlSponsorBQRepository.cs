@@ -171,7 +171,7 @@ FROM SponsorBQ";
 			string query = string.Format(
 				@"
 SELECT sbq.BQID,
-	BQ.Internal
+        BQ.Internal
 FROM SponsorBQ sbq
 INNER JOIN BQ ON BQ.BQID = sbq.BQID
 WHERE (BQ.Comparison = 1 OR sbq.Hidden = 1)
@@ -191,5 +191,5 @@ AND sbq.SponsorID = {0}",
 			}
 			return questions;
 		}
-	}
+    }
 }

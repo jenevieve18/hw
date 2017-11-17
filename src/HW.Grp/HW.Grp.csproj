@@ -405,8 +405,8 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
-    <None Include="Web References\WebService\Default.disco" />
     <None Include="Web References\WebService2\default.disco" />
+    <None Include="Web References\WebService\Default.disco" />
     <Content Include="~etc\assets\css\default.css" />
     <Content Include="~etc\assets\exercises\css\exercises.css" />
     <Content Include="~etc\assets\exercises\css\styles.css" />
@@ -1041,24 +1041,6 @@
     <Content Include="Web References\WebService\DepartmentTree.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
-    <Content Include="Web References\WebService\ListURL.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
-    <Content Include="Web References\WebService\PlotTypeLanguage.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
-    <Content Include="Web References\WebService\PlotTypeLanguage1.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
-    <Content Include="Web References\WebService\MemoryStream.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
-    <Content Include="Web References\WebService\ExporterAll.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
-    <Content Include="Web References\WebService\Exporter.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
     <Content Include="Web References\WebService\Exercise.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
@@ -1069,6 +1051,30 @@
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <Content Include="Web References\WebService\ExerciseItem.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebService\Exporter.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebService\GenericResponseOfBoolean.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebService\ListURL.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebService\ManagerFunctionLang.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebService\PlotTypeLanguage.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebService\Realm.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebService\Department.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebService\GenericResponseOfDepartment.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <None Include="Web References\WebService\Reference.map">
@@ -1090,34 +1096,22 @@
     <Content Include="Web References\WebService\SponsorDepartment.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
+    <Content Include="Web References\WebService\SponsorDepartmentCount.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
     <Content Include="Web References\WebService\SponsorProject.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <Content Include="Web References\WebService\SponsorProjectRoundUnit.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
+    <Content Include="Web References\WebService\SponsorSuperSponsor.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
     <Content Include="Web References\WebService\User.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
-    <Content Include="Web References\WebService\ReportPartLang1.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
-    <Content Include="Web References\WebService\Sponsor1.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
-    <Content Include="Web References\WebService\SponsorBackgroundQuestion1.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
-    <Content Include="Web References\WebService\SponsorDepartment1.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
-    <Content Include="Web References\WebService\SponsorProject1.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
-    <Content Include="Web References\WebService\SponsorProjectRoundUnit1.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
-    <Content Include="Web References\WebService\SponsorSuperSponsor.datasource">
+    <Content Include="Web References\WebService\UserSession.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <None Include="~etc\assets\css\main.css" />
